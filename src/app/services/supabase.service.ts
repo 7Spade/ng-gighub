@@ -114,10 +114,10 @@ export class SupabaseService {
    * Get a signed URL for private file access.
    * @param bucket - Storage bucket name
    * @param path - File path in the bucket
-   * @param expiresIn - Expiration time in seconds (default: 60)
+   * @param expiresIn - Expiration time in seconds (default: 3600 = 1 hour)
    * @returns Signed URL with expiration
    */
-  async createSignedUrl(bucket: string, path: string, expiresIn: number = 60) {
+  async createSignedUrl(bucket: string, path: string, expiresIn: number = 3600) {
     if (!this.supabase) {
       return { data: null, error: new Error('Supabase client not available (SSR context)') };
     }
