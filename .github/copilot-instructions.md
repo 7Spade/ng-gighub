@@ -7,6 +7,7 @@ This is an Angular 20 application with Server-Side Rendering (SSR) support using
 - **Framework**: Angular 20.1.0
 - **Server**: Express 5.1.0
 - **SSR**: Angular SSR (@angular/ssr)
+- **Backend**: Supabase (Database, Authentication, Storage, Real-time)
 - **Language**: TypeScript 5.8.2
 - **Testing**: Karma + Jasmine
 - **Build Tool**: Angular CLI 20.1.4
@@ -60,6 +61,16 @@ This is an Angular 20 application with Server-Side Rendering (SSR) support using
 - Use async pipe in templates when possible
 - Leverage Angular signals for reactive state
 
+### Supabase Integration
+- Use Supabase for backend services (database, authentication, storage, real-time)
+- Initialize Supabase client in a service for dependency injection
+- Handle authentication state with Supabase Auth
+- Use Supabase Realtime for live data updates
+- Store environment variables (API keys) in environment files
+- Use Row Level Security (RLS) policies for data access control
+- Leverage Supabase Storage for file uploads
+- Use Supabase Edge Functions for server-side logic when needed
+
 ### SSR Considerations
 When writing code that runs on both client and server:
 - Avoid direct DOM manipulation
@@ -88,3 +99,5 @@ When writing code that runs on both client and server:
 - [Angular Documentation](https://angular.dev)
 - [Angular CLI Reference](https://angular.dev/tools/cli)
 - [Angular SSR Guide](https://angular.dev/guide/ssr)
+- [Supabase Documentation](https://supabase.com/docs)
+- [Supabase JavaScript Client](https://supabase.com/docs/reference/javascript)
