@@ -139,10 +139,8 @@
                   },
                   "twoFactorCode": {
                     "type": "string",
-                    "description": "Required if 2FA is enabled",
-                    "pattern": "^[0-9]{6}$",
-                    "minLength": 6,
-                    "maxLength": 6
+                    "description": "Required if 2FA is enabled. Must be a 6-digit numeric code.",
+                    "pattern": "^[0-9]{6}$"
                   }
                 }
               }
