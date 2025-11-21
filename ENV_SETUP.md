@@ -1,6 +1,16 @@
 # Environment Variables Setup Guide
 
-This guide explains how to configure environment variables for the ng-gighub project.
+This guide explains how to configure environment variables for the ng-gighub Angular project.
+
+## Important Note About Variable Naming
+
+This project uses `NEXT_PUBLIC_` prefixed environment variables for compatibility with external tools and services. However, **ng-gighub is an Angular application, not Next.js**. 
+
+Key points:
+- **Server-side (SSR)**: Environment variables work as expected via `process.env` when loaded with dotenv
+- **Client-side**: Angular doesn't automatically expose `NEXT_PUBLIC_` variables to the browser
+- For production client-side usage, consider configuring Angular environment files (`src/environments/`) or using build-time replacements
+- The current implementation uses server-side environment variables with client-side fallback to hardcoded defaults
 
 ## Quick Start
 
@@ -26,13 +36,15 @@ This guide explains how to configure environment variables for the ng-gighub pro
 - **Description:** Your Supabase project URL
 - **Example:** `https://your-project.supabase.co`
 - **Required:** Yes
-- **Safe for client-side:** Yes (when using NEXT_PUBLIC_ prefix)
+- **Safe for client-side:** Yes
+- **Note:** The NEXT_PUBLIC_ prefix is for compatibility with external tools. In Angular, this works server-side via process.env. For client-side, configure via Angular environment files.
 
 #### `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - **Description:** Your Supabase anonymous/public key
 - **Example:** `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...`
 - **Required:** Yes
 - **Safe for client-side:** Yes (with Row Level Security enabled)
+- **Note:** The NEXT_PUBLIC_ prefix is for compatibility with external tools. In Angular, this works server-side via process.env. For client-side, configure via Angular environment files.
 
 #### `SUPABASE_SERVICE_ROLE_KEY`
 - **Description:** Service role key with full database access
@@ -95,21 +107,59 @@ These variables are typically provided by Supabase or your database hosting prov
 
 ## How Environment Variables Work in This Project
 
+### Important: Angular vs Next.js
+
+This project uses `NEXT_PUBLIC_` prefixed variables for compatibility with external tooling, but **this is an Angular application**. The behavior differs from Next.js:
+
 ### Server-Side (SSR)
 - Environment variables are loaded from `.env` using dotenv in `src/server.ts`
-- All variables are available via `process.env` on the server
+- All variables are available via `process.env` on the server (Node.js environment)
 - Loaded at runtime when the server starts
+- ✅ **Both `NEXT_PUBLIC_*` and non-prefixed variables work here**
 
-### Client-Side
-- Environment variables need to be injected at build time for Angular
-- The `supabase.config.ts` checks for environment variables and falls back to defaults
-- Only public values (anon key, project URL) should be available client-side
+### Client-Side (Browser)
+- Angular doesn't automatically expose `NEXT_PUBLIC_` variables to the browser like Next.js does
+- The `supabase.config.ts` checks for environment variables but falls back to defaults in browser context
+- For production client-side usage, consider:
+  - Using Angular environment files (`src/environments/environment.ts`)
+  - Configuring file replacements in `angular.json`
+  - Using custom build scripts to inject variables
+- ⚠️ **Currently, client-side code uses fallback values defined in `supabase.config.ts`**
 
 ### Configuration Priority
 The application follows this priority for configuration values:
 
-1. **Environment variables** (from `.env` file or system environment)
-2. **Hardcoded defaults** (in `supabase.config.ts`)
+1. **Server-side**: Environment variables from `.env` file or system environment
+2. **Client-side**: Hardcoded defaults in `supabase.config.ts` (as Angular doesn't auto-inject these vars)
+
+### Recommended Approach for Production
+
+For production deployments where client-side code needs dynamic configuration:
+
+1. **Option A**: Use Angular environment files
+   ```typescript
+   // src/environments/environment.prod.ts
+   export const environment = {
+     production: true,
+     supabaseUrl: 'https://your-project.supabase.co',
+     supabaseKey: 'your-anon-key'
+   };
+   ```
+
+2. **Option B**: Configure angular.json file replacements
+   ```json
+   "fileReplacements": [
+     {
+       "replace": "src/environments/environment.ts",
+       "with": "src/environments/environment.prod.ts"
+     }
+   ]
+   ```
+
+3. **Option C**: Keep using `.env` for server-side operations only
+   - Server-side SSR and API routes use `.env` variables
+   - Client-side uses hardcoded values in config files
+   - This is the current implementation
 
 ## Testing Your Configuration
 
