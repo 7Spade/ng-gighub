@@ -10,12 +10,14 @@ This repository contains an Angular 20.1 application with Server-Side Rendering 
 - **Build Tool:** Angular CLI with @angular/build
 - **Testing:** Karma + Jasmine
 - **SSR:** @angular/ssr with Express server
+- **Database:** Supabase (PostgreSQL-based backend)
 
 ## Development Environment Setup
 
 ### Prerequisites
 - Node.js (v20.x recommended)
 - npm (comes with Node.js)
+- Supabase project (for database and backend services)
 
 ### Installation
 ```bash
@@ -125,6 +127,12 @@ Production builds enforce size budgets:
 - Server entry point: `src/main.server.ts`
 - Express server config: `src/server.ts`
 
+### Database
+- **Backend:** This project uses Supabase as the database and backend service
+- **Database Type:** PostgreSQL (via Supabase)
+- **MCP Integration:** Supabase MCP server is configured for database operations
+- When working with database operations, use the Supabase client libraries and follow Supabase best practices
+
 ### File Modifications
 - **Angular configuration:** Changes to `angular.json` should be carefully reviewed
 - **TypeScript config:** Modifications to `tsconfig.*.json` files should maintain strict type checking
@@ -154,8 +162,24 @@ npm install <package-name>
 - Aim for meaningful test coverage of business logic
 - Tests run in Chrome (via karma-chrome-launcher)
 
+## Database & Backend
+
+### Supabase
+This project uses Supabase as the primary database and backend service:
+- **Database:** PostgreSQL with Supabase extensions
+- **Authentication:** Supabase Auth (if applicable)
+- **Storage:** Supabase Storage (if applicable)
+- **Real-time:** Supabase Realtime subscriptions (if applicable)
+
+### Working with Supabase
+- Use the Supabase JavaScript client library for database operations
+- Follow Supabase best practices for queries and data management
+- Ensure proper error handling for database operations
+- Use TypeScript types for database schemas when available
+
 ## Additional Resources
 
 - [Angular Documentation](https://angular.dev)
 - [Angular CLI Reference](https://angular.dev/tools/cli)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Supabase Documentation](https://supabase.com/docs)
