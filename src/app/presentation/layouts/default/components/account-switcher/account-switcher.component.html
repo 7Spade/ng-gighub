@@ -1,0 +1,49 @@
+<div class="account-switcher">
+  @if (currentAccount(); as account) {
+    <div class="current-account">
+      <img 
+        [src]="getAvatarUrl(account.avatarUrl)" 
+        [alt]="account.getDisplayName()"
+        class="avatar"
+      />
+      <div class="account-info">
+        <span class="display-name">{{ account.getDisplayName() }}</span>
+        <span class="username">@{{ account.username }}</span>
+        <span class="account-type">{{ account.type }}</span>
+      </div>
+    </div>
+
+    @if (canSwitch()) {
+      <div class="account-list">
+        <h3>Switch Account</h3>
+        
+        @if (loading()) {
+          <div class="loading">Loading accounts...</div>
+        } @else {
+          @for (acc of accessibleAccounts(); track acc.id) {
+            <button 
+              class="account-item"
+              [class.active]="acc.id === account.id"
+              (click)="onSwitchAccount(acc.id)"
+              [disabled]="acc.id === account.id"
+            >
+              <img 
+                [src]="getAvatarUrl(acc.avatarUrl)" 
+                [alt]="acc.getDisplayName()"
+                class="avatar-small"
+              />
+              <div class="account-info-small">
+                <span class="display-name-small">{{ acc.getDisplayName() }}</span>
+                <span class="username-small">@{{ acc.username }}</span>
+              </div>
+            </button>
+          }
+        }
+      </div>
+    }
+  } @else {
+    <div class="no-account">
+      <p>No account selected</p>
+    </div>
+  }
+</div>
