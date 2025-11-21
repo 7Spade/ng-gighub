@@ -67,6 +67,7 @@ ng generate component component-name
 ```typescript
 import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -79,6 +80,22 @@ export class SupabaseService {
       environment.supabaseUrl,
       environment.supabaseKey
     );
+  }
+
+  get client() {
+    return this.supabase;
+  }
+
+  get auth() {
+    return this.supabase.auth;
+  }
+
+  from(table: string) {
+    return this.supabase.from(table);
+  }
+
+  channel(name: string) {
+    return this.supabase.channel(name);
   }
 }
 ```
@@ -157,9 +174,16 @@ export class MyComponent {
 
 ### Supabase + Angular Signals
 ```typescript
-import { signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
+import { SupabaseService } from './supabase.service';
 
+@Component({
+  selector: 'app-data',
+  standalone: true,
+  template: '...'
+})
 export class DataComponent {
+  private supabase = inject(SupabaseService);
   data = signal<any[]>([]);
 
   async loadData() {
@@ -174,25 +198,51 @@ export class DataComponent {
 
 ### Real-time Subscriptions
 ```typescript
-ngOnInit() {
-  this.supabase
-    .channel('table-changes')
-    .on('postgres_changes', 
-      { event: '*', schema: 'public', table: 'table' },
-      (payload) => this.handleChange(payload)
-    )
-    .subscribe();
+import { Component, OnInit, inject } from '@angular/core';
+import { SupabaseService } from './supabase.service';
+
+@Component({
+  selector: 'app-realtime',
+  standalone: true,
+  template: '...'
+})
+export class RealtimeComponent implements OnInit {
+  private supabase = inject(SupabaseService);
+
+  ngOnInit() {
+    this.supabase
+      .channel('table-changes')
+      .on('postgres_changes', 
+        { event: '*', schema: 'public', table: 'table' },
+        (payload) => this.handleChange(payload)
+      )
+      .subscribe();
+  }
+
+  handleChange(payload: any) {
+    // Handle the change
+  }
 }
 ```
 
 ### Authentication Flow
 ```typescript
-async signIn(email: string, password: string) {
-  const { data, error } = await this.supabase.auth.signInWithPassword({
-    email,
-    password
-  });
-  return { data, error };
+import { Injectable, inject } from '@angular/core';
+import { SupabaseService } from './supabase.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private supabase = inject(SupabaseService);
+
+  async signIn(email: string, password: string) {
+    const { data, error } = await this.supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+    return { data, error };
+  }
 }
 ```
 
