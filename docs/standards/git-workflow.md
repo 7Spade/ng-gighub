@@ -407,9 +407,11 @@ git config --global color.ui auto
 # Set default branch name
 git config --global init.defaultBranch main
 
-# Configure line endings
-git config --global core.autocrlf input  # Mac/Linux
-git config --global core.autocrlf true   # Windows
+# Configure line endings (choose ONE based on your platform)
+# IMPORTANT: Teams should standardize on one approach
+git config --global core.autocrlf input  # Mac/Linux (recommended for cross-platform teams)
+git config --global core.autocrlf true   # Windows only (if team is Windows-only)
+# Note: Use .gitattributes file to enforce consistent line endings across all platforms
 ```
 
 ### Useful Aliases
