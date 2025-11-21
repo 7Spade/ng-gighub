@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { Observable } from 'rxjs';
 import { Account } from '../../../domain/account/models/account.model';
 import { AccountSwitcherService } from '../../../domain/account/services/account-switcher.service';
@@ -24,8 +25,6 @@ export class GetCurrentAccountQuery {
    * Get current account as observable (via signal)
    */
   asObservable(): Observable<Account | null> {
-    // Note: In a real implementation, you might want to convert signal to observable
-    // For now, returning a simple implementation
-    throw new Error('Not implemented - use execute() for synchronous access');
+    return toObservable(this.accountSwitcher.currentAccount);
   }
 }

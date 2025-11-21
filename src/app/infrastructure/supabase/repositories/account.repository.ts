@@ -125,12 +125,12 @@ export class AccountRepository implements IAccountRepository {
     }
 
     const row = AccountMapper.toPersistence(account);
-    delete row.id; // Let database generate ID
+    const { id, ...rowWithoutId } = row; // Remove id to let database generate it
 
     return from(
       client
         .from(this.tableName)
-        .insert(row)
+        .insert(rowWithoutId)
         .select()
         .single()
     ).pipe(

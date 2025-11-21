@@ -41,8 +41,8 @@ export class AccountSwitcherComponent implements OnInit {
     const success = this.currentAccountStore.switchAccount(accountId);
     
     if (success) {
-      // Optionally reload data or navigate
-      console.log('Switched to account:', accountId);
+      // Successfully switched account
+      // TODO: Optionally reload data or navigate to account-specific page
     }
   }
 
