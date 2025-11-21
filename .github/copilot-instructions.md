@@ -10,7 +10,10 @@ This repository contains an Angular 20.1 application with Server-Side Rendering 
 - **Build Tool:** Angular CLI with @angular/build
 - **Testing:** Karma + Jasmine
 - **SSR:** @angular/ssr with Express server
-- **Database:** Supabase (PostgreSQL-based backend)
+- **Database:** Supabase (PostgreSQL-based backend with Storage)
+- **UI Libraries:** Angular Material, Angular CDK (configured for future use)
+- **Animations:** @angular/animations (configured for future use)
+- **PWA:** @angular/service-worker (configured for future use)
 
 ## Development Environment Setup
 
@@ -127,16 +130,20 @@ Production builds enforce size budgets:
 - Server entry point: `src/main.server.ts`
 - Express server config: `src/server.ts`
 
-### Database
+### Database & Storage
 - **Backend:** This project uses Supabase as the database and backend service
 - **Database Type:** PostgreSQL (via Supabase)
+- **Storage:** Supabase Storage with comprehensive file management methods in `SupabaseService`
 - **MCP Integration:** Supabase MCP server is configured for database operations
 - When working with database operations, use the Supabase client libraries and follow Supabase best practices
+- Storage operations are SSR-compatible and return appropriate errors on server-side
 
 ### File Modifications
 - **Angular configuration:** Changes to `angular.json` should be carefully reviewed
 - **TypeScript config:** Modifications to `tsconfig.*.json` files should maintain strict type checking
 - **Dependencies:** When adding/updating dependencies, ensure compatibility with Angular 20.1
+  - Angular Material, CDK, Animations, and Service Worker are pre-installed
+  - Use these packages as needed without reinstalling
 
 ## Common Tasks
 
@@ -168,14 +175,32 @@ npm install <package-name>
 This project uses Supabase as the primary database and backend service:
 - **Database:** PostgreSQL with Supabase extensions
 - **Authentication:** Supabase Auth (if applicable)
-- **Storage:** Supabase Storage (if applicable)
+- **Storage:** Supabase Storage with comprehensive file management capabilities
 - **Real-time:** Supabase Realtime subscriptions (if applicable)
 
 ### Working with Supabase
 - Use the Supabase JavaScript client library for database operations
+- `SupabaseService` provides methods for both database and storage operations
+- Storage operations include: upload, download, delete, move, copy, list files, and URL generation
 - Follow Supabase best practices for queries and data management
-- Ensure proper error handling for database operations
+- Ensure proper error handling for database and storage operations
 - Use TypeScript types for database schemas when available
+- Set up appropriate bucket policies and RLS for storage security
+- See `SUPABASE_SETUP.md` for detailed usage examples
+
+### Angular Material & CDK
+- **Material:** Component library installed for future UI development
+- **CDK:** Component Dev Kit for custom components
+- Imports should be added as needed when using Material components
+
+### Animations
+- `@angular/animations` is installed and ready for use
+- Import animations as needed in components
+- Follow Angular animation best practices
+
+### Service Worker (PWA)
+- `@angular/service-worker` is installed for Progressive Web App capabilities
+- Configure as needed for offline functionality and caching
 
 ## Additional Resources
 
