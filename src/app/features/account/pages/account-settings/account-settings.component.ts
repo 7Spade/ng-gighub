@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
   templateUrl: './account-settings.component.html',
   standalone: true
 })
-export class AccountSettings.ComponentComponent {
+export class AccountSettingsComponent {
   // TODO: 實作元件邏輯
 }
