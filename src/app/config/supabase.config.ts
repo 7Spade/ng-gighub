@@ -7,6 +7,14 @@ export interface SupabaseConfig {
  * Gets environment variable value.
  * In browser context, this checks if the variable is available via build-time injection.
  * In server context (Node.js), this reads from process.env.
+ * 
+ * Note: For Angular applications, environment variables typically need to be:
+ * - Injected at build time (using Angular's file replacement in angular.json)
+ * - Or configured through Angular environment files (src/environments/)
+ * - Or passed via custom build scripts
+ * 
+ * The NEXT_PUBLIC_ prefix is maintained for compatibility with external tools,
+ * but Angular doesn't automatically expose these to the browser.
  */
 function getEnvVar(key: string, defaultValue: string = ''): string {
   // Check if we're in a Node.js environment (server-side)
@@ -14,9 +22,14 @@ function getEnvVar(key: string, defaultValue: string = ''): string {
     return process.env[key] || defaultValue;
   }
   
-  // For browser builds, environment variables need to be injected at build time
-  // or made available through import.meta.env (Vite) or similar mechanisms
-  // For now, return the default value in browser context
+  // For browser builds in Angular, environment variables need to be:
+  // 1. Injected via Angular environment files (src/environments/)
+  // 2. Or configured through angular.json file replacements
+  // 3. Or passed via custom build scripts
+  // 
+  // Unlike Next.js, Angular doesn't automatically expose NEXT_PUBLIC_ variables.
+  // For now, we return the default value in browser context and rely on
+  // the fallback configuration below.
   return defaultValue;
 }
 
