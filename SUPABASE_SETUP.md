@@ -2,11 +2,32 @@
 
 To configure Supabase for this project:
 
-1. Go to your Supabase project dashboard at https://pfxxjtvnqptdvjfakotc.supabase.co
-2. Navigate to Settings > API
-3. Copy your project URL and anon/public key
-4. Update the values in `src/app/config/supabase.config.ts`:
+## Using Environment Variables (Recommended)
+
+1. Copy `.env.example` to create a `.env` file:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Go to your Supabase project dashboard at https://pfxxjtvnqptdvjfakotc.supabase.co
+
+3. Navigate to Settings > API
+
+4. Update the `.env` file with your actual values:
+   - `NEXT_PUBLIC_SUPABASE_URL` or `SUPABASE_URL`: Your project URL
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your anon/public key
+   - (Optional) `SUPABASE_SERVICE_ROLE_KEY`: Service role key for server-side operations
+   - (Optional) `SUPABASE_JWT_SECRET`: JWT secret for token verification
+   - (Optional) PostgreSQL connection strings if needed
+
+5. **Important:** Never commit the `.env` file to version control. It's already in `.gitignore`.
+
+## Alternative: Manual Configuration
+
+If you prefer not to use environment variables, you can update the values directly in `src/app/config/supabase.config.ts`:
    - Replace `YOUR_SUPABASE_ANON_KEY` with your actual anon key
+
+**Note:** Environment variables take priority over hardcoded values in the config file.
 
 ## Using Supabase Service
 
