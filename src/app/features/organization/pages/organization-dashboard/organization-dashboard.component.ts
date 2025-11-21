@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
   templateUrl: './organization-dashboard.component.html',
   standalone: true
 })
-export class OrganizationDashboard.ComponentComponent {
+export class OrganizationDashboardComponent {
   // TODO: 實作元件邏輯
 }

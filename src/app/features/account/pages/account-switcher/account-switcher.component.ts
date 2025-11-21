@@ -8,6 +8,6 @@ import { Component } from '@angular/core';
   templateUrl: './account-switcher.component.html',
   standalone: true
 })
-export class AccountSwitcher.ComponentComponent {
+export class AccountSwitcherComponent {
   // TODO: 實作元件邏輯
 }
