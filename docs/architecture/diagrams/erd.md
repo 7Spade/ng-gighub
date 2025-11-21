@@ -11,7 +11,8 @@ erDiagram
     USER ||--o{ LIKE : gives
     POST ||--o{ COMMENT : has
     POST ||--o{ LIKE : receives
-    POST ||--o{ TAG : tagged_with
+    POST ||--o{ POST_TAG : has
+    TAG ||--o{ POST_TAG : applied_to
     USER ||--o{ FOLLOWER : follows
     USER ||--o{ NOTIFICATION : receives
     
@@ -66,6 +67,13 @@ erDiagram
         string slug UK
         text description
         int usage_count
+        datetime created_at
+    }
+    
+    POST_TAG {
+        string id PK
+        string post_id FK
+        string tag_id FK
         datetime created_at
     }
     
@@ -137,7 +145,16 @@ Represents categorization tags.
 - **Primary Key**: id
 - **Unique Keys**: name, slug
 - **Relationships**: 
-  - Applied to posts
+  - Applied to posts via POST_TAG junction table
+
+### POST_TAG
+Junction table for many-to-many relationship between posts and tags.
+- **Primary Key**: id
+- **Foreign Keys**: 
+  - post_id (references POST)
+  - tag_id (references TAG)
+- **Relationships**: 
+  - Links posts to tags
 
 ### FOLLOWER
 Represents follower relationships between users.
@@ -176,6 +193,14 @@ CREATE INDEX idx_comment_parent_id ON COMMENT(parent_comment_id);
 -- Like indexes
 CREATE UNIQUE INDEX idx_like_user_post ON LIKE(user_id, post_id);
 CREATE INDEX idx_like_post_id ON LIKE(post_id);
+
+-- Tag indexes
+CREATE INDEX idx_tag_name ON TAG(name);
+CREATE INDEX idx_tag_slug ON TAG(slug);
+
+-- Post-Tag indexes
+CREATE UNIQUE INDEX idx_post_tag_unique ON POST_TAG(post_id, tag_id);
+CREATE INDEX idx_post_tag_tag_id ON POST_TAG(tag_id);
 
 -- Follower indexes
 CREATE UNIQUE INDEX idx_follower_unique ON FOLLOWER(follower_id, following_id);
