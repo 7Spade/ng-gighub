@@ -22,6 +22,21 @@ export class MyComponent {
   private supabase = inject(SupabaseService);
 
   async loadData() {
+    // Option 1: Check if client is available
+    if (this.supabase.isClientAvailable()) {
+      const client = this.supabase.client!; // Safe to use non-null assertion
+      const { data, error } = await client
+        .from('your_table')
+        .select('*');
+      
+      if (error) {
+        console.error('Error loading data:', error);
+      } else {
+        console.log('Data:', data);
+      }
+    }
+
+    // Option 2: Check client directly
     const client = this.supabase.client;
     if (client) {
       const { data, error } = await client
