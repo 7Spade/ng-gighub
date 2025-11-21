@@ -14,11 +14,11 @@ import { SwitchAccountCommandHandler } from '../../../../../application/account/
   imports: [CommonModule],
   template: `
     <div class="account-switcher">
-      @if (currentAccount()) {
+      @if (currentAccount(); as account) {
         <div class="current-account">
-          <img [src]="currentAccount()?.avatarUrl || defaultAvatar" [alt]="currentAccount()?.username" />
-          <span>{{ currentAccount()?.displayName }}</span>
-          <span class="username">@{{ currentAccount()?.username }}</span>
+          <img [src]="account.avatarUrl || defaultAvatar" [alt]="account.username" />
+          <span>{{ account.displayName }}</span>
+          <span class="username">@{{ account.username }}</span>
         </div>
       }
 

@@ -87,7 +87,7 @@ export class AccountRepository implements IAccountRepository {
           .from('accounts')
           .select('*')
           .eq('owner_id', userId)
-          .eq('type', AccountType.BOT)
+          .eq('type', 'bot')
       ])
     ).pipe(
       switchMap(([userResult, orgMemberships, botResults]) => {
