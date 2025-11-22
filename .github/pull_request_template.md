@@ -1,3 +1,12 @@
+## PR Checklist（快速檢查）
+<!-- 提交前請確認以下項目 -->
+- [ ] PR 保持小且單一變更（Single Responsibility）
+- [ ] 已執行 `npm run format:check` 並通過
+- [ ] 已執行 `npm run lint` 並通過
+- [ ] 已執行 `npm run build` 並成功
+- [ ] 已新增或更新相關測試（如適用）
+- [ ] 無 Breaking Changes（或已在下方說明）
+
 ## PR 類型
 <!-- 請勾選適用的類型 -->
 - [ ] 🚀 新功能 (Feature)
