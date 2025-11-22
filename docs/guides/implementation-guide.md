@@ -231,7 +231,7 @@ npm run lint:fix
 
 ### Q3: 不知道代碼應該放在哪一層？
 
-參考 [ARCHITECTURE.md](./src/app/ARCHITECTURE.md)：
+參考 [系統架構概覽](../architecture/system-overview.md)：
 
 - 純業務邏輯 → `core/domain/`
 - 用例協調 → `core/application/`
