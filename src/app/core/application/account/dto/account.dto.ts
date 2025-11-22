@@ -1,6 +1,6 @@
 /**
  * Account DTO
- * 
+ *
  * 帳號資料傳輸物件
  */
 export interface AccountDto {

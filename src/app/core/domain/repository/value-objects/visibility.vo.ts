@@ -1,6 +1,6 @@
 /**
  * Visibility 值物件
- * 
+ *
  * Public, Private, Internal
  */
 export class Visibility {

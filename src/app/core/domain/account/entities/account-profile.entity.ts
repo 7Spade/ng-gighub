@@ -1,6 +1,6 @@
 /**
  * Account Profile 實體
- * 
+ *
  * 儲存帳號的公開個人資料
  */
 export class AccountProfileEntity {

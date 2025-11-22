@@ -1,6 +1,6 @@
 /**
  * Workspace Deleted Event
- * 
+ *
  * 當工作區被刪除時觸發
  */
 export class WorkspaceDeletedEvent {

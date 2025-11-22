@@ -1,6 +1,6 @@
 /**
  * Either 型別
- * 
+ *
  * 函數式程式設計的 Either monad
  * 用於表示兩種可能的結果：Left (錯誤) 或 Right (成功)
  */

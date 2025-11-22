@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-team-detail',
   templateUrl: './team-detail.component.html',
-  standalone: true
+  standalone: true,
 })
 export class TeamDetailComponent {
   // TODO: 實作元件邏輯

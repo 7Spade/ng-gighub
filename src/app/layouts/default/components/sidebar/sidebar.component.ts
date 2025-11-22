@@ -10,7 +10,7 @@ import { getMenuItems, MenuItem } from './config/menu.config';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive]
+  imports: [CommonModule, RouterLink, RouterLinkActive],
 })
 export class SidebarComponent {
   private readonly contextService = inject(ContextService);

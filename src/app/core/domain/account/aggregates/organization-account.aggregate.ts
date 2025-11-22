@@ -1,6 +1,6 @@
 /**
  * Organization Account 聚合根
- * 
+ *
  * 代表組織帳號
  * 可以管理成員、團隊、Bot
  */

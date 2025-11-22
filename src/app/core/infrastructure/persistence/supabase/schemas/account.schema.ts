@@ -1,6 +1,6 @@
 /**
  * Account Schema
- * 
+ *
  * TypeScript 型別定義，對應 Supabase 資料表結構
  */
 export interface AccountSchema {

@@ -1,6 +1,6 @@
 /**
  * Auth Service
- * 
+ *
  * 處理認證相關功能
  */
 export class AuthService {

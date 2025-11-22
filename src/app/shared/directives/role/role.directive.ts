@@ -3,7 +3,7 @@ import { Directive, Input } from '@angular/core';
 /** Role Directive - 根據角色控制元素顯示 */
 @Directive({
   selector: '[appRole]',
-  standalone: true
+  standalone: true,
 })
 export class RoleDirective {
   @Input() appRole: string = '';

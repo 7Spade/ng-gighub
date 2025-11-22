@@ -1,6 +1,6 @@
 /**
  * Member Role 值物件
- * 
+ *
  * 成員角色：Owner, Admin, Member
  */
 export class MemberRole {

@@ -3,7 +3,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 /** Truncate Pipe - 截斷文字 */
 @Pipe({
   name: 'truncate',
-  standalone: true
+  standalone: true,
 })
 export class TruncatePipe implements PipeTransform {
   transform(value: string, limit: number = 50): string {

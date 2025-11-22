@@ -1,6 +1,6 @@
 /**
  * Workspace Slug 值物件
- * 
+ *
  * 代表工作區的 URL-friendly 識別碼
  */
 export class WorkspaceSlug {

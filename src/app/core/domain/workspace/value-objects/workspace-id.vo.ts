@@ -1,6 +1,6 @@
 /**
  * Workspace ID 值物件
- * 
+ *
  * 代表工作區的唯一識別碼
  */
 export class WorkspaceId {

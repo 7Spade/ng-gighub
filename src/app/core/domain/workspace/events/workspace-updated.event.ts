@@ -1,6 +1,6 @@
 /**
  * Workspace Updated Event
- * 
+ *
  * 當工作區資訊被更新時觸發
  */
 export class WorkspaceUpdatedEvent {

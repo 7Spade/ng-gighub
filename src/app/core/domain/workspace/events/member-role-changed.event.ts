@@ -1,6 +1,6 @@
 /**
  * Member Role Changed Event
- * 
+ *
  * 當成員角色被變更時觸發
  */
 export class MemberRoleChangedEvent {

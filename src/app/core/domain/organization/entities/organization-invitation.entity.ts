@@ -1,6 +1,6 @@
 /**
  * Organization Invitation 實體
- * 
+ *
  * 組織邀請資訊
  */
 export class OrganizationInvitationEntity {

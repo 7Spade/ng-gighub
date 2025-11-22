@@ -5,4 +5,4 @@ import { CommonModule } from '@angular/common';
 @NgModule({
   imports: [CommonModule],
 })
-export class RepositoryModule { }
+export class RepositoryModule {}

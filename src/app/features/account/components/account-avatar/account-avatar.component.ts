@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-account-avatar',
   templateUrl: './account-avatar.component.html',
-  standalone: true
+  standalone: true,
 })
 export class AccountAvatarComponent {
   // TODO: 實作元件邏輯

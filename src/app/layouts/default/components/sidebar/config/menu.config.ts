@@ -23,60 +23,60 @@ export const MENU_CONFIG: Record<ContextType, MenuItem[]> = {
     {
       label: '個人資料',
       route: '/account/profile',
-      icon: 'person'
+      icon: 'person',
     },
     {
       label: '帳戶設定',
       route: '/account/settings',
-      icon: 'settings'
-    }
+      icon: 'settings',
+    },
   ],
 
   [ContextType.ORGANIZATION]: [
     {
       label: '組織儀表板',
       route: '/organizations',
-      icon: 'dashboard'
+      icon: 'dashboard',
     },
     {
       label: '成員管理',
       route: '/organizations/members',
-      icon: 'group'
+      icon: 'group',
     },
     {
       label: '團隊管理',
       route: '/organizations/teams',
-      icon: 'groups'
+      icon: 'groups',
     },
     {
       label: '機器人',
       route: '/organizations/bots',
-      icon: 'smart_toy'
+      icon: 'smart_toy',
     },
     {
       label: '組織設定',
       route: '/organizations/settings',
-      icon: 'settings'
-    }
+      icon: 'settings',
+    },
   ],
 
   [ContextType.TEAM]: [
     {
       label: '團隊概覽',
       route: '/teams/:id',
-      icon: 'groups'
+      icon: 'groups',
     },
     {
       label: '成員',
       route: '/teams/:id/members',
-      icon: 'people'
+      icon: 'people',
     },
     {
       label: '倉庫',
       route: '/teams/:id/repositories',
-      icon: 'folder'
-    }
-  ]
+      icon: 'folder',
+    },
+  ],
 };
 
 /**
@@ -90,9 +90,9 @@ export function getMenuItems(contextType: ContextType, teamId?: string): MenuIte
 
   // 如果是團隊上下文，替換路由中的 :id 為實際的 teamId
   if (contextType === ContextType.TEAM && teamId) {
-    return items.map(item => ({
+    return items.map((item) => ({
       ...item,
-      route: item.route.replace(':id', teamId)
+      route: item.route.replace(':id', teamId),
     }));
   }
 
