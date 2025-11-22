@@ -189,7 +189,7 @@ GitHub Copilot 自動查找的標準位置
 
 ### Phase 1：立即採用（本 PR）
 - ✅ 創建價值提取報告
-- ⏳ 創建 `.github/copilot-instructions.md`
+- ⏳ 更新 `.github/copilot-instructions.md`（已存在，需強化）
 - ⏳ 創建 `.copilot-instructions.md`
 - ⏳ 創建 `.copilot-commit-message-instructions.md`
 - ⏳ 更新 `.vscode/settings.json`

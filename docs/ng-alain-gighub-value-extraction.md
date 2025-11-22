@@ -410,7 +410,7 @@ ng-alain-gighub 強調的**四個核心原則**：
 #### 第一階段（本 PR）
 
 1. ✅ 創建本價值提取報告
-2. 📝 在 `.github/copilot-instructions.md` 放置標準指引
+2. 📝 更新 `.github/copilot-instructions.md`（已存在，需強化）
 3. 📝 創建 `.copilot-instructions.md`
 4. 📝 創建 `.copilot-commit-message-instructions.md`
 5. 📝 更新 `.vscode/settings.json`
@@ -484,7 +484,7 @@ ng-alain-gighub 強調的**四個核心原則**：
 ### 立即行動（本 PR）
 
 - [x] 完成價值提取分析
-- [ ] 創建 `.github/copilot-instructions.md`
+- [ ] 更新 `.github/copilot-instructions.md`（已存在，需強化）
 - [ ] 創建 `.copilot-instructions.md`
 - [ ] 創建 `.copilot-commit-message-instructions.md`
 - [ ] 更新 `.vscode/settings.json`
