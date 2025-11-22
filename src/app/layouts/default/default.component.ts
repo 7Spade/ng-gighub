@@ -10,11 +10,6 @@ import { FooterComponent } from './components/footer/footer.component';
   templateUrl: './default.component.html',
   styleUrls: ['./default.component.scss'],
   standalone: true,
-  imports: [
-    RouterOutlet,
-    HeaderComponent,
-    SidebarComponent,
-    FooterComponent
-  ]
+  imports: [RouterOutlet, HeaderComponent, SidebarComponent, FooterComponent],
 })
 export class DefaultLayoutComponent {}

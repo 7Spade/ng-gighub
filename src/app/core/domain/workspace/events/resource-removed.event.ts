@@ -1,6 +1,6 @@
 /**
  * Resource Removed Event
- * 
+ *
  * 當資源被移除出工作區時觸發
  */
 export class ResourceRemovedEvent {

@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
 @Component({
   selector: 'app-error',
   template: '<div class="error">{{ message }}</div>',
-  standalone: true
+  standalone: true,
 })
 export class ErrorComponent {
   @Input() message: string = '';

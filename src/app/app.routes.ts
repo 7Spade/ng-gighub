@@ -4,9 +4,7 @@ export const routes: Routes = [
   {
     path: '',
     loadComponent: () =>
-      import('./layouts/default/default.component').then(
-        (m) => m.DefaultLayoutComponent,
-      ),
+      import('./layouts/default/default.component').then((m) => m.DefaultLayoutComponent),
     children: [
       {
         path: '',
@@ -59,23 +57,23 @@ export const routes: Routes = [
           {
             path: ':id',
             loadComponent: () =>
-              import(
-                './features/team/pages/team-detail/team-detail.component'
-              ).then((m) => m.TeamDetailComponent),
+              import('./features/team/pages/team-detail/team-detail.component').then(
+                (m) => m.TeamDetailComponent
+              ),
           },
           {
             path: ':id/members',
             loadComponent: () =>
-              import(
-                './features/team/pages/team-members/team-members.component'
-              ).then((m) => m.TeamMembersComponent),
+              import('./features/team/pages/team-members/team-members.component').then(
+                (m) => m.TeamMembersComponent
+              ),
           },
           {
             path: ':id/repositories',
             loadComponent: () =>
-              import(
-                './features/team/pages/team-repositories/team-repositories.component'
-              ).then((m) => m.TeamRepositoriesComponent),
+              import('./features/team/pages/team-repositories/team-repositories.component').then(
+                (m) => m.TeamRepositoriesComponent
+              ),
           },
         ],
       },
@@ -85,9 +83,9 @@ export const routes: Routes = [
           {
             path: '',
             loadComponent: () =>
-              import(
-                './features/repository/pages/repository-list/repository-list.component'
-              ).then((m) => m.RepositoryListComponent),
+              import('./features/repository/pages/repository-list/repository-list.component').then(
+                (m) => m.RepositoryListComponent
+              ),
           },
           {
             path: ':id',
@@ -123,23 +121,23 @@ export const routes: Routes = [
           {
             path: 'profile',
             loadComponent: () =>
-              import(
-                './features/account/pages/account-profile/account-profile.component'
-              ).then((m) => m.AccountProfileComponent),
+              import('./features/account/pages/account-profile/account-profile.component').then(
+                (m) => m.AccountProfileComponent
+              ),
           },
           {
             path: 'settings',
             loadComponent: () =>
-              import(
-                './features/account/pages/account-settings/account-settings.component'
-              ).then((m) => m.AccountSettingsComponent),
+              import('./features/account/pages/account-settings/account-settings.component').then(
+                (m) => m.AccountSettingsComponent
+              ),
           },
           {
             path: 'switcher',
             loadComponent: () =>
-              import(
-                './features/account/pages/account-switcher/account-switcher.component'
-              ).then((m) => m.AccountSwitcherComponent),
+              import('./features/account/pages/account-switcher/account-switcher.component').then(
+                (m) => m.AccountSwitcherComponent
+              ),
           },
         ],
       },

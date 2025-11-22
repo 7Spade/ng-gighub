@@ -15,7 +15,7 @@ import { ResourceRemovedEvent } from '../events/resource-removed.event';
 
 /**
  * Workspace 聚合根
- * 
+ *
  * 代表一個工作區，管理工作區的基本資訊、成員和資源
  */
 export class WorkspaceAggregate {
@@ -81,14 +81,7 @@ export class WorkspaceAggregate {
     ownerId: string,
     description?: string
   ): WorkspaceAggregate {
-    const workspace = new WorkspaceAggregate(
-      id,
-      type,
-      name,
-      slug,
-      ownerId,
-      description || null
-    );
+    const workspace = new WorkspaceAggregate(id, type, name, slug, ownerId, description || null);
 
     // 自動將擁有者加入為成員
     const ownerMember = new WorkspaceMember(
@@ -101,12 +94,7 @@ export class WorkspaceAggregate {
 
     // 發布領域事件
     workspace.addDomainEvent(
-      new WorkspaceCreatedEvent(
-        id.getValue(),
-        name,
-        type.getValue(),
-        ownerId
-      )
+      new WorkspaceCreatedEvent(id.getValue(), name, type.getValue(), ownerId)
     );
 
     return workspace;
@@ -241,9 +229,7 @@ export class WorkspaceAggregate {
 
     this.name = newName;
     this.updatedAt = new Date();
-    this.addDomainEvent(
-      new WorkspaceUpdatedEvent(this.id.getValue(), ['name'])
-    );
+    this.addDomainEvent(new WorkspaceUpdatedEvent(this.id.getValue(), ['name']));
   }
 
   /**
@@ -252,9 +238,7 @@ export class WorkspaceAggregate {
   updateDescription(description: string | null): void {
     this.description = description;
     this.updatedAt = new Date();
-    this.addDomainEvent(
-      new WorkspaceUpdatedEvent(this.id.getValue(), ['description'])
-    );
+    this.addDomainEvent(new WorkspaceUpdatedEvent(this.id.getValue(), ['description']));
   }
 
   /**
@@ -263,9 +247,7 @@ export class WorkspaceAggregate {
   updateAvatarUrl(avatarUrl: string | null): void {
     this.avatarUrl = avatarUrl;
     this.updatedAt = new Date();
-    this.addDomainEvent(
-      new WorkspaceUpdatedEvent(this.id.getValue(), ['avatarUrl'])
-    );
+    this.addDomainEvent(new WorkspaceUpdatedEvent(this.id.getValue(), ['avatarUrl']));
   }
 
   /**
@@ -274,9 +256,7 @@ export class WorkspaceAggregate {
   updateSettings(settings: Record<string, any>): void {
     this.settings = { ...this.settings, ...settings };
     this.updatedAt = new Date();
-    this.addDomainEvent(
-      new WorkspaceUpdatedEvent(this.id.getValue(), ['settings'])
-    );
+    this.addDomainEvent(new WorkspaceUpdatedEvent(this.id.getValue(), ['settings']));
   }
 
   /**
@@ -285,9 +265,7 @@ export class WorkspaceAggregate {
   updateMetadata(metadata: Record<string, any>): void {
     this.metadata = { ...this.metadata, ...metadata };
     this.updatedAt = new Date();
-    this.addDomainEvent(
-      new WorkspaceUpdatedEvent(this.id.getValue(), ['metadata'])
-    );
+    this.addDomainEvent(new WorkspaceUpdatedEvent(this.id.getValue(), ['metadata']));
   }
 
   /**
@@ -296,9 +274,7 @@ export class WorkspaceAggregate {
   deactivate(): void {
     this.isActive = false;
     this.updatedAt = new Date();
-    this.addDomainEvent(
-      new WorkspaceUpdatedEvent(this.id.getValue(), ['isActive'])
-    );
+    this.addDomainEvent(new WorkspaceUpdatedEvent(this.id.getValue(), ['isActive']));
   }
 
   /**
@@ -307,9 +283,7 @@ export class WorkspaceAggregate {
   activate(): void {
     this.isActive = true;
     this.updatedAt = new Date();
-    this.addDomainEvent(
-      new WorkspaceUpdatedEvent(this.id.getValue(), ['isActive'])
-    );
+    this.addDomainEvent(new WorkspaceUpdatedEvent(this.id.getValue(), ['isActive']));
   }
 
   /**
@@ -317,9 +291,7 @@ export class WorkspaceAggregate {
    */
   delete(): void {
     this.isActive = false;
-    this.addDomainEvent(
-      new WorkspaceDeletedEvent(this.id.getValue(), this.ownerId)
-    );
+    this.addDomainEvent(new WorkspaceDeletedEvent(this.id.getValue(), this.ownerId));
   }
 
   // ========== Member Management ==========
@@ -327,33 +299,18 @@ export class WorkspaceAggregate {
   /**
    * 新增成員
    */
-  addMember(
-    memberId: string,
-    accountId: string,
-    role: MemberRole
-  ): void {
+  addMember(memberId: string, accountId: string, role: MemberRole): void {
     // 檢查成員是否已存在
     if (this.members.has(accountId)) {
       throw new Error('Member already exists in workspace');
     }
 
-    const member = new WorkspaceMember(
-      memberId,
-      accountId,
-      role,
-      new Date()
-    );
+    const member = new WorkspaceMember(memberId, accountId, role, new Date());
 
     this.members.set(accountId, member);
     this.updatedAt = new Date();
 
-    this.addDomainEvent(
-      new MemberAddedEvent(
-        this.id.getValue(),
-        accountId,
-        role.getValue()
-      )
-    );
+    this.addDomainEvent(new MemberAddedEvent(this.id.getValue(), accountId, role.getValue()));
   }
 
   /**
@@ -373,9 +330,7 @@ export class WorkspaceAggregate {
     this.members.delete(accountId);
     this.updatedAt = new Date();
 
-    this.addDomainEvent(
-      new MemberRemovedEvent(this.id.getValue(), accountId)
-    );
+    this.addDomainEvent(new MemberRemovedEvent(this.id.getValue(), accountId));
   }
 
   /**
@@ -451,13 +406,7 @@ export class WorkspaceAggregate {
     this.resources.set(resourceId, resource);
     this.updatedAt = new Date();
 
-    this.addDomainEvent(
-      new ResourceAddedEvent(
-        this.id.getValue(),
-        resourceType,
-        targetResourceId
-      )
-    );
+    this.addDomainEvent(new ResourceAddedEvent(this.id.getValue(), resourceType, targetResourceId));
   }
 
   /**

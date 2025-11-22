@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-account-dropdown',
   templateUrl: './account-dropdown.component.html',
-  standalone: true
+  standalone: true,
 })
 export class AccountDropdownComponent {
   // TODO: 實作元件邏輯

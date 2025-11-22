@@ -2,7 +2,7 @@ import { MemberRole } from '../value-objects/member-role.vo';
 
 /**
  * Workspace Member 實體
- * 
+ *
  * 代表工作區的成員
  */
 export class WorkspaceMember {

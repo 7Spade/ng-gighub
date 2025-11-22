@@ -1,6 +1,6 @@
 /**
  * Email Service
- * 
+ *
  * 整合外部郵件服務
  */
 export class EmailService {

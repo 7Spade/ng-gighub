@@ -1,6 +1,6 @@
 /**
  * Event Bus Service
- * 
+ *
  * 管理領域事件的發布與訂閱
  */
 export class EventBusService {

@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-team-member-list',
   templateUrl: './team-member-list.component.html',
-  standalone: true
+  standalone: true,
 })
 export class TeamMemberListComponent {
   // TODO: 實作元件邏輯

@@ -1,6 +1,6 @@
 /**
  * Resource Added Event
- * 
+ *
  * 當資源被加入工作區時觸發
  */
 export class ResourceAddedEvent {

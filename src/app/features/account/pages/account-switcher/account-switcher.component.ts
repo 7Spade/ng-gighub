@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-account-switcher',
   templateUrl: './account-switcher.component.html',
-  standalone: true
+  standalone: true,
 })
 export class AccountSwitcherComponent {
   // TODO: 實作元件邏輯

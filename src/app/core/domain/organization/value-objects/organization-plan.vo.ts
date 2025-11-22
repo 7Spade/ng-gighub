@@ -1,6 +1,6 @@
 /**
  * Organization Plan 值物件
- * 
+ *
  * 組織訂閱計畫
  */
 export class OrganizationPlan {

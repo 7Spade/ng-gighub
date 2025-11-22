@@ -7,12 +7,12 @@ export interface SupabaseConfig {
  * Gets environment variable value.
  * In browser context, this checks if the variable is available via build-time injection.
  * In server context (Node.js), this reads from process.env.
- * 
+ *
  * Note: For Angular applications, environment variables typically need to be:
  * - Injected at build time (using Angular's file replacement in angular.json)
  * - Or configured through Angular environment files (src/environments/)
  * - Or passed via custom build scripts
- * 
+ *
  * The NEXT_PUBLIC_ prefix is maintained for compatibility with external tools,
  * but Angular doesn't automatically expose these to the browser.
  */
@@ -21,12 +21,12 @@ function getEnvVar(key: string, defaultValue: string = ''): string {
   if (typeof process !== 'undefined' && process.env) {
     return process.env[key] || defaultValue;
   }
-  
+
   // For browser builds in Angular, environment variables need to be:
   // 1. Injected via Angular environment files (src/environments/)
   // 2. Or configured through angular.json file replacements
   // 3. Or passed via custom build scripts
-  // 
+  //
   // Unlike Next.js, Angular doesn't automatically expose NEXT_PUBLIC_ variables.
   // For now, we return the default value in browser context and rely on
   // the fallback configuration below.
@@ -35,30 +35,30 @@ function getEnvVar(key: string, defaultValue: string = ''): string {
 
 /**
  * Supabase configuration for the project.
- * 
+ *
  * **Configuration Priority:**
  * 1. Environment variables (from .env file or system environment)
  * 2. Fallback to hardcoded defaults
- * 
+ *
  * **Environment Variables:**
  * - NEXT_PUBLIC_SUPABASE_URL or SUPABASE_URL: Your Supabase project URL
  * - NEXT_PUBLIC_SUPABASE_ANON_KEY: Your Supabase anonymous/public key
- * 
- * **IMPORTANT:** 
+ *
+ * **IMPORTANT:**
  * - The anon key is safe to use in client-side code as it has Row Level Security (RLS) restrictions.
  * - Get your keys from: Supabase Dashboard > Settings > API
  * - For production, always use environment variables instead of hardcoded values.
  * - Create a .env file based on .env.example and add your actual keys.
- * 
- * **Note:** 
+ *
+ * **Note:**
  * - The fallback URL below comes from the MCP server configuration for development purposes.
  * - In production, this will be overridden by environment variables.
  * - This hardcoded value is safe to commit as it's only used as a development fallback.
  */
 export const SUPABASE_CONFIG: SupabaseConfig = {
-  url: getEnvVar('NEXT_PUBLIC_SUPABASE_URL') || 
-       getEnvVar('SUPABASE_URL') || 
-       'https://pfxxjtvnqptdvjfakotc.supabase.co', // MCP server config fallback for dev
-  anonKey: getEnvVar('NEXT_PUBLIC_SUPABASE_ANON_KEY') || 
-           '' // Empty string fallback - services will handle this gracefully
+  url:
+    getEnvVar('NEXT_PUBLIC_SUPABASE_URL') ||
+    getEnvVar('SUPABASE_URL') ||
+    'https://pfxxjtvnqptdvjfakotc.supabase.co', // MCP server config fallback for dev
+  anonKey: getEnvVar('NEXT_PUBLIC_SUPABASE_ANON_KEY') || '', // Empty string fallback - services will handle this gracefully
 };

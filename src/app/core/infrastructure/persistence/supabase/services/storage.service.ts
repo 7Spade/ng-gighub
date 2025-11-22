@@ -3,33 +3,33 @@ import { SupabaseClientService } from '../supabase.client';
 
 /**
  * Supabase Storage Service
- * 
+ *
  * 提供 Supabase Storage 相關操作，包含檔案上傳、下載、刪除等功能。
- * 
+ *
  * **重要：** 此服務依賴 SupabaseClientService。
  * 在 SSR 環境下，所有操作將返回錯誤。
- * 
+ *
  * @example
  * ```typescript
  * const storageService = inject(SupabaseStorageService);
- * 
+ *
  * // 上傳檔案
  * const file = new File(['content'], 'example.txt');
  * const result = await storageService.uploadFile('bucket-name', 'path/file.txt', file);
- * 
+ *
  * // 取得公開 URL
  * const { data } = storageService.getPublicUrl('bucket-name', 'path/file.txt');
  * ```
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SupabaseStorageService {
   private clientService = inject(SupabaseClientService);
 
   /**
    * 上傳檔案到 Supabase Storage
-   * 
+   *
    * @param bucket - Storage bucket 名稱
    * @param path - 檔案在 bucket 中的路徑
    * @param file - 要上傳的檔案
@@ -52,7 +52,7 @@ export class SupabaseStorageService {
 
   /**
    * 從 Supabase Storage 下載檔案
-   * 
+   *
    * @param bucket - Storage bucket 名稱
    * @param path - 檔案在 bucket 中的路徑
    * @returns 下載結果，包含資料或錯誤
@@ -68,7 +68,7 @@ export class SupabaseStorageService {
 
   /**
    * 取得檔案的公開 URL
-   * 
+   *
    * @param bucket - Storage bucket 名稱
    * @param path - 檔案在 bucket 中的路徑
    * @returns 公開 URL 物件
@@ -84,7 +84,7 @@ export class SupabaseStorageService {
 
   /**
    * 為私有檔案建立簽署 URL
-   * 
+   *
    * @param bucket - Storage bucket 名稱
    * @param path - 檔案在 bucket 中的路徑
    * @param expiresIn - 過期時間（秒），預設 3600 (1 小時)
@@ -101,7 +101,7 @@ export class SupabaseStorageService {
 
   /**
    * 列出 storage bucket 中的檔案
-   * 
+   *
    * @param bucket - Storage bucket 名稱
    * @param path - 資料夾路徑（選填）
    * @param options - 列表選項 (limit, offset, sortBy 等)
@@ -122,7 +122,7 @@ export class SupabaseStorageService {
 
   /**
    * 從 Supabase Storage 刪除檔案
-   * 
+   *
    * @param bucket - Storage bucket 名稱
    * @param paths - 要刪除的檔案路徑（單一或多個）
    * @returns 刪除結果
@@ -139,7 +139,7 @@ export class SupabaseStorageService {
 
   /**
    * 移動或重新命名檔案
-   * 
+   *
    * @param bucket - Storage bucket 名稱
    * @param fromPath - 目前檔案路徑
    * @param toPath - 新檔案路徑
@@ -156,7 +156,7 @@ export class SupabaseStorageService {
 
   /**
    * 複製檔案
-   * 
+   *
    * @param bucket - Storage bucket 名稱
    * @param fromPath - 來源檔案路徑
    * @param toPath - 目標檔案路徑

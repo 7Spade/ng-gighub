@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-account-card',
   templateUrl: './account-card.component.html',
-  standalone: true
+  standalone: true,
 })
 export class AccountCardComponent {
   // TODO: 實作元件邏輯

@@ -1,6 +1,6 @@
 /**
  * Workspace Type 值物件
- * 
+ *
  * 代表工作區的類型（personal 或 organization）
  */
 export type WorkspaceTypeValue = 'personal' | 'organization';

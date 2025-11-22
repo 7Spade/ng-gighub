@@ -1,6 +1,6 @@
 /**
  * Account Query Service
- * 
+ *
  * 專門用於查詢操作，可以跨聚合根查詢
  */
 export class AccountQueryService {

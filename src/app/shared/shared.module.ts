@@ -6,6 +6,6 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   exports: [
     // TODO: 匯出共用元件
-  ]
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

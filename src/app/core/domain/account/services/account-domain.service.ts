@@ -1,6 +1,6 @@
 /**
  * Account Domain Service
- * 
+ *
  * 處理跨越多個聚合根或不屬於單一聚合根的領域邏輯
  */
 export class AccountDomainService {

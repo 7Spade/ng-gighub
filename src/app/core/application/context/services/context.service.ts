@@ -1,19 +1,14 @@
 import { Injectable, signal, computed, effect } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID, inject } from '@angular/core';
-import {
-  AppContext,
-  ContextType,
-  ContextItem,
-  ContextSwitchResult
-} from '../models/context.model';
+import { AppContext, ContextType, ContextItem, ContextSwitchResult } from '../models/context.model';
 
 /**
  * Context Service
  * 管理應用程式上下文狀態（個人、組織、團隊）
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ContextService {
   private readonly platformId = inject(PLATFORM_ID);
@@ -87,14 +82,14 @@ export class ContextService {
       type: ContextType.PERSONAL,
       userId,
       displayName,
-      avatarUrl
+      avatarUrl,
     };
 
     this._currentContext.set(context);
 
     return {
       success: true,
-      context
+      context,
     };
   }
 
@@ -110,14 +105,14 @@ export class ContextService {
       type: ContextType.ORGANIZATION,
       organizationId,
       displayName,
-      avatarUrl
+      avatarUrl,
     };
 
     this._currentContext.set(context);
 
     return {
       success: true,
-      context
+      context,
     };
   }
 
@@ -135,14 +130,14 @@ export class ContextService {
       teamId,
       organizationId,
       displayName,
-      avatarUrl
+      avatarUrl,
     };
 
     this._currentContext.set(context);
 
     return {
       success: true,
-      context
+      context,
     };
   }
 

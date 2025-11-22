@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-member-invite',
   templateUrl: './member-invite.component.html',
-  standalone: true
+  standalone: true,
 })
 export class MemberInviteComponent {
   // TODO: 實作元件邏輯

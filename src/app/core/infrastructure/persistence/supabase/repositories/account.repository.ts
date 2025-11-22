@@ -1,6 +1,6 @@
 /**
  * Account Repository 實作
- * 
+ *
  * 實作 IAccountRepository 介面，使用 Supabase 進行持久化
  */
 export class AccountRepository {

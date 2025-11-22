@@ -9,7 +9,7 @@ export enum ContextType {
   /** 組織上下文 */
   ORGANIZATION = 'organization',
   /** 團隊上下文 */
-  TEAM = 'team'
+  TEAM = 'team',
 }
 
 /** 應用程式上下文 */

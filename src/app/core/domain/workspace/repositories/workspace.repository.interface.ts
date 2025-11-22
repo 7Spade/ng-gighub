@@ -3,7 +3,7 @@ import { WorkspaceId } from '../value-objects/workspace-id.vo';
 
 /**
  * Workspace Repository Interface
- * 
+ *
  * 定義工作區持久化的介面
  */
 export interface IWorkspaceRepository {
