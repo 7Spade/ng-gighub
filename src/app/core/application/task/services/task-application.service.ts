@@ -151,32 +151,34 @@ export class TaskApplicationService {
     );
   }
 
-  private mapToTaskDto(data: any): TaskDto {
+  private mapToTaskDto(data: unknown): TaskDto {
+    const row = data as any;
     return {
-      id: data.id,
-      workspaceId: data.workspace_id,
-      title: data.title,
-      description: data.description,
-      status: data.status,
-      priority: data.priority,
-      dueDate: data.due_date,
-      assigneeId: data.assignee_id,
-      createdBy: data.created_by,
-      metadata: data.metadata as Record<string, unknown>,
-      createdAt: data.created_at,
-      updatedAt: data.updated_at,
+      id: row.id,
+      workspaceId: row.workspace_id,
+      title: row.title,
+      description: row.description,
+      status: row.status,
+      priority: row.priority,
+      dueDate: row.due_date,
+      assigneeId: row.assignee_id,
+      createdBy: row.created_by,
+      metadata: row.metadata as Record<string, unknown>,
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
     };
   }
 
-  private mapToTaskCommentDto(data: any): TaskCommentDto {
+  private mapToTaskCommentDto(data: unknown): TaskCommentDto {
+    const row = data as any;
     return {
-      id: data.id,
-      taskId: data.task_id,
-      authorId: data.author_id,
-      content: data.content,
-      metadata: data.metadata as Record<string, unknown>,
-      createdAt: data.created_at,
-      updatedAt: data.updated_at,
+      id: row.id,
+      taskId: row.task_id,
+      authorId: row.author_id,
+      content: row.content,
+      metadata: row.metadata as Record<string, unknown>,
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
     };
   }
 }

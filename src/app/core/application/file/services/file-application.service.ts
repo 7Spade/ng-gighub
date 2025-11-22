@@ -130,19 +130,20 @@ export class FileApplicationService {
     return data.publicUrl;
   }
 
-  private mapToFileDto(data: any): FileDto {
+  private mapToFileDto(data: unknown): FileDto {
+    const row = data as any;
     return {
-      id: data.id,
-      workspaceId: data.workspace_id,
-      name: data.name,
-      path: data.path,
-      size: data.size,
-      mimeType: data.mime_type,
-      storagePath: data.storage_path,
-      uploadedBy: data.uploaded_by,
-      metadata: data.metadata as Record<string, unknown>,
-      createdAt: data.created_at,
-      updatedAt: data.updated_at,
+      id: row.id,
+      workspaceId: row.workspace_id,
+      name: row.name,
+      path: row.path,
+      size: row.size,
+      mimeType: row.mime_type,
+      storagePath: row.storage_path,
+      uploadedBy: row.uploaded_by,
+      metadata: row.metadata as Record<string, unknown>,
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
     };
   }
 }

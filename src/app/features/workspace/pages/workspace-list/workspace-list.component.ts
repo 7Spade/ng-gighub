@@ -51,8 +51,4 @@ export class WorkspaceListComponent implements OnInit {
     this.router.navigate(['/workspaces', workspaceId]);
   }
 
-  createWorkspace(): void {
-    // TODO: 導航到建立工作區頁面
-    console.log('Create workspace');
-  }
 }

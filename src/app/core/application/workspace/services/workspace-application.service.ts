@@ -34,8 +34,7 @@ export class WorkspaceApplicationService {
           `
           *,
           workspace_members!inner(
-            role,
-            account_id
+            role
           )
         `
         )
@@ -181,33 +180,35 @@ export class WorkspaceApplicationService {
   /**
    * Map database row to WorkspaceDto
    */
-  private mapToWorkspaceDto(data: any): WorkspaceDto {
+  private mapToWorkspaceDto(data: unknown): WorkspaceDto {
+    const row = data as any;
     return {
-      id: data.id,
-      type: data.type,
-      name: data.name,
-      slug: data.slug,
-      description: data.description,
-      ownerId: data.owner_id,
-      avatarUrl: data.avatar_url,
-      settings: data.settings as Record<string, unknown>,
-      metadata: data.metadata as Record<string, unknown>,
-      isActive: data.is_active,
-      createdAt: data.created_at,
-      updatedAt: data.updated_at,
+      id: row.id,
+      type: row.type,
+      name: row.name,
+      slug: row.slug,
+      description: row.description,
+      ownerId: row.owner_id,
+      avatarUrl: row.avatar_url,
+      settings: row.settings as Record<string, unknown>,
+      metadata: row.metadata as Record<string, unknown>,
+      isActive: row.is_active,
+      createdAt: row.created_at,
+      updatedAt: row.updated_at,
     };
   }
 
   /**
    * Map database row with member info to WorkspaceWithMemberDto
    */
-  private mapToWorkspaceWithMemberDto(data: any): WorkspaceWithMemberDto {
+  private mapToWorkspaceWithMemberDto(data: unknown): WorkspaceWithMemberDto {
     const workspace = this.mapToWorkspaceDto(data);
-    const members = data.workspace_members || [];
+    const members = (data as any).workspace_members || [];
+    // Note: The query only returns the current user's membership, so we can't get total member count
+    // For full member count, use listWorkspaceMembers() separately
     return {
       ...workspace,
       memberRole: members[0]?.role,
-      memberCount: members.length,
     };
   }
 }
