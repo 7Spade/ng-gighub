@@ -74,6 +74,93 @@ ng-gighub 採用 **RBAC (Role-Based Access Control)** 與 **ABAC (Attribute-Base
 - **RBAC**: 基於角色的粗粒度權限控制
 - **ABAC**: 基於屬性的細粒度權限控制
 
+#### RBAC (Role-Based Access Control)
+
+**概念：** 根據使用者的角色授予權限
+
+**範例：**
+```
+User → Role (admin) → Permissions (user:manage, repository:admin)
+```
+
+**優點：**
+- 簡單易懂
+- 易於管理大量使用者
+- 適合組織層級的權限控制
+
+**缺點：**
+- 缺乏靈活性
+- 難以處理複雜的業務規則
+- 角色爆炸問題（Role Explosion）
+
+#### ABAC (Attribute-Based Access Control)
+
+**概念：** 根據主體（Subject）、資源（Resource）、動作（Action）、環境（Environment）的屬性組合來決定授權
+
+**決策模型：**
+```
+Can Subject perform Action on Resource in Environment?
+
+Where:
+- Subject attributes: user_id, role, department, clearance_level
+- Resource attributes: owner_id, sensitivity, classification
+- Action attributes: read, write, delete
+- Environment attributes: time, location, IP address, device
+```
+
+**範例規則：**
+```json
+{
+  "rule_id": "allow_manager_edit_own_dept_docs",
+  "effect": "allow",
+  "conditions": {
+    "subject": {
+      "role": "manager",
+      "department": "$resource.department"
+    },
+    "resource": {
+      "type": "document",
+      "classification": ["internal", "public"]
+    },
+    "action": ["read", "write"],
+    "environment": {
+      "time": {
+        "between": ["09:00", "18:00"]
+      }
+    }
+  }
+}
+```
+
+**優點：**
+- 高度靈活
+- 支援複雜的業務規則
+- 動態權限評估
+- 細粒度控制
+
+**缺點：**
+- 實作複雜
+- 效能開銷較大
+- 規則管理較困難
+
+#### ng-gighub 的混合實作策略
+
+```mermaid
+graph TB
+    Request[權限請求] --> RBAC{RBAC 檢查}
+    RBAC -->|角色允許| ABAC{ABAC 檢查}
+    RBAC -->|角色拒絕| Deny[拒絕存取]
+    ABAC -->|屬性符合| Allow[允許存取]
+    ABAC -->|屬性不符| Deny
+```
+
+**策略：**
+1. **第一層：RBAC** - 快速過濾明顯無權限的請求
+2. **第二層：ABAC** - 對通過 RBAC 的請求進行細粒度檢查
+3. **快取結果** - 對相同條件的請求快取決策結果
+
+詳細的 ABAC 實作請參考本文件後續的 [ABAC 實作](#abac-實作) 章節。
+
 ### 權限結構
 
 ```mermaid
