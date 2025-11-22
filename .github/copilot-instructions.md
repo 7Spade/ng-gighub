@@ -19,9 +19,21 @@ Index to detailed guidance (in this repo)
 - Security & sensitive data: ./copilot-instructions/security-guidelines.md
 - Prompt / example responses: ./copilot-instructions/examples/prompt-examples.md
 
+Pull request process
+- Use PR templates: ./pull_request_template.md (default) or ./pull_request_template/ for specific types
+- Template types: feature.md, bugfix.md, security.md, default.md
+- All PRs must reference this file and follow core rules above
+- See ./pull_request_template/README.md for template selection guide
+
 How agents should use this file
 - Treat the "Core rules" above as authoritative constraints.
 - When generating code or PR text, include: purpose, changes summary, test steps, rollback plan, and risk level.
 - If uncertain, list options and ask for confirmation before making breaking changes.
+- Reference appropriate PR template based on change type.
 
-If you want me to move/normalize files (e.g., ensure this file is at .github root or unify PR template placement), tell me the target branch (e.g., main) and I can prepare a PR.
+Directory structure
+- Agents: ./agents/*.agent.md (Copilot agent definitions)
+- Actions: ./actions/ (custom GitHub Actions)
+- Workflows: ./workflows/ (CI/CD pipelines)
+- Issue templates: ./ISSUE_TEMPLATE/
+- Full structure guide: ./README.md
