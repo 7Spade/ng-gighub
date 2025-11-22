@@ -17,20 +17,9 @@ export { SupabaseStorageService } from './services/storage.service';
 export { SupabaseAuthService } from './services/auth.service';
 export { SupabaseRealtimeService } from './services/realtime.service';
 
-// Schemas
-export * from './schemas/account.schema';
-export * from './schemas/organization.schema';
-export * from './schemas/repository.schema';
-export * from './schemas/team.schema';
-
-// Mappers
-export * from './mappers/account.mapper';
-export * from './mappers/organization.mapper';
-export * from './mappers/repository.mapper';
-export * from './mappers/team.mapper';
-
-// Repositories
-export * from './repositories/account.repository';
-export * from './repositories/organization.repository';
-export * from './repositories/repository.repository';
-export * from './repositories/team.repository';
+// Note: Schemas, Mappers, and Repositories are placeholder stubs.
+// They will be properly implemented and exported when needed.
+// For now, they can be imported directly from their respective directories:
+// - import { AccountSchema } from './schemas/account.schema';
+// - import { AccountMapper } from './mappers/account.mapper';
+// - import { AccountRepository } from './repositories/account.repository';

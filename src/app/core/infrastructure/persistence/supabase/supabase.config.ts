@@ -57,5 +57,5 @@ export const SUPABASE_CONFIG: SupabaseConfig = {
        getEnvVar('SUPABASE_URL') || 
        'https://pfxxjtvnqptdvjfakotc.supabase.co',
   anonKey: getEnvVar('NEXT_PUBLIC_SUPABASE_ANON_KEY') || 
-           'YOUR_SUPABASE_ANON_KEY' // Replace with your actual anon key or set in .env
+           '' // Empty string fallback - services will handle this gracefully
 };
