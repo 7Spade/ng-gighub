@@ -99,7 +99,7 @@ ng-gighub is a modern web application based on Angular 20.1 with Server-Side Ren
 **檔案位置 / File Locations:**
 - `src/app/services/supabase.service.ts` - 服務類別
 - `src/app/config/supabase.config.ts` - 配置檔案
-- `SUPABASE_SETUP.md` - 使用文檔
+- `docs/setup/supabase.md` - 使用文檔
 
 **實施內容 / Implementation:**
 
@@ -254,7 +254,13 @@ ng-gighub/
 │   ├── main.ts                      # 客戶端入口
 │   ├── server.ts                    # Express 伺服器
 │   └── styles.scss                  # 全域樣式
-├── SUPABASE_SETUP.md               # Supabase 設置指南
+├── docs/                            # 專案文件
+│   ├── setup/                       # 設定指南
+│   │   ├── environment.md           # 環境設定
+│   │   └── supabase.md              # Supabase 設定
+│   ├── architecture/                # 架構文件
+│   └── standards/                   # 開發標準
+├── CONTRIBUTING.md                  # 貢獻指南
 ├── angular.json                     # Angular 配置
 ├── package.json                     # 套件依賴
 └── tsconfig.json                    # TypeScript 配置
@@ -322,7 +328,7 @@ export const SUPABASE_CONFIG: SupabaseConfig = {
 
 ### 3. 使用範例 / Usage Examples
 
-詳細使用範例請參閱 `SUPABASE_SETUP.md` 文檔。
+詳細使用範例請參閱 `docs/setup/supabase.md` 文檔。
 
 ---
 
@@ -391,7 +397,8 @@ export const SUPABASE_CONFIG: SupabaseConfig = {
 - [Angular CLI 參考](https://angular.dev/tools/cli)
 - [TypeScript 手冊](https://www.typescriptlang.org/docs/)
 - [Supabase 文檔](https://supabase.com/docs)
-- [SUPABASE_SETUP.md](../SUPABASE_SETUP.md) - Supabase 詳細設置指南
+- [Supabase 設置指南](setup/supabase.md) - Supabase 詳細設置指南
+- [環境設定指南](setup/environment.md) - 環境變數設定
 - [.github/copilot-instructions.md](../.github/copilot-instructions.md) - Copilot 開發指引
 
 ---

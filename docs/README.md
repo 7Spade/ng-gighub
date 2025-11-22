@@ -4,6 +4,12 @@ Welcome to the ng-gighub documentation! This documentation is specifically desig
 
 ## 📚 Documentation Structure
 
+### 📋 [setup/](./setup/)
+Environment setup and configuration guides.
+
+- **[environment.md](./setup/environment.md)** - Environment variables configuration
+- **[supabase.md](./setup/supabase.md)** - Supabase database and storage setup
+
 ### 📋 [workspace/](./workspace/)
 Working documents and active development artifacts. Use this area for day-to-day development work.
 
@@ -25,12 +31,17 @@ Historical documents and deprecated content. Reference only, not for active use.
 System design documentation with diagrams and specifications.
 
 - **[system-overview.md](./architecture/system-overview.md)** - High-level system architecture
+- **[DOMAIN_MODEL.md](./architecture/DOMAIN_MODEL.md)** - Domain model design
+- **[FOLDER_STRUCTURE.md](./architecture/FOLDER_STRUCTURE.md)** - Complete folder structure
 - **[diagrams/](./architecture/diagrams/)** - Architecture diagrams (Mermaid format)
   - `erd.md` - Entity Relationship Diagram
   - `flowchart.md` - Application flow diagrams
 - **[api-specs/](./architecture/api-specs/)** - API specifications (OpenAPI)
   - `v1.json` - Version 1 API specification
   - `v2.json` - Version 2 API specification
+
+### 📚 [guides/](./guides/)
+How-to guides and tutorials (for future use).
 
 ### 📏 [standards/](./standards/)
 Coding standards, workflows, and team guidelines.
@@ -49,16 +60,19 @@ AI agent prompt templates for common development tasks.
 ## 🚀 Quick Start
 
 ### For Developers
-1. Read the [system-overview.md](./architecture/system-overview.md) to understand the architecture
-2. Review [code-style.md](./standards/code-style.md) before writing code
-3. Follow [git-workflow.md](./standards/git-workflow.md) for commits and PRs
-4. Check [review-guidelines.md](./standards/review-guidelines.md) before code reviews
+1. Read the [系統概覽](./architecture/system-overview.md) to understand the architecture
+2. Review [程式碼風格](./standards/code-style.md) before writing code
+3. Follow [Git 工作流程](./standards/git-workflow.md) for commits and PRs
+4. Check [審查準則](./standards/review-guidelines.md) before code reviews
+5. Configure your [開發環境](./setup/environment.md)
+6. Set up [Supabase](./setup/supabase.md) for backend services
 
 ### For AI Agents
 1. Use [prompts/](./prompts/) templates for structured tasks
 2. Reference [architecture/](./architecture/) for system context
 3. Follow [standards/](./standards/) for consistency
 4. Update [workspace/](./workspace/) with progress
+5. Consult [DOCUMENTATION_STANDARDS.md](./DOCUMENTATION_STANDARDS.md) for documentation guidelines
 
 ## 📖 Document Types
 
@@ -135,7 +149,11 @@ flowchart LR
 
 | Topic | Location | Files |
 |-------|----------|-------|
+| Environment Setup | `setup/` | `environment.md` |
+| Supabase Setup | `setup/` | `supabase.md` |
 | System Architecture | `architecture/` | `system-overview.md` |
+| Domain Model | `architecture/` | `DOMAIN_MODEL.md` |
+| Folder Structure | `architecture/` | `FOLDER_STRUCTURE.md` |
 | Database Schema | `architecture/diagrams/` | `erd.md` |
 | API Endpoints | `architecture/api-specs/` | `v1.json`, `v2.json` |
 | Application Flows | `architecture/diagrams/` | `flowchart.md` |
@@ -145,6 +163,7 @@ flowchart LR
 | Current Tasks | `workspace/todos/` | `sprint-2025-11.yaml` |
 | Design Decisions | `workspace/notes/` | `*.md` |
 | Meeting Records | `workspace/meeting-minutes/` | `*.md` |
+| Documentation Standards | `.` | `DOCUMENTATION_STANDARDS.md` |
 
 ### By Role
 

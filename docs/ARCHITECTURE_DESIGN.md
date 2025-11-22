@@ -1215,8 +1215,8 @@ describe('Username ValueObject', () => {
 - **系統概覽**: `docs/architecture/system-overview.md`
 - **API 規格**: `docs/architecture/api-specs/`
 - **資料庫 Schema**: `docs/architecture/DATABASE_SCHEMA.md`
-- **Supabase 設定**: `SUPABASE_SETUP.md`
-- **環境設定**: `ENV_SETUP.md`
+- **Supabase 設定**: `setup/supabase.md`
+- **環境設定**: `setup/environment.md`
 
 ### C. 參考資料
 

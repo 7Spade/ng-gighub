@@ -17,8 +17,16 @@ ng-gighub/
 ├── package.json                # NPM 依賴與腳本
 ├── tsconfig.json               # TypeScript 配置
 ├── README.md                   # 專案說明
-├── ENV_SETUP.md                # 環境設定指南
-└── SUPABASE_SETUP.md           # Supabase 設定指南
+├── docs/                        # 專案文件目錄
+│   ├── setup/                  # 設定指南
+│   │   ├── environment.md      # 環境設定指南
+│   │   └── supabase.md         # Supabase 設定指南
+│   ├── architecture/           # 架構文件
+│   ├── standards/              # 開發標準
+│   ├── prompts/                # AI 提示範本
+│   └── workspace/              # 工作區文件
+├── CONTRIBUTING.md             # 貢獻指南
+└── README.md                   # 專案說明
 ```
 
 ## src/ 目錄結構
