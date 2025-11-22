@@ -1,12 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  of,
-  throwError,
-  timer,
-} from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError, timer } from 'rxjs';
 import {
   catchError,
   delay,
@@ -54,9 +48,7 @@ export class CopilotAgentService {
   /**
    * Circuit breaker state
    */
-  private readonly circuitState$ = new BehaviorSubject<CircuitState>(
-    CircuitState.CLOSED
-  );
+  private readonly circuitState$ = new BehaviorSubject<CircuitState>(CircuitState.CLOSED);
 
   /**
    * Consecutive failure counter
@@ -82,20 +74,14 @@ export class CopilotAgentService {
    * @param params - Optional query parameters
    * @returns Observable of type T
    */
-  public fetch<T>(
-    path: string,
-    params?: Record<string, string>
-  ): Observable<T> {
+  public fetch<T>(path: string, params?: Record<string, string>): Observable<T> {
     // Build request key for deduplication
     const requestKey = this.buildRequestKey(path, params);
 
     // Check circuit breaker state
     if (this.circuitState$.value === CircuitState.OPEN) {
       return throwError(
-        () =>
-          new Error(
-            'Circuit breaker is OPEN - request rejected without attempting'
-          )
+        () => new Error('Circuit breaker is OPEN - request rejected without attempting')
       );
     }
 
@@ -126,10 +112,7 @@ export class CopilotAgentService {
               `[CopilotAgentService] Retrying request (${retryCount + 1}/${MAX_RETRIES}):`,
               {
                 url,
-                error:
-                  error instanceof HttpErrorResponse
-                    ? error.status
-                    : 'Network error',
+                error: error instanceof HttpErrorResponse ? error.status : 'Network error',
                 delay: backoffDelay,
               }
             );
@@ -164,10 +147,7 @@ export class CopilotAgentService {
   /**
    * Build request key for deduplication
    */
-  private buildRequestKey(
-    path: string,
-    params?: Record<string, string>
-  ): string {
+  private buildRequestKey(path: string, params?: Record<string, string>): string {
     const paramString = params
       ? Object.entries(params)
           .sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
@@ -187,10 +167,7 @@ export class CopilotAgentService {
     }
 
     const queryString = Object.entries(params)
-      .map(
-        ([key, value]) =>
-          `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
-      )
+      .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
       .join('&');
 
     return `${path}?${queryString}`;
@@ -235,9 +212,7 @@ export class CopilotAgentService {
 
     // If circuit was HALF_OPEN, transition to CLOSED
     if (this.circuitState$.value === CircuitState.HALF_OPEN) {
-      console.info(
-        '[CopilotAgentService] Circuit breaker transitioning: HALF_OPEN → CLOSED'
-      );
+      console.info('[CopilotAgentService] Circuit breaker transitioning: HALF_OPEN → CLOSED');
       this.circuitState$.next(CircuitState.CLOSED);
     }
   }
@@ -286,9 +261,7 @@ export class CopilotAgentService {
    * Transition circuit to HALF_OPEN state after cooldown
    */
   private halfOpenCircuit(): void {
-    console.info(
-      '[CopilotAgentService] Circuit breaker transitioning: OPEN → HALF_OPEN'
-    );
+    console.info('[CopilotAgentService] Circuit breaker transitioning: OPEN → HALF_OPEN');
 
     this.circuitState$.next(CircuitState.HALF_OPEN);
     this.consecutiveFailures = 0;
