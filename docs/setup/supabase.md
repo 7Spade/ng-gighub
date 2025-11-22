@@ -9,7 +9,7 @@ To configure Supabase for this project:
    cp .env.example .env
    ```
 
-2. Go to your Supabase project dashboard at https://pfxxjtvnqptdvjfakotc.supabase.co
+2. Go to your Supabase project dashboard at https://your-project-id.supabase.co
 
 3. Navigate to Settings > API
 
@@ -25,7 +25,7 @@ To configure Supabase for this project:
 ## Alternative: Manual Configuration
 
 If you prefer not to use environment variables, you can update the values directly in `src/app/config/supabase.config.ts`:
-   - Replace `YOUR_SUPABASE_ANON_KEY` with your actual anon key
+   - Replace `YOUR_SUPABASE_ANON_KEY` with your actual anon key from `NEXT_PUBLIC_SUPABASE_ANON_KEY` environment variable
 
 **Note:** Environment variables take priority over hardcoded values in the config file.
 
