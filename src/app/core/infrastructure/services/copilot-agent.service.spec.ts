@@ -1,14 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  HttpTestingController,
-  provideHttpClientTesting,
-} from '@angular/common/http/testing';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideZoneChangeDetection } from '@angular/core';
-import {
-  CopilotAgentService,
-  CircuitState,
-} from './copilot-agent.service';
+import { CopilotAgentService, CircuitState } from './copilot-agent.service';
 
 describe('CopilotAgentService', () => {
   let service: CopilotAgentService;
@@ -63,9 +57,7 @@ describe('CopilotAgentService', () => {
         error: () => fail('Should not error'),
       });
 
-      const req = httpMock.expectOne(
-        '/api/test?foo=bar&baz=qux'
-      );
+      const req = httpMock.expectOne('/api/test?foo=bar&baz=qux');
       expect(req.request.method).toBe('GET');
       req.flush(testData);
     });
@@ -119,7 +111,7 @@ describe('CopilotAgentService', () => {
           attempts++;
           req.flush('Server Error', { status: 500, statusText: 'Server Error' });
         }
-        
+
         if (attempts >= 4) {
           clearInterval(interval);
         }
@@ -165,7 +157,7 @@ describe('CopilotAgentService', () => {
         if (pending.length > 0) {
           attempts++;
           const req = httpMock.expectOne(testPath);
-          
+
           if (attempts === 1) {
             req.flush('Error', { status: 500, statusText: 'Server Error' });
           } else {
@@ -237,7 +229,7 @@ describe('CopilotAgentService', () => {
           const req = httpMock.expectOne(testPath);
           requestCount++;
           req.flush('Error', { status: 500, statusText: 'Server Error' });
-          
+
           // Stop after 4 attempts (1 initial + 3 retries)
           if (requestCount >= 4) {
             clearInterval(interval);
