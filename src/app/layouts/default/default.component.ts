@@ -8,6 +8,7 @@ import { FooterComponent } from './components/footer/footer.component';
 @Component({
   selector: 'app-default-layout',
   templateUrl: './default.component.html',
+  styleUrls: ['./default.component.scss'],
   standalone: true,
   imports: [
     RouterOutlet,

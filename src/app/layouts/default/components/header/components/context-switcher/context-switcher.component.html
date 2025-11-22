@@ -1,0 +1,95 @@
+<div class="context-switcher">
+  <button
+    mat-button
+    [matMenuTriggerFor]="contextMenu"
+    class="context-trigger"
+  >
+    <div class="context-avatar">
+      @if (currentContext()?.avatarUrl) {
+        <img [src]="currentContext()!.avatarUrl" [alt]="currentContext()!.displayName" />
+      } @else {
+        <mat-icon>account_circle</mat-icon>
+      }
+    </div>
+    <div class="context-info">
+      <span class="context-name">{{ currentContext()?.displayName || '未選擇' }}</span>
+      <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
+    </div>
+  </button>
+
+  <mat-menu #contextMenu="matMenu" class="context-menu">
+    <!-- 個人上下文 -->
+    @if (personalContexts().length > 0) {
+      <div class="menu-section">
+        <div class="menu-section-title">個人</div>
+        @for (item of personalContexts(); track item.id) {
+          <button
+            mat-menu-item
+            (click)="switchContext(item)"
+            [class.active]="isCurrentContext(item)"
+          >
+            <mat-icon>person</mat-icon>
+            <span>{{ item.displayName }}</span>
+            @if (isCurrentContext(item)) {
+              <mat-icon class="check-icon">check</mat-icon>
+            }
+          </button>
+        }
+      </div>
+    }
+
+    <!-- 組織上下文 -->
+    @if (organizationContexts().length > 0) {
+      <div class="menu-section">
+        <div class="menu-section-title">組織</div>
+        @for (item of organizationContexts(); track item.id) {
+          <button
+            mat-menu-item
+            (click)="switchContext(item)"
+            [class.active]="isCurrentContext(item)"
+          >
+            <mat-icon>business</mat-icon>
+            <span>{{ item.displayName }}</span>
+            @if (isCurrentContext(item)) {
+              <mat-icon class="check-icon">check</mat-icon>
+            }
+          </button>
+        }
+      </div>
+    }
+
+    <!-- 團隊上下文 -->
+    @if (teamContexts().length > 0) {
+      <div class="menu-section">
+        <div class="menu-section-title">團隊</div>
+        @for (item of teamContexts(); track item.id) {
+          <button
+            mat-menu-item
+            (click)="switchContext(item)"
+            [class.active]="isCurrentContext(item)"
+          >
+            <mat-icon>groups</mat-icon>
+            <span>{{ item.displayName }}</span>
+            @if (isCurrentContext(item)) {
+              <mat-icon class="check-icon">check</mat-icon>
+            }
+          </button>
+        }
+      </div>
+    }
+
+    <mat-divider></mat-divider>
+
+    <!-- 管理選項 -->
+    <div class="menu-section">
+      <button mat-menu-item (click)="manageOrganizations()">
+        <mat-icon>settings</mat-icon>
+        <span>管理組織</span>
+      </button>
+      <button mat-menu-item (click)="createOrganization()">
+        <mat-icon>add</mat-icon>
+        <span>建立組織</span>
+      </button>
+    </div>
+  </mat-menu>
+</div>

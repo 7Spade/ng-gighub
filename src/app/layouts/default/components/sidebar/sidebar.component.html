@@ -1,3 +1,30 @@
 <aside class="sidebar">
-  <!-- TODO: 實作 sidebar -->
+  <div class="sidebar-header">
+    <h3 class="context-name">{{ contextDisplayName() }}</h3>
+  </div>
+
+  <nav class="sidebar-nav">
+    @if (menuItems().length > 0) {
+      <ul class="menu-list">
+        @for (item of menuItems(); track item.route) {
+          <li class="menu-item">
+            <a
+              [routerLink]="item.route"
+              routerLinkActive="active"
+              class="menu-link"
+            >
+              @if (item.icon) {
+                <span class="menu-icon">{{ item.icon }}</span>
+              }
+              <span class="menu-label">{{ item.label }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="no-menu">
+        <p>請選擇上下文以顯示選單</p>
+      </div>
+    }
+  </nav>
 </aside>
