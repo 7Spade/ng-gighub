@@ -13,17 +13,17 @@ supabase/
 │   ├── storage.service.ts  # 檔案儲存服務
 │   ├── auth.service.ts     # 認證服務（預留）
 │   └── realtime.service.ts # 即時通訊服務（預留）
-├── repositories/           # DDD Repository 實作
+├── repositories/           # DDD Repository 實作（目前為 TODO 佔位檔，待實作）
 │   ├── account.repository.ts
 │   ├── organization.repository.ts
 │   ├── repository.repository.ts
 │   └── team.repository.ts
-├── mappers/                # 資料轉換器（Supabase Row ↔ Domain Entity）
+├── mappers/                # 資料轉換器（目前為 TODO 佔位檔，待實作）
 │   ├── account.mapper.ts
 │   ├── organization.mapper.ts
 │   ├── repository.mapper.ts
 │   └── team.mapper.ts
-├── schemas/                # Supabase 資料表型別定義
+├── schemas/                # Supabase 資料表型別定義（目前為 TODO 佔位檔，待實作）
 │   ├── account.schema.ts
 │   ├── organization.schema.ts
 │   ├── repository.schema.ts

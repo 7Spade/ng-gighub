@@ -14,6 +14,7 @@ export { SupabaseClientService } from './supabase.client';
 
 // Services
 export { SupabaseStorageService } from './services/storage.service';
+// Note: Auth and Realtime services are placeholder stubs - do not use yet
 export { SupabaseAuthService } from './services/auth.service';
 export { SupabaseRealtimeService } from './services/realtime.service';
 

@@ -50,12 +50,15 @@ function getEnvVar(key: string, defaultValue: string = ''): string {
  * - For production, always use environment variables instead of hardcoded values.
  * - Create a .env file based on .env.example and add your actual keys.
  * 
- * **Note:** The fallback URL below is from the MCP configuration.
+ * **Note:** 
+ * - The fallback URL below comes from the MCP server configuration for development purposes.
+ * - In production, this will be overridden by environment variables.
+ * - This hardcoded value is safe to commit as it's only used as a development fallback.
  */
 export const SUPABASE_CONFIG: SupabaseConfig = {
   url: getEnvVar('NEXT_PUBLIC_SUPABASE_URL') || 
        getEnvVar('SUPABASE_URL') || 
-       'https://pfxxjtvnqptdvjfakotc.supabase.co',
+       'https://pfxxjtvnqptdvjfakotc.supabase.co', // MCP server config fallback for dev
   anonKey: getEnvVar('NEXT_PUBLIC_SUPABASE_ANON_KEY') || 
            '' // Empty string fallback - services will handle this gracefully
 };
