@@ -2,7 +2,7 @@
 
 ## 概述
 
-本文檔補充 [ARCHITECTURE.md](./src/app/ARCHITECTURE.md) 中的依賴規則，詳細說明模組間的依賴關係、禁止事項和檢查方法。
+本文檔補充 [系統架構概覽](../architecture/system-overview.md) 中的依賴規則，詳細說明模組間的依賴關係、禁止事項和檢查方法。
 
 ---
 

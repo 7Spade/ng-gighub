@@ -13,8 +13,8 @@ Environment setup and configuration guides.
 ### 📋 [workspace/](./workspace/)
 Working documents and active development artifacts. Use this area for day-to-day development work.
 
-- **[todos/](./workspace/todos/)** - Sprint tasks and TODO lists
-  - `sprint-2025-11.yaml` - Current sprint task tracking
+- **[todos/](./workspace/todos/)** - Development roadmap and task tracking
+  - `development-roadmap.md` - Project development roadmap and milestones
 - **[notes/](./workspace/notes/)** - Development notes and decisions
   - `component-x.md` - Component development notes and design decisions
 - **[meeting-minutes/](./workspace/meeting-minutes/)** - Meeting records
@@ -41,12 +41,18 @@ System design documentation with diagrams and specifications.
   - `v2.json` - Version 2 API specification
 
 ### 📚 [guides/](./guides/)
-How-to guides and tutorials (for future use).
+How-to guides and tutorials.
+
+- **[implementation-guide.md](./guides/implementation-guide.md)** - Implementation guide and best practices
 
 ### 📏 [standards/](./standards/)
 Coding standards, workflows, and team guidelines.
 
 - **[code-style.md](./standards/code-style.md)** - Code style guide and best practices
+- **[coding-standards.md](./standards/coding-standards.md)** - Overall coding standards
+- **[naming-conventions.md](./standards/naming-conventions.md)** - Naming rules and conventions
+- **[dependency-rules.md](./standards/dependency-rules.md)** - Dependency direction rules
+- **[testing-standards.md](./standards/testing-standards.md)** - Testing standards and strategy
 - **[git-workflow.md](./standards/git-workflow.md)** - Git branching strategy and commit conventions
 - **[review-guidelines.md](./standards/review-guidelines.md)** - Code review process and checklist
 
@@ -158,9 +164,13 @@ flowchart LR
 | API Endpoints | `architecture/api-specs/` | `v1.json`, `v2.json` |
 | Application Flows | `architecture/diagrams/` | `flowchart.md` |
 | Code Style | `standards/` | `code-style.md` |
+| Coding Standards | `standards/` | `coding-standards.md` |
+| Naming Conventions | `standards/` | `naming-conventions.md` |
+| Dependency Rules | `standards/` | `dependency-rules.md` |
+| Testing Standards | `standards/` | `testing-standards.md` |
 | Git Process | `standards/` | `git-workflow.md` |
 | Code Reviews | `standards/` | `review-guidelines.md` |
-| Current Tasks | `workspace/todos/` | `sprint-2025-11.yaml` |
+| Development Roadmap | `workspace/todos/` | `development-roadmap.md` |
 | Design Decisions | `workspace/notes/` | `*.md` |
 | Meeting Records | `workspace/meeting-minutes/` | `*.md` |
 | Documentation Standards | `.` | `DOCUMENTATION_STANDARDS.md` |

@@ -1,176 +1,267 @@
-# Code Style Guide
+# 代碼風格指南 (Code Style Guide)
 
-## Overview
-This document defines the coding standards and style guidelines for the ng-gighub project to ensure consistency and maintainability across the codebase.
+## 概述
 
-## General Principles
+本文檔定義 ng-gighub 專案的代碼風格規範。這些規範通過 ESLint 和 Prettier 自動化執行。
 
-### Core Values
-1. **Consistency**: Follow established patterns and conventions
-2. **Readability**: Write code that is easy to understand
-3. **Maintainability**: Make code easy to modify and extend
-4. **Simplicity**: Prefer simple solutions over complex ones
-5. **Performance**: Write efficient code without premature optimization
+---
 
-## TypeScript/JavaScript Standards
+## 目錄
 
-### Naming Conventions
+1. [TypeScript 風格](#typescript-風格)
+2. [Angular 風格](#angular-風格)
+3. [HTML 模板風格](#html-模板風格)
+4. [SCSS 風格](#scss-風格)
+5. [註解和文檔](#註解和文檔)
+6. [最佳實踐](#最佳實踐)
 
-#### Variables and Functions
+---
+
+## TypeScript 風格
+
+### 基本格式
+
 ```typescript
-// Use camelCase for variables and functions
-const userName = 'John';
-const calculateTotal = (items: Item[]): number => { };
+// ✅ 正確
+const userName = 'John Doe';
+const age = 30;
 
-// Use descriptive names
-// Bad
-const d = new Date();
-const calc = (a, b) => a + b;
+// 使用 const，除非需要重新賦值
+const config = { timeout: 5000 };
 
-// Good
-const currentDate = new Date();
-const calculateSum = (firstNumber, secondNumber) => firstNumber + secondNumber;
+// 需要重新賦值時使用 let
+let counter = 0;
+counter++;
+
+// ❌ 錯誤 - 禁止使用 var
+var oldStyle = 'bad';
 ```
 
-#### Classes and Interfaces
-```typescript
-// Use PascalCase for classes and interfaces
-class UserService { }
-interface UserProfile { }
-
-// Prefix interfaces with 'I' only if necessary for clarity
-interface IUserRepository { } // Only when needed
-```
-
-#### Constants
-```typescript
-// Use UPPER_SNAKE_CASE for constants
-const MAX_RETRY_COUNT = 3;
-const API_BASE_URL = 'https://api.example.com';
-```
-
-#### Private Members
-```typescript
-// Use underscore prefix for private members (optional)
-class UserService {
-  private _cache: Map<string, User>;
-  
-  private _validateUser(user: User): boolean { }
-}
-```
-
-### Code Formatting
-
-#### Indentation
-- Use 2 spaces for indentation (not tabs)
-- Configure your editor to use spaces
-
-#### Line Length
-- Maximum line length: 100 characters
-- Break long lines at logical points
-
-#### Semicolons
-- Always use semicolons at the end of statements
-
-#### Quotes
-```typescript
-// Prefer single quotes for strings
-const message = 'Hello, world!';
-
-// Use backticks for template literals
-const greeting = `Hello, ${name}!`;
-```
-
-#### Spacing
-```typescript
-// Add spaces around operators
-const sum = a + b;
-
-// Add space after keywords
-if (condition) { }
-for (let i = 0; i < 10; i++) { }
-
-// No space before function parentheses
-function doSomething() { }
-const arrow = () => { };
-```
-
-### Type Annotations
+### 型別宣告
 
 ```typescript
-// Always specify return types for functions
-function getUserName(id: string): string {
-  return 'John';
+// ✅ 正確 - 明確型別
+function getUserById(id: string): User | null {
+  return this.users.find(user => user.id === id) || null;
 }
 
-// Use explicit types for variables when type inference isn't clear
-const count: number = 0;
 const users: User[] = [];
+const config: AppConfig = { timeout: 5000 };
 
-// Prefer interfaces over type aliases for object shapes
+// ✅ 正確 - 型別推斷明確時可省略
+const count = 42; // TypeScript 自動推斷為 number
+const message = 'Hello'; // TypeScript 自動推斷為 string
+
+// ❌ 錯誤 - 避免使用 any
+function processData(data: any): any {
+  return data;
+}
+
+// ✅ 使用泛型或 unknown
+function processData<T>(data: T): T {
+  return data;
+}
+
+function processUnknown(data: unknown): void {
+  if (typeof data === 'string') {
+    console.log(data.toUpperCase());
+  }
+}
+```
+
+### Interface vs Type
+
+```typescript
+// ✅ Interface - 用於物件結構定義
 interface User {
   id: string;
   name: string;
+  email: string;
 }
 
-// Use type aliases for unions, intersections, and primitives
-type Status = 'pending' | 'approved' | 'rejected';
+interface UserRepository {
+  findById(id: string): Promise<User | null>;
+  save(user: User): Promise<void>;
+}
+
+// ✅ Type - 用於聯合型別、交集型別、工具型別
+type UserId = string;
+type UserRole = 'admin' | 'user' | 'guest';
+type Result<T, E> = { success: true; data: T } | { success: false; error: E };
+
+// 擴展 Interface
+interface AdminUser extends User {
+  permissions: string[];
+}
+
+// 交集型別
+type AdminUser = User & {
+  permissions: string[];
+};
 ```
 
-### Error Handling
+### 函數風格
 
 ```typescript
-// Use try-catch for async operations
-async function fetchUser(id: string): Promise<User> {
+// ✅ 正確 - 箭頭函數（推薦用於簡短函數）
+const double = (n: number) => n * 2;
+const greet = (name: string) => `Hello, ${name}!`;
+
+// ✅ 正確 - 傳統函數（用於複雜邏輯）
+function calculateTotal(items: Item[]): number {
+  return items.reduce((sum, item) => sum + item.price, 0);
+}
+
+// ✅ 正確 - Async/Await
+async function fetchUserData(id: string): Promise<User> {
   try {
-    const response = await api.get(`/users/${id}`);
-    return response.data;
+    const response = await this.http.get<User>(`/api/users/${id}`);
+    return response;
   } catch (error) {
-    console.error('Failed to fetch user:', error);
-    throw new Error(`User fetch failed: ${error.message}`);
+    throw new Error(`Failed to fetch user: ${error}`);
   }
 }
 
-// Create custom error classes
-class ValidationError extends Error {
-  constructor(message: string) {
-    super(message);
-    this.name = 'ValidationError';
+// ❌ 錯誤 - 函數過長
+function complexProcess() {
+  // ... 100 行代碼
+}
+
+// ✅ 拆分成多個小函數
+function complexProcess() {
+  const data = prepareData();
+  const validated = validateData(data);
+  return processData(validated);
+}
+```
+
+### Class 風格
+
+```typescript
+// ✅ 正確
+export class UserService {
+  // Public 屬性（預設）
+  readonly apiUrl = 'https://api.example.com';
+  
+  // Private 屬性
+  private cache = new Map<string, User>();
+  
+  // Constructor injection（Angular DI）
+  constructor(
+    private readonly http: HttpClient,
+    private readonly logger: LoggerService
+  ) {}
+  
+  // Public 方法
+  async getUser(id: string): Promise<User> {
+    const cached = this.getCachedUser(id);
+    if (cached) return cached;
+    
+    const user = await this.fetchUser(id);
+    this.cacheUser(id, user);
+    return user;
+  }
+  
+  // Private 方法
+  private getCachedUser(id: string): User | undefined {
+    return this.cache.get(id);
+  }
+  
+  private async fetchUser(id: string): Promise<User> {
+    return this.http.get<User>(`${this.apiUrl}/users/${id}`).toPromise();
+  }
+  
+  private cacheUser(id: string, user: User): void {
+    this.cache.set(id, user);
   }
 }
 ```
 
-## Angular Standards
-
-### Component Structure
+### 解構賦值
 
 ```typescript
+// ✅ 正確 - 使用解構
+const { id, name, email } = user;
+const [first, second, ...rest] = array;
+
+// 函數參數解構
+function displayUser({ name, email }: User) {
+  console.log(`${name} <${email}>`);
+}
+
+// ✅ 正確 - 預設值
+const { timeout = 5000, retries = 3 } = config;
+```
+
+### 模板字串
+
+```typescript
+// ✅ 正確 - 使用模板字串
+const greeting = `Hello, ${userName}!`;
+const url = `${baseUrl}/api/users/${userId}`;
+
+// ❌ 錯誤 - 字串串接
+const greeting = 'Hello, ' + userName + '!';
+const url = baseUrl + '/api/users/' + userId;
+```
+
+### 可選鏈和空值合併
+
+```typescript
+// ✅ 正確 - 使用可選鏈
+const userName = user?.profile?.name;
+const firstItem = array?.[0];
+
+// ✅ 正確 - 使用空值合併
+const timeout = config?.timeout ?? 5000;
+const name = user?.name ?? 'Anonymous';
+
+// ❌ 錯誤 - 手動檢查
+const userName = user && user.profile && user.profile.name;
+const timeout = config.timeout !== null && config.timeout !== undefined 
+  ? config.timeout 
+  : 5000;
+```
+
+---
+
+## Angular 風格
+
+### Component 結構
+
+```typescript
+// ✅ 正確 - Component 結構順序
 @Component({
   selector: 'app-user-profile',
   templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./user-profile.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush, // 推薦使用 OnPush
 })
 export class UserProfileComponent implements OnInit, OnDestroy {
-  // 1. Inputs
+  // 1. Input 屬性
   @Input() userId!: string;
+  @Input() showDetails = true;
   
-  // 2. Outputs
+  // 2. Output 屬性
   @Output() userUpdated = new EventEmitter<User>();
   
-  // 3. Public properties
-  user?: User;
+  // 3. ViewChild / ContentChild
+  @ViewChild('userForm') userForm!: ElementRef;
   
-  // 4. Private properties
+  // 4. Public 屬性
+  user: User | null = null;
+  isLoading = false;
+  
+  // 5. Private 屬性
   private destroy$ = new Subject<void>();
   
-  // 5. Constructor with dependency injection
+  // 6. Constructor（依賴注入）
   constructor(
-    private userService: UserService,
-    private router: Router
-  ) { }
+    private readonly userService: UserService,
+    private readonly cdr: ChangeDetectorRef
+  ) {}
   
-  // 6. Lifecycle hooks
+  // 7. 生命週期鉤子（按順序）
   ngOnInit(): void {
     this.loadUser();
   }
@@ -180,213 +271,455 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
   
-  // 7. Public methods
-  updateUser(): void { }
+  // 8. Public 方法
+  async loadUser(): Promise<void> {
+    this.isLoading = true;
+    try {
+      this.user = await this.userService.getUser(this.userId);
+    } finally {
+      this.isLoading = false;
+      this.cdr.markForCheck();
+    }
+  }
   
-  // 8. Private methods
-  private loadUser(): void { }
-}
-```
-
-### Component Naming
-- Use kebab-case for selectors: `app-user-profile`
-- Use PascalCase for class names: `UserProfileComponent`
-- Suffix component classes with `Component`
-
-### Service Structure
-
-```typescript
-@Injectable({
-  providedIn: 'root'
-})
-export class UserService {
-  private readonly apiUrl = '/api/users';
+  onSave(): void {
+    if (this.user) {
+      this.userUpdated.emit(this.user);
+    }
+  }
   
-  constructor(private http: HttpClient) { }
-  
-  getUser(id: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/${id}`);
+  // 9. Private 方法
+  private validateUser(user: User): boolean {
+    return !!user.email && !!user.name;
   }
 }
 ```
 
-### Template Guidelines
+### Service 結構
+
+```typescript
+// ✅ 正確
+@Injectable({ providedIn: 'root' })
+export class UserService {
+  private readonly apiUrl = environment.apiUrl;
+  
+  constructor(
+    private readonly http: HttpClient,
+    private readonly supabase: SupabaseService
+  ) {}
+  
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/users`).pipe(
+      catchError(this.handleError)
+    );
+  }
+  
+  async getUserById(id: string): Promise<User | null> {
+    const { data, error } = await this.supabase
+      .from('users')
+      .select('*')
+      .eq('id', id)
+      .single();
+      
+    if (error) throw error;
+    return data;
+  }
+  
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    console.error('An error occurred:', error);
+    return throwError(() => new Error('Something went wrong'));
+  }
+}
+```
+
+### RxJS 風格
+
+```typescript
+// ✅ 正確 - 使用 pipe 和 operators
+this.userService.getUsers().pipe(
+  map(users => users.filter(u => u.isActive)),
+  tap(users => console.log('Active users:', users.length)),
+  catchError(error => {
+    console.error(error);
+    return of([]);
+  }),
+  takeUntil(this.destroy$)
+).subscribe(users => {
+  this.users = users;
+});
+
+// ✅ 正確 - 使用 async pipe（推薦）
+// Component
+users$ = this.userService.getUsers().pipe(
+  map(users => users.filter(u => u.isActive))
+);
+
+// Template
+<div *ngFor="let user of users$ | async">{{ user.name }}</div>
+
+// ❌ 錯誤 - 忘記 unsubscribe
+this.userService.getUsers().subscribe(users => {
+  this.users = users;
+}); // Memory leak!
+```
+
+---
+
+## HTML 模板風格
+
+### 基本格式
 
 ```html
-<!-- Use meaningful template reference variables -->
-<input #usernameInput type="text">
+<!-- ✅ 正確 - 清晰的縮排和結構 -->
+<div class="user-profile">
+  <header class="profile-header">
+    <h1>{{ user.name }}</h1>
+    <p>{{ user.email }}</p>
+  </header>
+  
+  <section class="profile-details">
+    <div *ngIf="isLoading" class="loading">
+      Loading...
+    </div>
+    
+    <div *ngIf="!isLoading && user" class="user-info">
+      <p>Created: {{ user.createdAt | date:'short' }}</p>
+    </div>
+  </section>
+</div>
 
-<!-- Use async pipe for observables -->
-<div *ngIf="user$ | async as user">
+<!-- ❌ 錯誤 - 混亂的格式 -->
+<div class="user-profile"><header class="profile-header"><h1>{{ user.name }}</h1><p>{{ user.email }}</p></header></div>
+```
+
+### 結構型指令
+
+```html
+<!-- ✅ 正確 - 使用 ng-container 避免額外 DOM -->
+<ng-container *ngIf="user; else loading">
+  <div class="user-details">
+    {{ user.name }}
+  </div>
+</ng-container>
+
+<ng-template #loading>
+  <div class="loading">Loading...</div>
+</ng-template>
+
+<!-- ✅ 正確 - ngFor 使用 trackBy -->
+<div *ngFor="let user of users; trackBy: trackByUserId">
   {{ user.name }}
 </div>
 
-<!-- Use trackBy for ngFor -->
-<div *ngFor="let item of items; trackBy: trackById">
-  {{ item.name }}
-</div>
-
-<!-- Keep templates simple, move logic to component -->
-<!-- Bad -->
-<div *ngIf="user && user.isActive && user.role === 'admin'">
-
-<!-- Good -->
-<div *ngIf="isAdminUser()">
+// Component
+trackByUserId(index: number, user: User): string {
+  return user.id;
+}
 ```
 
-### Style Guidelines
+### 屬性綁定
+
+```html
+<!-- ✅ 正確 - 屬性綁定 -->
+<img [src]="user.avatarUrl" [alt]="user.name">
+<button [disabled]="isLoading" (click)="onSave()">Save</button>
+
+<!-- ✅ 正確 - Class 和 Style 綁定 -->
+<div [class.active]="isActive" [class.disabled]="isDisabled">
+  Content
+</div>
+
+<div [style.width.px]="width" [style.color]="textColor">
+  Styled content
+</div>
+
+<!-- ❌ 錯誤 - 混合使用字串和綁定 -->
+<div class="user-card {{isActive ? 'active' : ''}}">
+```
+
+### 事件處理
+
+```html
+<!-- ✅ 正確 - 清楚的事件處理 -->
+<button (click)="onSave()">Save</button>
+<input (input)="onSearch($event)" [value]="searchTerm">
+
+<!-- ✅ 正確 - 防止預設行為 -->
+<form (ngSubmit)="onSubmit($event)">
+  <button type="submit">Submit</button>
+</form>
+```
+
+---
+
+## SCSS 風格
+
+### 基本格式
 
 ```scss
-// Use BEM naming convention
+// ✅ 正確
 .user-profile {
+  padding: 16px;
+  background-color: #ffffff;
+  
   &__header {
-    // header styles
+    margin-bottom: 24px;
+    
+    h1 {
+      font-size: 24px;
+      color: #333333;
+    }
   }
   
   &__content {
-    // content styles
+    display: flex;
+    gap: 16px;
   }
   
-  &--compact {
-    // modifier styles
+  &--loading {
+    opacity: 0.5;
+    pointer-events: none;
   }
 }
 
-// Scope styles to component
-:host {
-  display: block;
+// ❌ 錯誤 - 過深的巢狀
+.user-profile {
+  .header {
+    .title {
+      .text {
+        .content {
+          color: red; // 太深了！
+        }
+      }
+    }
+  }
 }
+```
 
-// Use CSS variables for theming
+### 變數和主題
+
+```scss
+// ✅ 正確 - 使用 CSS 變數或 SCSS 變數
+$primary-color: #007bff;
+$spacing-unit: 8px;
+
 .button {
   background-color: var(--primary-color);
-  color: var(--text-color);
+  padding: calc(var(--spacing-unit) * 2);
+}
+
+// 或使用 SCSS 變數
+.button {
+  background-color: $primary-color;
+  padding: $spacing-unit * 2;
 }
 ```
 
-## Testing Standards
+### BEM 命名
 
-### Unit Tests
-
-```typescript
-describe('UserService', () => {
-  let service: UserService;
-  let httpMock: HttpTestingController;
+```scss
+// ✅ 推薦 - BEM 命名規範
+.user-card {              // Block
+  &__header {             // Element
+    font-weight: bold;
+  }
   
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [UserService]
-    });
-    service = TestBed.inject(UserService);
-    httpMock = TestBed.inject(HttpTestingController);
-  });
+  &__body {               // Element
+    padding: 16px;
+  }
   
-  it('should fetch user by id', () => {
-    const mockUser: User = { id: '1', name: 'John' };
-    
-    service.getUser('1').subscribe(user => {
-      expect(user).toEqual(mockUser);
-    });
-    
-    const req = httpMock.expectOne('/api/users/1');
-    expect(req.request.method).toBe('GET');
-    req.flush(mockUser);
-  });
+  &--featured {           // Modifier
+    border: 2px solid gold;
+  }
   
-  afterEach(() => {
-    httpMock.verify();
-  });
-});
+  &--disabled {           // Modifier
+    opacity: 0.5;
+  }
+}
 ```
 
-### Test Naming
-- Use descriptive test names: `should fetch user by id`
-- Follow AAA pattern: Arrange, Act, Assert
+---
 
-## Documentation
+## 註解和文檔
 
-### Code Comments
+### JSDoc 風格
 
 ```typescript
 /**
- * Calculates the total price including tax and discount.
+ * 根據 ID 取得使用者資料
  * 
- * @param basePrice - The base price before calculations
- * @param taxRate - Tax rate as a decimal (e.g., 0.08 for 8%)
- * @param discount - Optional discount as a decimal
- * @returns The final calculated price
+ * @param id - 使用者的唯一識別碼
+ * @returns Promise<User | null> - 使用者物件，若不存在則返回 null
+ * @throws {Error} 當 API 請求失敗時
+ * 
+ * @example
+ * ```typescript
+ * const user = await userService.getUserById('123');
+ * if (user) {
+ *   console.log(user.name);
+ * }
+ * ```
  */
-function calculateTotal(
-  basePrice: number,
-  taxRate: number,
-  discount: number = 0
-): number {
-  // Apply discount first
-  const discountedPrice = basePrice * (1 - discount);
-  
-  // Then apply tax
-  return discountedPrice * (1 + taxRate);
+async getUserById(id: string): Promise<User | null> {
+  // 實作...
 }
 ```
 
-### JSDoc Comments
-- Use JSDoc for public APIs
-- Document parameters, return values, and exceptions
-- Keep comments up-to-date with code changes
+### 單行註解
 
-## Best Practices
+```typescript
+// ✅ 正確 - 解釋為什麼（Why），而非什麼（What）
+// 使用 cache 避免重複的 API 請求
+const cachedUser = this.cache.get(userId);
 
-### DRY (Don't Repeat Yourself)
-- Extract common code into reusable functions/services
-- Use composition over inheritance
+// ❌ 錯誤 - 重複代碼的意思
+// 從 cache 取得 user
+const cachedUser = this.cache.get(userId);
+```
 
-### SOLID Principles
-- **S**ingle Responsibility: Each class should have one reason to change
-- **O**pen/Closed: Open for extension, closed for modification
-- **L**iskov Substitution: Subtypes must be substitutable for base types
-- **I**nterface Segregation: Many specific interfaces over one general interface
-- **D**ependency Inversion: Depend on abstractions, not concretions
+### TODO 註解
 
-### Performance
-- Use OnPush change detection where possible
-- Unsubscribe from observables in ngOnDestroy
-- Use trackBy with ngFor
-- Lazy load routes and modules
+```typescript
+// TODO: 實作錯誤重試機制
+// FIXME: 處理 edge case - 當 userId 為空字串時
+// NOTE: 這個方法在未來版本會被廢棄
+// HACK: 臨時解決方案，等待 API 更新
+```
 
-### Security
-- Never trust user input
-- Sanitize HTML content
-- Use Angular's built-in XSS protection
-- Validate data on both client and server
+---
 
-## Tools and Automation
+## 最佳實踐
 
-### Prettier
-Configure Prettier for automatic formatting:
+### 1. 單一職責原則
+
+```typescript
+// ✅ 正確 - 每個函數只做一件事
+function validateEmail(email: string): boolean {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function sendWelcomeEmail(email: string): Promise<void> {
+  return this.emailService.send(email, 'Welcome!');
+}
+
+// ❌ 錯誤 - 函數做太多事
+function processUser(email: string): void {
+  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if (isValid) {
+    this.emailService.send(email, 'Welcome!');
+    this.logService.log(`Email sent to ${email}`);
+    this.analyticsService.track('user_registered');
+  }
+}
+```
+
+### 2. 錯誤處理
+
+```typescript
+// ✅ 正確 - 明確的錯誤處理
+async function fetchUser(id: string): Promise<User> {
+  try {
+    const response = await fetch(`/api/users/${id}`);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('Failed to fetch user:', error);
+    throw new Error(`Unable to fetch user ${id}`);
+  }
+}
+
+// ❌ 錯誤 - 吞掉錯誤
+async function fetchUser(id: string): Promise<User | null> {
+  try {
+    return await fetch(`/api/users/${id}`).then(r => r.json());
+  } catch {
+    return null; // 錯誤被隱藏了
+  }
+}
+```
+
+### 3. 不可變性
+
+```typescript
+// ✅ 正確 - 使用不可變操作
+const newUsers = [...users, newUser];
+const updatedUser = { ...user, name: 'New Name' };
+const filteredUsers = users.filter(u => u.isActive);
+
+// ❌ 錯誤 - 直接修改
+users.push(newUser);
+user.name = 'New Name';
+```
+
+### 4. 避免魔術數字
+
+```typescript
+// ✅ 正確 - 使用命名常數
+const MAX_RETRY_COUNT = 3;
+const DEFAULT_TIMEOUT_MS = 5000;
+const ITEMS_PER_PAGE = 20;
+
+if (retryCount >= MAX_RETRY_COUNT) {
+  throw new Error('Max retries exceeded');
+}
+
+// ❌ 錯誤 - 魔術數字
+if (retryCount >= 3) {
+  throw new Error('Max retries exceeded');
+}
+```
+
+---
+
+## 自動化檢查
+
+### 執行格式化和檢查
+
+```bash
+# 檢查代碼格式
+npm run format:check
+
+# 自動格式化代碼
+npm run format
+
+# 執行 ESLint
+npm run lint
+
+# 自動修復 ESLint 問題
+npm run lint:fix
+
+# 執行所有檢查
+npm run check
+```
+
+### Pre-commit Hook（可選）
+
+使用 husky 和 lint-staged 在 commit 前自動檢查：
+
 ```json
+// package.json
 {
-  "singleQuote": true,
-  "trailingComma": "es5",
-  "tabWidth": 2,
-  "semi": true,
-  "printWidth": 100
+  "lint-staged": {
+    "*.ts": ["eslint --fix", "prettier --write"],
+    "*.html": ["prettier --write"],
+    "*.scss": ["prettier --write"]
+  }
 }
 ```
 
-### ESLint
-Use ESLint for code quality checks:
-```json
-{
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@angular-eslint/recommended"
-  ]
-}
-```
+---
 
-## References
+## 參考資源
+
 - [Angular Style Guide](https://angular.dev/style-guide)
 - [TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html)
+- [Airbnb JavaScript Style Guide](https://github.com/airbnb/javascript)
 - [Clean Code JavaScript](https://github.com/ryanmcdermott/clean-code-javascript)
+
+---
+
+**記住**: 一致性比完美更重要。當團隊就風格達成共識後，最重要的是**保持一致**。

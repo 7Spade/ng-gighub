@@ -54,7 +54,7 @@ src/app/
 
 ## 命名規範
 
-詳細規範請參考 [NAMING_CONVENTIONS.md](./NAMING_CONVENTIONS.md)。
+詳細規範請參考 [naming-conventions.md](./naming-conventions.md)。
 
 ### 快速參考
 
@@ -79,7 +79,7 @@ src/app/
 
 ## 代碼風格
 
-詳細規範請參考 [CODE_STYLE.md](./CODE_STYLE.md)。
+詳細規範請參考 [code-style.md](./code-style.md)。
 
 ### 自動化工具
 
@@ -127,7 +127,7 @@ npm run check
 
 ## 依賴規則
 
-詳細規範請參考 [DEPENDENCY_RULES.md](./DEPENDENCY_RULES.md)。
+詳細規範請參考 [dependency-rules.md](./dependency-rules.md)。
 
 ### 依賴方向規則
 
@@ -155,7 +155,7 @@ npm run check
 
 ## 測試規範
 
-詳細規範請參考 [TESTING_STANDARDS.md](./TESTING_STANDARDS.md)。
+詳細規範請參考 [testing-standards.md](./testing-standards.md)。
 
 ### 測試策略
 
@@ -192,7 +192,7 @@ npm test -- --code-coverage
 
 ## Git 工作流程
 
-詳細規範請參考 [GIT_WORKFLOW.md](./GIT_WORKFLOW.md)。
+詳細規範請參考 [git-workflow.md](./git-workflow.md)。
 
 ### Branch 命名
 

@@ -1,86 +1,61 @@
-# Git Workflow Guide
+# Git 工作流程 (Git Workflow)
 
-## Overview
-This document outlines the Git workflow and branching strategy for the ng-gighub project.
+## 概述
 
-## Branching Strategy
+本文檔定義 ng-gighub 專案的 Git 工作流程、分支策略和 commit 規範。
 
-### Main Branches
+---
 
-#### `main`
-- **Purpose**: Production-ready code
-- **Protection**: Protected branch with required reviews
-- **Deployment**: Automatically deployed to production
-- **Direct commits**: Not allowed
+## 目錄
 
-#### `develop`
-- **Purpose**: Integration branch for features
-- **Protection**: Protected branch with required reviews
-- **Deployment**: Automatically deployed to staging
-- **Direct commits**: Limited to hotfixes only
+1. [分支策略](#分支策略)
+2. [Commit Message 規範](#commit-message-規範)
+3. [Pull Request 流程](#pull-request-流程)
+4. [代碼審查](#代碼審查)
+5. [發布流程](#發布流程)
 
-### Supporting Branches
+---
 
-#### Feature Branches
-- **Naming**: `feature/<ticket-id>-<short-description>`
-- **Example**: `feature/TASK-123-user-authentication`
-- **Base**: Created from `develop`
-- **Merge into**: `develop`
-- **Lifetime**: Deleted after merge
+## 分支策略
 
-#### Bugfix Branches
-- **Naming**: `bugfix/<ticket-id>-<short-description>`
-- **Example**: `bugfix/BUG-456-fix-login-error`
-- **Base**: Created from `develop`
-- **Merge into**: `develop`
-- **Lifetime**: Deleted after merge
+### 主要分支
 
-#### Hotfix Branches
-- **Naming**: `hotfix/<version>-<short-description>`
-- **Example**: `hotfix/1.2.1-critical-security-fix`
-- **Base**: Created from `main`
-- **Merge into**: Both `main` and `develop`
-- **Lifetime**: Deleted after merge
+- **`main`**: 生產環境分支，永遠保持穩定可部署
+- **`develop`**: 開發分支，整合最新功能
 
-#### Release Branches
-- **Naming**: `release/<version>`
-- **Example**: `release/1.2.0`
-- **Base**: Created from `develop`
-- **Merge into**: Both `main` and `develop`
-- **Purpose**: Final preparations before production release
+### 輔助分支
 
-## Workflow Diagram
+- **Feature branches**: 功能開發分支
+- **Bugfix branches**: 修復 bug 分支
+- **Hotfix branches**: 緊急修復分支
+- **Release branches**: 發布準備分支
 
-```mermaid
-gitGraph
-    commit id: "Initial commit"
-    branch develop
-    checkout develop
-    commit id: "Setup project"
-    
-    branch feature/user-auth
-    checkout feature/user-auth
-    commit id: "Add login"
-    commit id: "Add register"
-    
-    checkout develop
-    merge feature/user-auth
-    
-    branch release/1.0.0
-    checkout release/1.0.0
-    commit id: "Update version"
-    commit id: "Fix tests"
-    
-    checkout main
-    merge release/1.0.0 tag: "v1.0.0"
-    
-    checkout develop
-    merge release/1.0.0
+### 分支命名規範
+
+```
+feature/[issue-number]-[short-description]
+bugfix/[issue-number]-[short-description]
+hotfix/[issue-number]-[short-description]
+release/v[version-number]
 ```
 
-## Commit Message Convention
+**範例**:
+```
+feature/123-user-authentication
+feature/456-add-dark-mode
+bugfix/789-fix-login-error
+hotfix/101-critical-security-patch
+release/v1.2.0
+```
 
-### Format
+---
+
+## Commit Message 規範
+
+### Conventional Commits
+
+遵循 [Conventional Commits](https://www.conventionalcommits.org/) 規範：
+
 ```
 <type>(<scope>): <subject>
 
@@ -89,362 +64,557 @@ gitGraph
 <footer>
 ```
 
-### Types
-- **feat**: New feature
-- **fix**: Bug fix
-- **docs**: Documentation changes
-- **style**: Code style changes (formatting, missing semi-colons, etc.)
-- **refactor**: Code refactoring without feature changes
-- **perf**: Performance improvements
-- **test**: Adding or updating tests
-- **build**: Changes to build system or dependencies
-- **ci**: Changes to CI configuration
-- **chore**: Other changes that don't modify src or test files
+### Type（類型）
 
-### Examples
+| Type | 說明 | 範例 |
+|------|------|------|
+| `feat` | 新功能 | `feat(auth): add user login` |
+| `fix` | 修復 bug | `fix(api): handle null response` |
+| `docs` | 文檔變更 | `docs(readme): update installation guide` |
+| `style` | 代碼格式（不影響邏輯） | `style(app): fix indentation` |
+| `refactor` | 重構（不是新功能也不是修復） | `refactor(service): simplify user fetch` |
+| `perf` | 性能優化 | `perf(list): optimize rendering` |
+| `test` | 測試相關 | `test(auth): add login tests` |
+| `build` | 建置系統或依賴變更 | `build(deps): upgrade Angular to 20.1` |
+| `ci` | CI 配置變更 | `ci(github): add test workflow` |
+| `chore` | 其他雜項變更 | `chore(git): add .gitignore entry` |
+| `revert` | 回退先前的 commit | `revert: feat(auth): add user login` |
 
-#### Feature Commit
+### Scope（範圍）
+
+Scope 指明變更影響的範圍：
+
+- `auth` - 認證相關
+- `account` - 帳戶功能
+- `team` - 團隊功能
+- `repo` - 倉庫功能
+- `org` - 組織功能
+- `ui` - UI 元件
+- `api` - API 相關
+- `db` - 資料庫相關
+- `config` - 配置相關
+
+### Subject（主題）
+
+- 使用現在式、祈使句（"add" 而非 "added" 或 "adds"）
+- 不要大寫首字母
+- 結尾不加句號
+- 簡短描述（建議 50 字元內）
+
+### Body（內文）
+
+- 可選，提供更詳細的說明
+- 解釋**為什麼**要做這個變更，而非**如何**做
+- 與 subject 空一行
+- 每行建議 72 字元內
+
+### Footer（頁尾）
+
+- 可選，用於引用 Issue 或說明破壞性變更
+- 格式: `Closes #123` 或 `Fixes #456`
+- 破壞性變更: `BREAKING CHANGE: ...`
+
+### 完整範例
+
 ```
-feat(auth): implement user registration
+feat(auth): add user registration functionality
+
+Implement user registration with email verification.
+Users can now sign up using email and password, and will
+receive a verification link via email.
 
 - Add registration form component
-- Create user registration service
-- Add email validation
-- Update routing configuration
+- Implement email verification service
+- Add user registration API endpoint
 
 Closes #123
 ```
 
-#### Bug Fix Commit
 ```
-fix(posts): resolve duplicate posts issue
+fix(api): handle null response from user service
 
-Fixed a race condition that caused posts to appear
-multiple times in the feed when rapidly scrolling.
+Previously, the app would crash when the user service
+returned null. Now we properly handle this case and
+show an appropriate error message.
 
 Fixes #456
 ```
 
-#### Breaking Change
 ```
-feat(api)!: change authentication token format
+docs(readme): update installation instructions
 
-BREAKING CHANGE: Authentication tokens now use JWT
-format instead of custom format. All clients must
-update their token handling logic.
-
-Migration guide: docs/migration/v2-auth.md
+Add detailed steps for setting up Supabase and
+configuring environment variables.
 ```
 
-### Commit Message Rules
-
-1. **Subject Line**
-   - Use imperative mood: "add feature" not "added feature"
-   - Don't capitalize first letter
-   - No period at the end
-   - Maximum 50 characters
-
-2. **Body**
-   - Wrap at 72 characters
-   - Explain what and why, not how
-   - Separate from subject with blank line
-
-3. **Footer**
-   - Reference issues: `Closes #123`, `Fixes #456`
-   - Note breaking changes: `BREAKING CHANGE: description`
-
-## Pull Request Process
-
-### Creating a Pull Request
-
-1. **Update your branch**
-   ```bash
-   git checkout develop
-   git pull origin develop
-   git checkout feature/your-feature
-   git rebase develop
-   ```
-
-2. **Push your changes**
-   ```bash
-   git push origin feature/your-feature
-   ```
-
-3. **Create PR via GitHub**
-   - Title should be clear and descriptive
-   - Link related issues
-   - Fill out PR template completely
-   - Add relevant labels
-   - Request reviewers
-
-### PR Title Format
 ```
-[Type] Brief description of changes
+refactor(service): simplify user data fetching
+
+Reduce code duplication by extracting common logic
+into a shared utility function.
 ```
 
-Examples:
-- `[Feature] Add user profile editing`
-- `[Bugfix] Fix memory leak in subscription`
-- `[Hotfix] Patch critical security vulnerability`
+### Breaking Changes（破壞性變更）
 
-### PR Description Template
-```markdown
-## Description
-Brief description of the changes
+當變更不向後兼容時，必須在 footer 註明：
 
-## Type of Change
-- [ ] Bug fix
-- [ ] New feature
-- [ ] Breaking change
-- [ ] Documentation update
+```
+feat(api): change user endpoint response format
 
-## Related Issues
-Closes #123
+BREAKING CHANGE: The user API now returns { data, meta }
+instead of a flat object. Clients must update their code.
 
-## Changes Made
-- Added user profile component
-- Updated user service
-- Added unit tests
-
-## Testing
-- [ ] Unit tests pass
-- [ ] Integration tests pass
-- [ ] Manual testing completed
-
-## Screenshots (if applicable)
-Add screenshots here
-
-## Checklist
-- [ ] Code follows style guidelines
-- [ ] Self-review completed
-- [ ] Comments added for complex code
-- [ ] Documentation updated
-- [ ] No new warnings generated
-- [ ] Tests added/updated
-- [ ] All tests passing
+Before: GET /api/users returns { id, name, email }
+After: GET /api/users returns { data: { id, name, email }, meta: {} }
 ```
 
-### Code Review Guidelines
+---
 
-#### For Authors
-- Keep PRs small and focused (< 400 lines changed)
-- Provide context in description
-- Respond to feedback promptly
-- Don't take feedback personally
-- Update PR based on feedback
+## Pull Request 流程
 
-#### For Reviewers
-- Review within 24 hours
-- Be constructive and respectful
-- Explain your suggestions
-- Approve if no blocking issues
-- Use GitHub's suggestion feature for small changes
+### 1. 建立 Feature Branch
 
-### Review Process
-1. Automated checks must pass (tests, linting)
-2. At least one approval required
-3. No unresolved conversations
-4. Branch up-to-date with target
-5. Merge using "Squash and merge" (default)
-
-## Common Workflows
-
-### Starting New Feature
 ```bash
-# Update develop
+# 從 develop 建立新分支
 git checkout develop
 git pull origin develop
-
-# Create feature branch
-git checkout -b feature/TASK-123-new-feature
-
-# Make changes and commit
-git add .
-git commit -m "feat(feature): add new feature"
-
-# Push to remote
-git push origin feature/TASK-123-new-feature
+git checkout -b feature/123-add-user-profile
 ```
 
-### Updating Feature Branch
+### 2. 開發功能
+
 ```bash
-# Get latest from develop
+# 進行開發
+# ...
+
+# Commit 變更
+git add .
+git commit -m "feat(profile): add user profile page"
+```
+
+### 3. 保持分支更新
+
+```bash
+# 定期同步 develop 分支
 git checkout develop
 git pull origin develop
-
-# Update feature branch
-git checkout feature/TASK-123-new-feature
+git checkout feature/123-add-user-profile
 git rebase develop
-
-# Force push if already pushed
-git push origin feature/TASK-123-new-feature --force-with-lease
 ```
 
-### Handling Merge Conflicts
+### 4. 推送到遠端
+
 ```bash
-# Start rebase
-git rebase develop
-
-# Resolve conflicts in files
-# Edit conflicting files
-
-# Mark as resolved
-git add .
-git rebase --continue
-
-# Or abort if needed
-git rebase --abort
+git push origin feature/123-add-user-profile
 ```
 
-### Creating a Hotfix
+### 5. 建立 Pull Request
+
+- 在 GitHub 上建立 PR
+- 使用 PR 模板填寫資訊
+- 指派 Reviewers
+- 添加適當的 Labels
+
+### 6. 代碼審查
+
+- 等待 Review
+- 根據反饋修改代碼
+- 推送更新
+
+### 7. 合併
+
+- 確保 CI 通過
+- 獲得至少 1 個 Approval
+- 由 Reviewer 或自己合併
+
+### 8. 清理
+
 ```bash
-# Create hotfix from main
+# 刪除本地分支
+git branch -d feature/123-add-user-profile
+
+# 刪除遠端分支（如果 GitHub 未自動刪除）
+git push origin --delete feature/123-add-user-profile
+```
+
+---
+
+## 代碼審查
+
+### Pull Request 檢查清單
+
+提交 PR 前，確認：
+
+- [ ] 代碼通過所有測試（`npm test`）
+- [ ] 代碼通過 lint 檢查（`npm run lint`）
+- [ ] 代碼格式正確（`npm run format:check`）
+- [ ] Build 成功（`npm run build`）
+- [ ] 遵循命名規範
+- [ ] 遵循架構分層原則
+- [ ] 無循環依賴
+- [ ] 有適當的測試覆蓋
+- [ ] 有必要的註解和文檔
+- [ ] Commit message 符合規範
+- [ ] PR 描述清楚
+
+### Reviewer 檢查清單
+
+審查時，注意：
+
+- [ ] 代碼邏輯正確
+- [ ] 符合專案規範和最佳實踐
+- [ ] 沒有明顯的 bugs 或安全問題
+- [ ] 測試充分且有意義
+- [ ] 性能考量合理
+- [ ] 錯誤處理適當
+- [ ] 沒有硬編碼的敏感資訊
+- [ ] 註解清楚且必要
+- [ ] 沒有不必要的代碼或註解
+- [ ] 變更範圍合理（不過大也不過小）
+
+### Review 反饋原則
+
+- 具體明確，指出具體位置和問題
+- 友善建設性，避免批評性語言
+- 提供替代方案或建議
+- 區分「必須修改」和「建議優化」
+- 及時回應和跟進
+
+---
+
+## 發布流程
+
+### 版本號規範
+
+遵循 [Semantic Versioning](https://semver.org/)：
+
+```
+MAJOR.MINOR.PATCH
+```
+
+- **MAJOR**: 破壞性變更
+- **MINOR**: 新功能（向後兼容）
+- **PATCH**: Bug 修復（向後兼容）
+
+範例: `v1.2.3`
+
+### Release 流程
+
+#### 1. 建立 Release Branch
+
+```bash
+git checkout develop
+git pull origin develop
+git checkout -b release/v1.2.0
+```
+
+#### 2. 更新版本號
+
+```bash
+# 更新 package.json 版本號
+npm version 1.2.0 --no-git-tag-version
+
+# Commit 版本變更
+git add package.json package-lock.json
+git commit -m "chore(release): bump version to 1.2.0"
+```
+
+#### 3. 最終測試
+
+```bash
+# 執行完整測試套件
+npm test -- --code-coverage
+npm run lint
+npm run build
+
+# 手動測試關鍵功能
+```
+
+#### 4. 合併到 main
+
+```bash
+# 推送 release branch
+git push origin release/v1.2.0
+
+# 建立 PR: release/v1.2.0 → main
+# 審查並合併
+```
+
+#### 5. 建立 Tag
+
+```bash
 git checkout main
 git pull origin main
-git checkout -b hotfix/1.2.1-critical-fix
+git tag -a v1.2.0 -m "Release version 1.2.0"
+git push origin v1.2.0
+```
 
-# Make fix and commit
-git add .
+#### 6. 合併回 develop
+
+```bash
+git checkout develop
+git merge main
+git push origin develop
+```
+
+#### 7. 發布說明
+
+在 GitHub Releases 建立發布說明，包含：
+
+- 新功能列表
+- Bug 修復列表
+- 破壞性變更（如有）
+- 升級指南（如有）
+- 已知問題（如有）
+
+### Hotfix 流程
+
+緊急修復直接從 main 分支：
+
+```bash
+# 1. 建立 hotfix branch
+git checkout main
+git pull origin main
+git checkout -b hotfix/security-patch
+
+# 2. 修復問題
+# ...
+
+# 3. Commit
 git commit -m "fix(security): patch XSS vulnerability"
 
-# Merge to main
+# 4. 測試
+npm test
+npm run build
+
+# 5. 合併到 main
 git checkout main
-git merge hotfix/1.2.1-critical-fix
-git tag v1.2.1
+git merge hotfix/security-patch
+
+# 6. 建立 tag
+git tag -a v1.2.1 -m "Hotfix: security patch"
 git push origin main --tags
 
-# Also merge to develop
+# 7. 合併回 develop
 git checkout develop
-git merge hotfix/1.2.1-critical-fix
+git merge main
 git push origin develop
 
-# Delete hotfix branch
-git branch -d hotfix/1.2.1-critical-fix
-git push origin --delete hotfix/1.2.1-critical-fix
+# 8. 刪除 hotfix branch
+git branch -d hotfix/security-patch
 ```
 
-## Best Practices
+---
 
-### Commits
-- Commit early and often
-- Make atomic commits (one logical change per commit)
-- Write meaningful commit messages
-- Don't commit sensitive data or credentials
-- Review changes before committing
+## 常見命令
 
-### Branches
-- Keep branches short-lived (< 1 week)
-- Sync with base branch regularly
-- Delete branches after merge
-- Use descriptive branch names
+### 日常開發
 
-### Collaboration
-- Communicate changes in PR descriptions
-- Tag relevant team members
-- Keep PRs manageable in size
-- Respond to review comments promptly
-- Use draft PRs for work in progress
-
-## Useful Git Commands
-
-### Checking Status
 ```bash
-# Show status
+# 查看狀態
 git status
 
-# Show commit log
-git log --oneline --graph --all
-
-# Show changes
+# 查看變更
 git diff
-git diff --staged
+
+# 暫存所有變更
+git add .
+
+# 暫存特定檔案
+git add path/to/file
+
+# Commit
+git commit -m "feat(scope): description"
+
+# 推送
+git push origin branch-name
+
+# 拉取最新變更
+git pull origin develop
 ```
 
-### Undoing Changes
+### 分支操作
+
 ```bash
-# Discard local changes
-git checkout -- <file>
+# 查看所有分支
+git branch -a
 
-# Unstage file
-git reset HEAD <file>
+# 建立並切換分支
+git checkout -b feature/new-feature
 
-# Amend last commit
+# 切換分支
+git checkout branch-name
+
+# 刪除本地分支
+git branch -d branch-name
+
+# 強制刪除本地分支
+git branch -D branch-name
+
+# 刪除遠端分支
+git push origin --delete branch-name
+```
+
+### 同步與合併
+
+```bash
+# Rebase（保持線性歷史）
+git rebase develop
+
+# Merge（保留完整歷史）
+git merge develop
+
+# 解決衝突後
+git add .
+git rebase --continue
+# 或
+git merge --continue
+
+# 放棄 rebase/merge
+git rebase --abort
+git merge --abort
+```
+
+### 撤銷與修改
+
+```bash
+# 撤銷未暫存的變更
+git checkout -- path/to/file
+
+# 撤銷已暫存的變更
+git reset HEAD path/to/file
+
+# 修改最後一次 commit
 git commit --amend
 
-# Undo last commit (keep changes)
+# 撤銷最後一次 commit（保留變更）
 git reset --soft HEAD~1
 
-# Undo last commit (discard changes)
+# 撤銷最後一次 commit（丟棄變更）
 git reset --hard HEAD~1
 ```
 
-### Cleaning Up
+### 查看歷史
+
 ```bash
-# Remove untracked files (dry run)
-git clean -n
+# 查看 commit 歷史
+git log
 
-# Remove untracked files
-git clean -f
+# 簡潔的 commit 歷史
+git log --oneline
 
-# Remove untracked files and directories
-git clean -fd
+# 圖形化顯示
+git log --graph --oneline --all
+
+# 查看特定檔案的歷史
+git log -- path/to/file
+
+# 查看特定 commit
+git show commit-hash
 ```
 
-## Git Configuration
+---
 
-### Recommended Settings
+## Git 配置建議
+
+### 全域配置
+
 ```bash
-# Set user info
+# 設定使用者資訊
 git config --global user.name "Your Name"
 git config --global user.email "your.email@example.com"
 
-# Set default editor
+# 設定預設編輯器
 git config --global core.editor "code --wait"
 
-# Enable color
-git config --global color.ui auto
-
-# Set default branch name
+# 設定預設分支名稱
 git config --global init.defaultBranch main
 
-# Configure line endings (choose ONE based on your platform)
-# IMPORTANT: Teams should standardize on one approach
-git config --global core.autocrlf input  # Mac/Linux (recommended for cross-platform teams)
-git config --global core.autocrlf true   # Windows only (if team is Windows-only)
-# Note: Use .gitattributes file to enforce consistent line endings across all platforms
+# 啟用顏色輸出
+git config --global color.ui auto
+
+# 設定 pull 策略
+git config --global pull.rebase true
 ```
 
-### Useful Aliases
+### 專案配置
+
 ```bash
-# Status shortcut
-git config --global alias.st status
-
-# Log with graph
-git config --global alias.lg "log --oneline --graph --all"
-
-# Amend last commit
-git config --global alias.amend "commit --amend --no-edit"
-
-# Show current branch
-git config --global alias.current "rev-parse --abbrev-ref HEAD"
+# 設定行尾符號（跨平台開發）
+git config core.autocrlf input  # Mac/Linux
+git config core.autocrlf true   # Windows
 ```
 
-## Troubleshooting
+---
 
-### Problem: Merge Conflicts
-**Solution**: Resolve conflicts manually, then continue with merge/rebase
+## 常見問題
 
-### Problem: Pushed Wrong Commit
-**Solution**: Use `git revert` to create a new commit that undoes changes
+### Q: 如何修改已推送的 commit message？
 
-### Problem: Need to Change Old Commit
-**Solution**: Use interactive rebase (`git rebase -i`) carefully
+```bash
+# 修改最後一次 commit
+git commit --amend
+git push origin branch-name --force-with-lease
 
-### Problem: Accidentally Deleted Branch
-**Solution**: Use `git reflog` to find commit and recreate branch
+# 修改更早的 commit（使用 interactive rebase）
+git rebase -i HEAD~3  # 修改最近 3 個 commits
+# 將要修改的 commit 標記為 'reword'
+git push origin branch-name --force-with-lease
+```
 
-## References
-- [Git Documentation](https://git-scm.com/doc)
-- [GitHub Flow](https://guides.github.com/introduction/flow/)
+### Q: 如何合併多個 commits？
+
+```bash
+git rebase -i HEAD~3  # 合併最近 3 個 commits
+# 將後續的 commits 標記為 'squash' 或 's'
+git push origin branch-name --force-with-lease
+```
+
+### Q: 如何解決合併衝突？
+
+```bash
+# 1. 拉取最新變更
+git pull origin develop
+
+# 2. 查看衝突檔案
+git status
+
+# 3. 手動編輯衝突檔案，解決衝突標記
+# <<<<<<<, =======, >>>>>>>
+
+# 4. 標記為已解決
+git add conflicted-file
+
+# 5. 完成合併
+git commit  # 或 git rebase --continue
+```
+
+### Q: 不小心 commit 到錯誤的分支怎麼辦？
+
+```bash
+# 1. 記下 commit hash
+git log
+
+# 2. 切換到正確的分支
+git checkout correct-branch
+
+# 3. Cherry-pick 該 commit
+git cherry-pick commit-hash
+
+# 4. 回到錯誤的分支，撤銷 commit
+git checkout wrong-branch
+git reset --hard HEAD~1
+```
+
+---
+
+## 參考資源
+
 - [Conventional Commits](https://www.conventionalcommits.org/)
-- [Git Best Practices](https://git-scm.com/book/en/v2)
+- [Semantic Versioning](https://semver.org/)
+- [Git Flow](https://nvie.com/posts/a-successful-git-branching-model/)
+- [Pro Git Book](https://git-scm.com/book/en/v2)
+
+---
+
+**記住**: Git 工作流程的目的是讓團隊協作更順暢，而非製造障礙。根據專案需求靈活調整。

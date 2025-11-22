@@ -10,34 +10,34 @@
 
 ### 必讀文檔（按優先順序）
 
-1. **[CODING_STANDARDS.md](./CODING_STANDARDS.md)** ⭐⭐⭐
+1. **[../standards/coding-standards.md](../standards/coding-standards.md)** ⭐⭐⭐
    - 開始這裡！整體規範總覽
    - 涵蓋所有關鍵領域
    - 包含檢查清單
 
-2. **[ARCHITECTURE.md](./src/app/ARCHITECTURE.md)** ⭐⭐⭐
+2. **[../architecture/system-overview.md](../architecture/system-overview.md)** ⭐⭐⭐
    - DDD 架構說明
    - 分層原則和依賴規則
    - 資料流設計
 
-3. **[NAMING_CONVENTIONS.md](./NAMING_CONVENTIONS.md)** ⭐⭐
+3. **[../standards/naming-conventions.md](../standards/naming-conventions.md)** ⭐⭐
    - 命名規範詳細說明
    - 包含大量範例
 
-4. **[CODE_STYLE.md](./CODE_STYLE.md)** ⭐⭐
+4. **[../standards/code-style.md](../standards/code-style.md)** ⭐⭐
    - 代碼風格指南
    - TypeScript, Angular, HTML, SCSS
 
-5. **[GIT_WORKFLOW.md](./GIT_WORKFLOW.md)** ⭐⭐
+5. **[../standards/git-workflow.md](../standards/git-workflow.md)** ⭐⭐
    - Git 工作流程
    - Commit message 規範
    - PR 流程
 
-6. **[DEPENDENCY_RULES.md](./DEPENDENCY_RULES.md)** ⭐
+6. **[../standards/dependency-rules.md](../standards/dependency-rules.md)** ⭐
    - 依賴規則詳細說明
    - 進階架構主題
 
-7. **[TESTING_STANDARDS.md](./TESTING_STANDARDS.md)** ⭐
+7. **[../standards/testing-standards.md](../standards/testing-standards.md)** ⭐
    - 測試策略和標準
    - 測試覆蓋率要求
 
@@ -82,9 +82,9 @@
    ```
 
 4. **閱讀核心文檔**
-   - [ ] [CODING_STANDARDS.md](./CODING_STANDARDS.md)
-   - [ ] [ARCHITECTURE.md](./src/app/ARCHITECTURE.md)
-   - [ ] [GIT_WORKFLOW.md](./GIT_WORKFLOW.md)
+   - [ ] [../standards/coding-standards.md](../standards/coding-standards.md)
+   - [ ] [../architecture/system-overview.md](../architecture/system-overview.md)
+   - [ ] [../standards/git-workflow.md](../standards/git-workflow.md)
 
 ### Day 2-3: 熟悉架構
 
@@ -221,7 +221,7 @@ npm run lint:fix
 
 ### Q2: 不確定如何命名？
 
-查看 [NAMING_CONVENTIONS.md](./NAMING_CONVENTIONS.md)，裡面有詳細的範例。
+查看 [命名規範](../standards/naming-conventions.md)，裡面有詳細的範例。
 
 基本規則：
 - 檔案：`kebab-case`
@@ -231,7 +231,7 @@ npm run lint:fix
 
 ### Q3: 不知道代碼應該放在哪一層？
 
-參考 [ARCHITECTURE.md](./src/app/ARCHITECTURE.md)：
+參考 [系統架構概覽](../architecture/system-overview.md)：
 
 - 純業務邏輯 → `core/domain/`
 - 用例協調 → `core/application/`
@@ -285,7 +285,7 @@ npm test -- --code-coverage
 open coverage/index.html
 ```
 
-參考 [TESTING_STANDARDS.md](./TESTING_STANDARDS.md) 了解如何撰寫測試。
+參考 [測試規範](../standards/testing-standards.md) 了解如何撰寫測試。
 
 ---
 
@@ -293,7 +293,7 @@ open coverage/index.html
 
 ### 初級（Week 1-2）
 1. ✅ 環境設定
-2. ✅ 閱讀 CODING_STANDARDS.md
+2. ✅ 閱讀 [編碼規範](../standards/coding-standards.md)
 3. ✅ 理解基本架構
 4. ✅ 學習 Git 工作流程
 5. ✅ 完成第一個小任務
