@@ -10,6 +10,12 @@
 - [ ] 🔧 建置/工具相關 (Build/Tools)
 - [ ] 🔥 緊急修復 (Hotfix)
 
+## PR 原則
+<!-- 請確認以下原則 -->
+- [ ] 此 PR 專注於單一目的/功能（Single Responsibility）
+- [ ] 變更範圍最小化，僅包含必要的修改
+- [ ] 如有破壞性變更，已在下方詳細說明
+
 ## 變更描述
 <!-- 簡要描述此 PR 的變更內容 -->
 
@@ -59,13 +65,18 @@ Closes #
 
 ## 檢查清單
 
-### 代碼品質
-- [ ] 代碼通過 `npm run lint`
+### CI 流程
+<!-- 確保通過所有 CI 檢查 -->
+- [ ] GitHub Actions CI 通過所有檢查
 - [ ] 代碼通過 `npm run format:check`
-- [ ] 代碼通過 `npm test`
+- [ ] 代碼通過 `npm run lint`
 - [ ] 代碼通過 `npm run build`
+- [ ] 代碼通過 `npm test`（使用 ChromeHeadless）
+
+### 代碼品質
 - [ ] 無 TypeScript 編譯錯誤
 - [ ] 無 console.log 或 debugger 語句（除非必要）
+- [ ] 代碼風格一致且可讀性好
 
 ### 架構和規範
 - [ ] 遵循 [架構原則](../docs/architecture/system-overview.md)
