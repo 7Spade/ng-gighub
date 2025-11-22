@@ -186,7 +186,7 @@ This project uses Supabase as the primary database and backend service:
 - Ensure proper error handling for database and storage operations
 - Use TypeScript types for database schemas when available
 - Set up appropriate bucket policies and RLS for storage security
-- See `SUPABASE_SETUP.md` for detailed usage examples
+- See `docs/setup/supabase.md` for detailed usage examples
 
 ### Angular Material & CDK
 - **Material:** Component library installed for future UI development

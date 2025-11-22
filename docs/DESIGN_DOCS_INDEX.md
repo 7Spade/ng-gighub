@@ -37,8 +37,8 @@
 ### 補充文件
 
 4. **[系統概覽](architecture/system-overview.md)** - 技術架構總覽
-5. **[Supabase 設定](../SUPABASE_SETUP.md)** - 資料庫與後端設定
-6. **[環境設定](../ENV_SETUP.md)** - 開發環境設定
+5. **[Supabase 設定](setup/supabase.md)** - 資料庫與後端設定
+6. **[環境設定](setup/environment.md)** - 開發環境設定
 
 ---
 
@@ -287,9 +287,11 @@ describe('Username', () => {
 
 ### 內部文件
 - [專案 README](../README.md)
-- [Supabase 設定](../SUPABASE_SETUP.md)
-- [環境設定](../ENV_SETUP.md)
+- [貢獻指南](../CONTRIBUTING.md)
+- [Supabase 設定](setup/supabase.md)
+- [環境設定](setup/environment.md)
 - [實作總結](IMPLEMENTATION_SUMMARY.md)
+- [文件管理標準](DOCUMENTATION_STANDARDS.md)
 
 ### 外部參考
 - [Domain-Driven Design](https://www.domainlanguage.com/ddd/)
