@@ -68,10 +68,10 @@ Closes #
 - [ ] 無 console.log 或 debugger 語句（除非必要）
 
 ### 架構和規範
-- [ ] 遵循 [ARCHITECTURE.md](../ARCHITECTURE.md) 架構原則
-- [ ] 遵循 [NAMING_CONVENTIONS.md](../NAMING_CONVENTIONS.md) 命名規範
-- [ ] 遵循 [CODE_STYLE.md](../CODE_STYLE.md) 代碼風格
-- [ ] 遵循 [DEPENDENCY_RULES.md](../DEPENDENCY_RULES.md) 依賴規則
+- [ ] 遵循 [架構原則](../docs/architecture/system-overview.md)
+- [ ] 遵循 [命名規範](../docs/standards/naming-conventions.md)
+- [ ] 遵循 [代碼風格](../docs/standards/code-style.md)
+- [ ] 遵循 [依賴規則](../docs/standards/dependency-rules.md)
 - [ ] 無循環依賴
 - [ ] 依賴方向正確（由外向內）
 
