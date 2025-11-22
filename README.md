@@ -94,7 +94,7 @@ npm run check
 
 ## 🏗️ Building
 
-To build the project run:
+建置專案：
 
 ```bash
 npm run build
@@ -201,6 +201,63 @@ src/app/
 ## 📝 License
 
 This project is private and proprietary.
+
+## SSR 伺服器
+
+執行 Server-Side Rendering 伺服器：
+
+```bash
+npm run serve:ssr:ng-gighub
+```
+
+需要先執行 `npm run build` 建置專案。
+
+## 專案架構
+
+本專案採用 **Domain-Driven Design (DDD) + Clean Architecture + CQRS** 架構模式：
+
+```
+src/app/
+├── core/                    # 核心層
+│   ├── domain/             # 領域層（業務邏輯）
+│   ├── application/        # 應用層（用例、Commands/Queries）
+│   └── infrastructure/     # 基礎設施層（資料存取、外部服務）
+├── features/               # 功能模組（UI 組件）
+├── layouts/                # 版面配置
+└── shared/                 # 共用元件與工具
+```
+
+詳細架構說明請參考：
+- [系統架構概覽](docs/architecture/system-overview.md)
+- [領域模型設計](docs/architecture/DOMAIN_MODEL.md)
+- [資料夾結構詳解](docs/architecture/FOLDER_STRUCTURE.md)
+
+## 技術棧
+
+| 類別 | 技術 | 版本 |
+|------|------|------|
+| 框架 | Angular | 20.1.x |
+| 語言 | TypeScript | 5.8.x |
+| SSR | @angular/ssr + Express | 20.1.x |
+| 後端 | Supabase | Latest |
+| 樣式 | SCSS | - |
+| 測試 | Jasmine + Karma | - |
+| UI 元件庫 | Angular Material | 20.1.x |
+
+## 開發規範
+
+- 遵循 [Angular Style Guide](https://angular.dev/style-guide)
+- 參考 [程式碼風格指南](docs/standards/code-style.md)
+- 遵守 [Git 工作流程](docs/standards/git-workflow.md)
+- 查看 [審查準則](docs/standards/review-guidelines.md)
+
+## 貢獻
+
+歡迎貢獻！請參閱 [CONTRIBUTING.md](CONTRIBUTING.md) 了解如何參與專案開發。
+
+## 授權
+
+[待補充授權資訊]
 
 ## Running end-to-end tests
 
