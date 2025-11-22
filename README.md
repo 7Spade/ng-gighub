@@ -1,18 +1,61 @@
-# NgGighub
+# ng-gighub
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.4.
+**Angular 20.1 + SSR + Supabase + DDD Architecture**
 
-## Development server
+This project is an enterprise-grade Angular application built with Domain-Driven Design principles, Server-Side Rendering, and Supabase backend.
+
+## 📚 Documentation
+
+### 開發規範 (Development Standards)
+- **[CODING_STANDARDS.md](./CODING_STANDARDS.md)** - 整體開發規範總覽
+- **[NAMING_CONVENTIONS.md](./NAMING_CONVENTIONS.md)** - 命名規則詳細說明
+- **[CODE_STYLE.md](./CODE_STYLE.md)** - 代碼風格指南
+- **[DEPENDENCY_RULES.md](./DEPENDENCY_RULES.md)** - 依賴方向規則
+- **[TESTING_STANDARDS.md](./TESTING_STANDARDS.md)** - 測試規範和策略
+- **[GIT_WORKFLOW.md](./GIT_WORKFLOW.md)** - Git 工作流程和 commit 規範
+
+### 架構文檔 (Architecture)
+- **[ARCHITECTURE.md](./src/app/ARCHITECTURE.md)** - DDD 架構說明
+- **[SUPABASE_SETUP.md](./SUPABASE_SETUP.md)** - Supabase 設定指南
+- **[ENV_SETUP.md](./ENV_SETUP.md)** - 環境變數設定
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js v20.x
+- npm v10.x
+- Supabase project
+
+### Installation
+
+```bash
+# Clone repository
+git clone https://github.com/7Spade/ng-gighub.git
+cd ng-gighub
+
+# Install dependencies
+npm install
+
+# Setup environment variables
+cp .env.example .env
+# Edit .env with your Supabase credentials
+```
+
+### Development server
 
 To start a local development server, run:
 
 ```bash
+npm start
+# or
 ng serve
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+## 🛠️ Development
+
+### Code Scaffolding
 
 Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
@@ -26,23 +69,138 @@ For a complete list of available schematics (such as `components`, `directives`,
 ng generate --help
 ```
 
-## Building
+**重要**: 請遵循 [NAMING_CONVENTIONS.md](./NAMING_CONVENTIONS.md) 的命名規範。
+
+### Code Quality
+
+在提交代碼前，請執行以下檢查：
+
+```bash
+# 檢查代碼格式
+npm run format:check
+
+# 自動格式化代碼
+npm run format
+
+# 執行 ESLint
+npm run lint
+
+# 自動修復 ESLint 問題
+npm run lint:fix
+
+# 執行所有檢查（format + lint）
+npm run check
+```
+
+## 🏗️ Building
 
 To build the project run:
 
 ```bash
-ng build
+npm run build
 ```
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Running unit tests
+### Server-Side Rendering
+
+To run the SSR server:
+
+```bash
+# First, build the project
+npm run build
+
+# Then, serve with SSR
+npm run serve:ssr:ng-gighub
+```
+
+## 🧪 Testing
+
+### Running unit tests
 
 To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
 ```bash
-ng test
+npm test
 ```
+
+### Running tests with coverage
+
+```bash
+npm test -- --code-coverage
+```
+
+詳細測試規範請參考 [TESTING_STANDARDS.md](./TESTING_STANDARDS.md)。
+
+## 📋 Code Review Checklist
+
+在提交 Pull Request 前，請確認：
+
+- [ ] 代碼通過 `npm run check`（ESLint + Prettier）
+- [ ] 所有測試通過 `npm test`
+- [ ] Build 成功 `npm run build`
+- [ ] 遵循 [命名規範](./NAMING_CONVENTIONS.md)
+- [ ] 遵循 [架構分層原則](./src/app/ARCHITECTURE.md)
+- [ ] 遵循 [依賴規則](./DEPENDENCY_RULES.md)
+- [ ] 有適當的測試覆蓋
+- [ ] Commit message 符合 [Conventional Commits](https://www.conventionalcommits.org/) 規範
+- [ ] PR 使用了 [PR 模板](./.github/pull_request_template.md)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Follow the [Git Workflow](./GIT_WORKFLOW.md)
+4. Follow the [Coding Standards](./CODING_STANDARDS.md)
+5. Write tests following [Testing Standards](./TESTING_STANDARDS.md)
+6. Commit your changes following [Conventional Commits](https://www.conventionalcommits.org/)
+7. Push to the branch (`git push origin feature/amazing-feature`)
+8. Open a Pull Request using the [PR template](./.github/pull_request_template.md)
+
+## 📖 Project Structure
+
+```
+src/app/
+├── core/
+│   ├── domain/         # Domain layer - Business logic core
+│   ├── application/    # Application layer - Use cases (CQRS)
+│   └── infrastructure/ # Infrastructure layer - Technical implementations
+├── features/           # Presentation layer - UI implementation
+├── shared/             # Shared modules - Cross-feature components
+└── layouts/            # Layout modules - Overall page structure
+```
+
+詳細架構說明請參考 [ARCHITECTURE.md](./src/app/ARCHITECTURE.md)。
+
+## 🔧 Technology Stack
+
+- **Framework**: Angular 20.1.x
+- **Language**: TypeScript 5.8.x
+- **SSR**: @angular/ssr + Express
+- **Database**: Supabase (PostgreSQL)
+- **UI**: Angular Material / CDK
+- **State Management**: NgRx Signal Store / RxJS
+- **Testing**: Karma + Jasmine
+- **Code Quality**: ESLint + Prettier
+- **Architecture**: DDD + Clean Architecture + CQRS
+
+## 📚 Learning Resources
+
+### Internal Docs
+- [Coding Standards](./CODING_STANDARDS.md)
+- [Architecture Guide](./src/app/ARCHITECTURE.md)
+- [Git Workflow](./GIT_WORKFLOW.md)
+
+### External Resources
+- [Angular Documentation](https://angular.dev)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+- [Domain-Driven Design](https://martinfowler.com/bliki/DomainDrivenDesign.html)
+- [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+- [Supabase Documentation](https://supabase.com/docs)
+
+## 📝 License
+
+This project is private and proprietary.
 
 ## Running end-to-end tests
 
