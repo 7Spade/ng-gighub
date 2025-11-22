@@ -2,6 +2,26 @@
 
 Welcome to the ng-gighub documentation! This documentation is specifically designed to work effectively with AI agents and human developers.
 
+## 🎓 開發學習路徑（推薦起點）
+
+**新手入門？請從這裡開始！**
+
+我們提供結構化的學習路徑，幫助您從零開始，循序漸進地掌握專案。
+
+### 📘 [完整學習路徑指南](./LEARNING_PATH.md)
+
+按照以下順序學習，可以最有效率地理解專案：
+
+- **Level 0: 入門必讀** 🚀 - 專案概覽、環境設定、貢獻指南
+- **Level 1: 架構理解** 🏗️ - 系統架構、領域模型、資料夾結構
+- **Level 2: 開發規範** 📏 - 程式碼規範、Git 工作流程、測試標準
+- **Level 3: 功能開發** ⚙️ - 實作指南、模組開發、實際練習
+- **Level 4: 進階主題** 🚀 - 基礎設施、安全性、效能優化
+
+**強烈建議先閱讀** [LEARNING_PATH.md](./LEARNING_PATH.md)，它會引導您按照最佳順序閱讀下面的所有文件。
+
+---
+
 ## 📚 Documentation Structure
 
 ### 📋 [setup/](./setup/)
@@ -65,7 +85,17 @@ AI agent prompt templates for common development tasks.
 
 ## 🚀 Quick Start
 
-### For Developers
+### 🆕 新成員入門
+**如果您是第一次接觸本專案，請按照以下步驟：**
+
+1. 📖 **閱讀** [開發學習路徑](./LEARNING_PATH.md) - 完整的學習指南
+2. 🏠 **閱讀** [專案 README](../README.md) - 專案概覽與快速開始
+3. 💻 **設定** [開發環境](./setup/environment.md) - 安裝與配置
+4. 🗄️ **設定** [Supabase](./setup/supabase.md) - 後端服務設定
+5. 🏗️ **理解** [系統架構](./architecture/system-overview.md) - 架構概覽
+6. 📝 **遵循** [程式碼風格](./standards/code-style.md) - 開發規範
+
+### 👨‍💻 For Developers
 1. Read the [系統概覽](./architecture/system-overview.md) to understand the architecture
 2. Review [程式碼風格](./standards/code-style.md) before writing code
 3. Follow [Git 工作流程](./standards/git-workflow.md) for commits and PRs
@@ -73,7 +103,7 @@ AI agent prompt templates for common development tasks.
 5. Configure your [開發環境](./setup/environment.md)
 6. Set up [Supabase](./setup/supabase.md) for backend services
 
-### For AI Agents
+### 🤖 For AI Agents
 1. Use [prompts/](./prompts/) templates for structured tasks
 2. Reference [architecture/](./architecture/) for system context
 3. Follow [standards/](./standards/) for consistency
@@ -155,6 +185,9 @@ flowchart LR
 
 | Topic | Location | Files |
 |-------|----------|-------|
+| **學習路徑** | `.` | `LEARNING_PATH.md` ⭐ |
+| **設計文件索引** | `.` | `DESIGN_DOCS_INDEX.md` |
+| **文件管理標準** | `.` | `DOCUMENTATION_STANDARDS.md` |
 | Environment Setup | `setup/` | `environment.md` |
 | Supabase Setup | `setup/` | `supabase.md` |
 | System Architecture | `architecture/` | `system-overview.md` |
@@ -173,33 +206,41 @@ flowchart LR
 | Development Roadmap | `workspace/todos/` | `development-roadmap.md` |
 | Design Decisions | `workspace/notes/` | `*.md` |
 | Meeting Records | `workspace/meeting-minutes/` | `*.md` |
-| Documentation Standards | `.` | `DOCUMENTATION_STANDARDS.md` |
 
 ### By Role
 
 #### Frontend Developer
-- Start: `architecture/system-overview.md`
-- Style: `standards/code-style.md`
-- Components: `workspace/notes/component-x.md`
+- Start: [學習路徑](./LEARNING_PATH.md) ⭐
+- Architecture: [系統概覽](./architecture/system-overview.md)
+- Style: [程式碼風格](./standards/code-style.md)
+- Components: [實作指南](./guides/implementation-guide.md)
 
 #### Backend Developer
-- Start: `architecture/system-overview.md`
+- Start: [學習路徑](./LEARNING_PATH.md) ⭐
+- Architecture: [系統架構](./architecture/system-overview.md)
+- Domain: [領域模型](./architecture/DOMAIN_MODEL.md)
 - API: `architecture/api-specs/v2.json`
-- Database: `architecture/diagrams/erd.md`
+- Database: [ERD](./architecture/diagrams/erd.md)
+
+#### New Team Member
+- Start: [學習路徑](./LEARNING_PATH.md) ⭐ **必讀！**
+- Follow Level 0 → Level 1 → Level 2 → Level 3 → Level 4
 
 #### DevOps Engineer
-- Start: `architecture/system-overview.md`
-- Workflows: `standards/git-workflow.md`
+- Start: [系統概覽](./architecture/system-overview.md)
+- Workflows: [Git 工作流程](./standards/git-workflow.md)
 
 #### Project Manager
-- Tasks: `workspace/todos/sprint-2025-11.yaml`
+- Overview: [專案 README](../README.md)
+- Tasks: `workspace/todos/`
 - Meetings: `workspace/meeting-minutes/`
-- Architecture: `architecture/system-overview.md`
+- Architecture: [系統概覽](./architecture/system-overview.md)
 
 #### AI Agent
+- Start: [學習路徑](./LEARNING_PATH.md) for context
 - Prompts: `prompts/`
 - Standards: `standards/`
-- Context: `architecture/`
+- Architecture: `architecture/`
 
 ## 🛠️ Tools & Formats
 
@@ -402,28 +443,54 @@ Track these metrics to ensure documentation health:
 
 ## 🎓 Learning Path
 
-### Week 1: Onboarding
-1. Read system-overview.md
-2. Review code-style.md
-3. Understand git-workflow.md
-4. Explore api-specs
+### 📘 按開發順序學習（推薦）
 
-### Week 2: Deep Dive
-1. Study architecture diagrams
-2. Review prompts for AI usage
-3. Read review guidelines
-4. Check recent meeting minutes
+詳細的學習路徑請參考 **[LEARNING_PATH.md](./LEARNING_PATH.md)**
 
-### Ongoing
-1. Keep workspace documents updated
-2. Contribute to standards
-3. Archive old content
-4. Improve documentation
+#### Level 0: 入門必讀 (1-2 天)
+- [專案 README](../README.md) - 專案概覽
+- [環境設定](./setup/environment.md) - 開發環境配置
+- [Supabase 設定](./setup/supabase.md) - 後端服務設定
+- [貢獻指南](../CONTRIBUTING.md) - 開發流程與規範
+
+#### Level 1: 架構理解 (2-3 天)
+- [系統架構概覽](./architecture/system-overview.md) - DDD + Clean Architecture
+- [領域模型](./architecture/DOMAIN_MODEL.md) - 聚合根、實體、值對象
+- [資料夾結構](./architecture/FOLDER_STRUCTURE.md) - 程式碼組織
+- [架構圖表](./architecture/diagrams/) - ERD、流程圖
+
+#### Level 2: 開發規範 (2-3 天)
+- [程式碼規範](./standards/coding-standards.md) - 整體開發規範
+- [程式碼風格](./standards/code-style.md) - TypeScript/Angular 風格
+- [命名規範](./standards/naming-conventions.md) - 檔案與變數命名
+- [Git 工作流程](./standards/git-workflow.md) - 分支策略與 Commit 規範
+- [測試標準](./standards/testing-standards.md) - 測試策略與實作
+- [審查準則](./standards/review-guidelines.md) - Code Review 流程
+
+#### Level 3: 功能開發 (1-2 週)
+- [實作指南](./guides/implementation-guide.md) - 完整的功能開發流程
+- [模組 README](../src/app/core/domain/README.md) - 各層級詳細說明
+- 實作練習與專案任務
+
+#### Level 4: 進階主題 (持續學習)
+- [基礎設施](./infrastructure/) - Authentication, Authorization, Security
+- [多租戶架構](./infrastructure/multi-tenancy.md)
+- [安全性最佳實踐](./infrastructure/security-best-practices.md)
+- 效能優化、監控、CI/CD
+
+### 📊 學習進度追蹤
+
+完成每個 Level 後，檢查 [LEARNING_PATH.md](./LEARNING_PATH.md) 中的驗證清單。
 
 ---
 
-**Last Updated**: 2025-11-21  
-**Version**: 1.0.0  
+**Last Updated**: 2025-11-22  
+**Version**: 1.1.0  
 **Maintainers**: Development Team
+
+**重要更新**:
+- ✨ 新增 [開發學習路徑](./LEARNING_PATH.md) - 結構化的 Level 0-4 學習指南
+- 📝 改善文件導覽與組織
+- 🎯 明確的新手入門路徑
 
 For questions or suggestions, please open an issue or contact the team.
