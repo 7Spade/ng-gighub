@@ -2,9 +2,14 @@
 # 具體實施任務清單
 
 **Project**: ng-gighub Multi-tenant Collaborative Workspace Platform  
-**Current Completion**: 38%  
+**Current Completion**: 42% (updated 2025-11-22)  
 **Target**: 100%  
-**Estimated Remaining**: 166-234 hours
+**Estimated Remaining**: 158-226 hours (reduced from 166-234)
+
+**Latest Progress**:
+- ✅ Phase 1a Application Layer: 13/14 tasks completed (handlers & queries implemented)
+- ⏳ Phase 1a remaining: TaskApplicationService update pending
+- 📝 Unit tests for handlers & queries pending (to be added in Phase 1e)
 
 ---
 
@@ -15,114 +20,118 @@
 #### Week 1 - Days 1-2: Command Handlers Implementation
 
 **Task 1.1: CreateTaskCommandHandler** [2 hours]
-- [ ] Create file: `src/app/core/application/task/commands/handlers/create-task.handler.ts`
-- [ ] Inject `ITaskRepository` dependency
-- [ ] Implement `execute(command: CreateTaskCommand)` method
-- [ ] Create TaskAggregate using factory method
-- [ ] Call repository.save()
-- [ ] Handle domain events
-- [ ] Add error handling with try-catch
-- [ ] Add logging
+- [x] Create file: `src/app/core/application/task/commands/handlers/create-task.handler.ts`
+- [x] Inject `ITaskRepository` dependency
+- [x] Implement `execute(command: CreateTaskCommand)` method
+- [x] Create TaskAggregate using factory method
+- [x] Call repository.save()
+- [x] Handle domain events
+- [x] Add error handling with try-catch
+- [x] Add logging
 - [ ] Write unit tests
-- **Deliverable**: Working CreateTaskCommandHandler with tests
+- **Deliverable**: Working CreateTaskCommandHandler with tests ✅ (tests pending)
 
 **Task 1.2: UpdateTaskCommandHandler** [1.5 hours]
-- [ ] Create file: `src/app/core/application/task/commands/handlers/update-task.handler.ts`
-- [ ] Load task from repository by ID
-- [ ] Apply updates using aggregate methods
-- [ ] Call repository.update()
-- [ ] Handle domain events
+- [x] Create file: `src/app/core/application/task/commands/handlers/update-task.handler.ts`
+- [x] Load task from repository by ID
+- [x] Apply updates using aggregate methods
+- [x] Call repository.update()
+- [x] Handle domain events
 - [ ] Write unit tests
-- **Deliverable**: Working UpdateTaskCommandHandler with tests
+- **Deliverable**: Working UpdateTaskCommandHandler with tests ✅ (tests pending)
 
 **Task 1.3: ChangeTaskStatusCommandHandler** [1.5 hours]
-- [ ] Create file: `src/app/core/application/task/commands/handlers/change-task-status.handler.ts`
-- [ ] Load task from repository
-- [ ] Call task.changeStatus() with validation
-- [ ] Handle domain events
-- [ ] Update repository
+- [x] Create file: `src/app/core/application/task/commands/handlers/change-task-status.handler.ts`
+- [x] Load task from repository
+- [x] Call task.changeStatus() with validation
+- [x] Handle domain events
+- [x] Update repository
 - [ ] Write unit tests
-- **Deliverable**: Working ChangeTaskStatusCommandHandler with tests
+- **Deliverable**: Working ChangeTaskStatusCommandHandler with tests ✅ (tests pending)
 
 **Task 1.4: AssignTaskCommandHandler** [1 hour]
-- [ ] Create file: `src/app/core/application/task/commands/handlers/assign-task.handler.ts`
-- [ ] Load task from repository
-- [ ] Call task.assignTo()
-- [ ] Update repository
-- [ ] Handle domain events
+- [x] Create file: `src/app/core/application/task/commands/handlers/assign-task.handler.ts`
+- [x] Load task from repository
+- [x] Call task.assignTo()
+- [x] Update repository
+- [x] Handle domain events
 - [ ] Write unit tests
-- **Deliverable**: Working AssignTaskCommandHandler with tests
+- **Deliverable**: Working AssignTaskCommandHandler with tests ✅ (tests pending)
 
 **Task 1.5: AddTaskCommentCommandHandler** [1.5 hours]
-- [ ] Create file: `src/app/core/application/task/commands/handlers/add-task-comment.handler.ts`
-- [ ] Load task from repository
-- [ ] Call task.addComment()
-- [ ] Update repository
-- [ ] Handle domain events
+- [x] Create file: `src/app/core/application/task/commands/handlers/add-task-comment.handler.ts`
+- [x] Load task from repository
+- [x] Call task.addComment()
+- [x] Update repository
+- [x] Handle domain events
 - [ ] Write unit tests
-- **Deliverable**: Working AddTaskCommentCommandHandler with tests
+- **Deliverable**: Working AddTaskCommentCommandHandler with tests ✅ (tests pending)
 
 **Task 1.6: DeleteTaskCommandHandler** [1 hour]
-- [ ] Create file: `src/app/core/application/task/commands/handlers/delete-task.handler.ts`
-- [ ] Load task from repository
-- [ ] Call task.delete()
-- [ ] Call repository.delete()
-- [ ] Handle domain events
+- [x] Create file: `src/app/core/application/task/commands/handlers/delete-task.handler.ts`
+- [x] Load task from repository
+- [x] Call task.delete()
+- [x] Call repository.delete()
+- [x] Handle domain events
 - [ ] Write unit tests
-- **Deliverable**: Working DeleteTaskCommandHandler with tests
+- **Deliverable**: Working DeleteTaskCommandHandler with tests ✅ (tests pending)
 
 #### Week 1 - Day 3: Query Classes
 
 **Task 1.7: Create Query Classes** [1.5 hours]
-- [ ] Create `src/app/core/application/task/queries/get-task-by-id.query.ts`
-- [ ] Create `src/app/core/application/task/queries/list-tasks-by-workspace.query.ts`
-- [ ] Create `src/app/core/application/task/queries/list-tasks-by-status.query.ts`
-- [ ] Create `src/app/core/application/task/queries/list-tasks-by-assignee.query.ts`
-- [ ] Create `src/app/core/application/task/queries/search-tasks.query.ts`
-- [ ] Create `src/app/core/application/task/queries/get-task-statistics.query.ts`
-- **Deliverable**: 6 query classes with proper typing
+- [x] Create `src/app/core/application/task/queries/get-task-by-id.query.ts`
+- [x] Create `src/app/core/application/task/queries/list-tasks-by-workspace.query.ts`
+- [x] Create `src/app/core/application/task/queries/list-tasks-by-status.query.ts`
+- [x] Create `src/app/core/application/task/queries/list-tasks-by-assignee.query.ts`
+- [x] Create `src/app/core/application/task/queries/search-tasks.query.ts`
+- [x] Create `src/app/core/application/task/queries/get-task-statistics.query.ts`
+- **Deliverable**: 6 query classes with proper typing ✅
 
 #### Week 1 - Day 4: Query Handlers
 
 **Task 1.8: GetTaskByIdQueryHandler** [1 hour]
-- [ ] Create file: `src/app/core/application/task/queries/handlers/get-task-by-id.handler.ts`
-- [ ] Inject repository
-- [ ] Call repository.findById()
-- [ ] Map domain model to DTO
-- [ ] Handle not found case
+- [x] Create file: `src/app/core/application/task/queries/handlers/get-task-by-id.handler.ts`
+- [x] Inject repository
+- [x] Call repository.findById()
+- [x] Map domain model to DTO
+- [x] Handle not found case
 - [ ] Write unit tests
-- **Deliverable**: Working GetTaskByIdQueryHandler
+- **Deliverable**: Working GetTaskByIdQueryHandler ✅ (tests pending)
 
 **Task 1.9: ListTasksByWorkspaceQueryHandler** [1 hour]
-- [ ] Create file: `src/app/core/application/task/queries/handlers/list-tasks-by-workspace.handler.ts`
-- [ ] Call repository.findByWorkspaceId()
-- [ ] Map to DTOs
+- [x] Create file: `src/app/core/application/task/queries/handlers/list-tasks-by-workspace.handler.ts`
+- [x] Call repository.findByWorkspaceId()
+- [x] Map to DTOs
 - [ ] Write unit tests
-- **Deliverable**: Working ListTasksByWorkspaceQueryHandler
+- **Deliverable**: Working ListTasksByWorkspaceQueryHandler ✅ (tests pending)
 
 **Task 1.10: ListTasksByStatusQueryHandler** [0.5 hours]
-- [ ] Create file: `src/app/core/application/task/queries/handlers/list-tasks-by-status.handler.ts`
-- [ ] Call repository.findByStatus()
-- [ ] Map to DTOs
+- [x] Create file: `src/app/core/application/task/queries/handlers/list-tasks-by-status.handler.ts`
+- [x] Call repository.findByStatus()
+- [x] Map to DTOs
 - [ ] Write unit tests
+- **Deliverable**: Working ListTasksByStatusQueryHandler ✅ (tests pending)
 
 **Task 1.11: ListTasksByAssigneeQueryHandler** [0.5 hours]
-- [ ] Create file: `src/app/core/application/task/queries/handlers/list-tasks-by-assignee.handler.ts`
-- [ ] Call repository.findByAssignee()
-- [ ] Map to DTOs
+- [x] Create file: `src/app/core/application/task/queries/handlers/list-tasks-by-assignee.handler.ts`
+- [x] Call repository.findByAssignee()
+- [x] Map to DTOs
 - [ ] Write unit tests
+- **Deliverable**: Working ListTasksByAssigneeQueryHandler ✅ (tests pending)
 
 **Task 1.12: SearchTasksQueryHandler** [1 hour]
-- [ ] Create file: `src/app/core/application/task/queries/handlers/search-tasks.handler.ts`
-- [ ] Call repository.search()
-- [ ] Map to DTOs
+- [x] Create file: `src/app/core/application/task/queries/handlers/search-tasks.handler.ts`
+- [x] Call repository.search()
+- [x] Map to DTOs
 - [ ] Write unit tests
+- **Deliverable**: Working SearchTasksQueryHandler ✅ (tests pending)
 
 **Task 1.13: GetTaskStatisticsQueryHandler** [1.5 hours]
-- [ ] Create file: `src/app/core/application/task/queries/handlers/get-task-statistics.handler.ts`
-- [ ] Call repository.getStatistics()
-- [ ] Format statistics data
+- [x] Create file: `src/app/core/application/task/queries/handlers/get-task-statistics.handler.ts`
+- [x] Call repository.getStatistics()
+- [x] Format statistics data
 - [ ] Write unit tests
+- **Deliverable**: Working GetTaskStatisticsQueryHandler ✅ (tests pending)
 
 #### Week 1 - Day 5: Application Service Update
 
@@ -596,9 +605,19 @@
 
 ## 📊 Progress Tracking
 
-**Completed Tasks**: 0 / ~130  
-**Estimated Hours Remaining**: 166-234 hours  
-**Current Sprint**: Phase 1a (Week 1)
+**Completed Tasks**: 13 / ~130 (up from 0)  
+**Estimated Hours Remaining**: 158-226 hours (reduced by 8 hours)  
+**Current Sprint**: Phase 1a (Week 1) - 92% complete
+
+**Recent Completions** (2025-11-22):
+- ✅ All 6 Command Handlers (create, update, change-status, assign, add-comment, delete)
+- ✅ All 6 Query Classes (get-by-id, list-by-workspace, list-by-status, list-by-assignee, search, get-statistics)
+- ✅ All 6 Query Handlers with DTO mapping
+- ✅ Repository injection token created
+- ✅ Project builds successfully
+- ✅ No new lint errors introduced
+
+**Next Immediate Task**: Task 1.14 - Update TaskApplicationService with handler dispatching
 
 ### Week-by-Week Milestones
 
