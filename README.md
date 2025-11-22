@@ -1,5 +1,7 @@
 # ng-gighub
 
+[![CI](https://github.com/7Spade/ng-gighub/actions/workflows/ci.yml/badge.svg)](https://github.com/7Spade/ng-gighub/actions/workflows/ci.yml)
+
 **Angular 20.1 + SSR + Supabase + DDD Architecture**
 
 This project is an enterprise-grade Angular application built with Domain-Driven Design principles, Server-Side Rendering, and Supabase backend.
@@ -120,6 +122,62 @@ npm test -- --code-coverage
 ```
 
 For detailed testing guidelines, see [Testing Standards](./docs/standards/testing-standards.md).
+
+## 🔄 Running CI Locally
+
+To verify your changes before pushing, run the same checks that CI runs:
+
+```bash
+# Run all CI checks in sequence
+npm run format:check && npm run lint && npm run build && npm test -- --no-watch --no-progress --browsers=ChromeHeadless
+```
+
+### Individual CI Steps
+
+```bash
+# 1. Check code formatting
+npm run format:check
+
+# Auto-fix formatting issues
+npm run format
+
+# 2. Run linter
+npm run lint
+
+# Auto-fix linting issues
+npm run lint:fix
+
+# 3. Build the project
+npm run build
+
+# 4. Run tests in headless mode (CI environment)
+npm test -- --no-watch --no-progress --browsers=ChromeHeadless
+
+# Run tests in watch mode (development)
+npm test
+```
+
+### Debugging CI Failures
+
+If tests fail in CI but pass locally:
+
+1. **Run tests in headless mode** (same as CI):
+   ```bash
+   npm test -- --no-watch --no-progress --browsers=ChromeHeadless
+   ```
+
+2. **Check for browser-specific issues**: CI runs in Chrome Headless on Linux
+
+3. **Verify Node version**: CI uses Node.js v20.x
+   ```bash
+   node --version  # Should be v20.x
+   ```
+
+4. **Clean install dependencies** (same as CI):
+   ```bash
+   rm -rf node_modules package-lock.json
+   npm install
+   ```
 
 ## 📋 Code Review Checklist
 
