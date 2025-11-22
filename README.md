@@ -1,5 +1,7 @@
 # ng-gighub
 
+[![CI](https://github.com/7Spade/ng-gighub/actions/workflows/ci.yml/badge.svg)](https://github.com/7Spade/ng-gighub/actions/workflows/ci.yml)
+
 **Angular 20.1 + SSR + Supabase + DDD Architecture**
 
 This project is an enterprise-grade Angular application built with Domain-Driven Design principles, Server-Side Rendering, and Supabase backend.
@@ -89,6 +91,29 @@ npm run lint:fix
 # Run all checks (format + lint)
 npm run check
 ```
+
+### Local CI Steps
+
+Run the same checks as the CI workflow locally before pushing:
+
+```bash
+# Install dependencies
+npm ci
+
+# Run format check
+npm run format:check
+
+# Run linter
+npm run lint
+
+# Build the application
+npm run build
+
+# Run tests (headless)
+npm test -- --watch=false --no-progress --browsers=ChromeHeadless
+```
+
+These commands match the GitHub Actions CI workflow and help catch issues early.
 
 ## 🏗️ Building
 
@@ -191,6 +216,16 @@ See [Architecture Documentation](./docs/architecture/) for detailed system desig
 - [Domain-Driven Design](https://martinfowler.com/bliki/DomainDrivenDesign.html)
 - [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 - [Supabase Documentation](https://supabase.com/docs)
+
+## 🎯 Roadmap & Future Tasks
+
+The following tasks are planned to further improve the project:
+
+- [ ] Stabilize shared module and core exports
+- [ ] Add lazy-loading for feature modules
+- [ ] Add unit tests for core services (auth, api client)
+- [ ] Gradually enable TypeScript strict checks
+- [ ] Improve CONTRIBUTING.md / onboarding
 
 ## 📝 License
 
