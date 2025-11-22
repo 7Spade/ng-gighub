@@ -1,3 +1,10 @@
+<!-- 
+Before submitting this PR, please review:
+- Project standards: .github/copilot-instructions.md
+- Detailed guidelines: .github/copilot-instructions/ (style, testing, security)
+- Multiple templates available: .github/pull_request_template/ (feature, bugfix, security)
+-->
+
 ## PR Checklist（快速檢查）
 <!-- 提交前請確認以下項目 -->
 - [ ] PR 保持小且單一變更（Single Responsibility）
