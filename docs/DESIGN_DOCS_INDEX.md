@@ -48,6 +48,24 @@
 5. **[Supabase 設定](setup/supabase.md)** - 資料庫與後端設定
 6. **[環境設定](setup/environment.md)** - 開發環境設定
 
+### 基礎設施文件
+
+7. **[認證與令牌管理](infrastructure/authentication.md)** - 認證系統理論架構
+   - JWT Token 管理
+   - Session 管理
+   - SSR 環境下的認證處理
+   - Refresh Token 策略
+   - Multi-Factor Authentication
+   - 社交登入 (OAuth)
+   - 安全考量
+
+8. **[認證功能實施文檔](infrastructure/authentication-implementation.md)** - 認證功能實作指引 ⭐ NEW
+   - `/login`, `/register`, `/logout`, `/refresh` 端點設計
+   - Supabase 整合說明
+   - 分階段實作步驟
+   - 完整程式碼範例
+   - 驗證清單
+
 ---
 
 ## 🏗️ 架構快速參考
