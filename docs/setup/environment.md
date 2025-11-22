@@ -6,11 +6,17 @@ This guide explains how to configure environment variables for the ng-gighub Ang
 
 This project uses `NEXT_PUBLIC_` prefixed environment variables for compatibility with external tools and services. However, **ng-gighub is an Angular application, not Next.js**. 
 
-Key points:
+⚠️ **Important Considerations:**
 - **Server-side (SSR)**: Environment variables work as expected via `process.env` when loaded with dotenv
-- **Client-side**: Angular doesn't automatically expose `NEXT_PUBLIC_` variables to the browser
-- For production client-side usage, consider configuring Angular environment files (`src/environments/`) or using build-time replacements
-- The current implementation uses server-side environment variables with client-side fallback to hardcoded defaults
+- **Client-side**: Angular doesn't automatically expose `NEXT_PUBLIC_` variables to the browser like Next.js does
+- The current implementation is a temporary approach; consider migrating to Angular's native environment configuration (`src/environments/`) for better maintainability
+- For production client-side usage, use Angular environment files or build-time replacements instead
+
+**Recommended Migration Path:**
+1. Move client-side config to `src/environments/environment.ts` and `environment.prod.ts`
+2. Use Angular's file replacement mechanism in `angular.json`
+3. Keep server-side variables in `.env` for SSR operations
+4. This provides clearer separation and follows Angular conventions
 
 ## Quick Start
 
