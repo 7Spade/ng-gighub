@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-account-profile',
   templateUrl: './account-profile.component.html',
-  standalone: true
+  standalone: true,
 })
 export class AccountProfileComponent {
   // TODO: 實作元件邏輯

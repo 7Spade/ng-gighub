@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-team-header',
   templateUrl: './team-header.component.html',
-  standalone: true
+  standalone: true,
 })
 export class TeamHeaderComponent {
   // TODO: 實作元件邏輯

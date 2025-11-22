@@ -1,6 +1,6 @@
 /**
  * Workspace Created Event
- * 
+ *
  * 當工作區被建立時觸發
  */
 export class WorkspaceCreatedEvent {

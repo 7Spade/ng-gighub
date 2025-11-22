@@ -1,6 +1,6 @@
 /**
  * Workspace Resource 實體
- * 
+ *
  * 代表工作區中的資源（如 team, repository, project 等）
  */
 export class WorkspaceResource {

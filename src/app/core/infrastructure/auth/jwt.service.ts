@@ -1,6 +1,6 @@
 /**
  * JWT Service
- * 
+ *
  * 處理 JWT token 相關功能
  */
 export class JwtService {

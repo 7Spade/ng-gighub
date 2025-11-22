@@ -1,6 +1,6 @@
 /**
  * Account 抽象聚合根
- * 
+ *
  * 定義所有帳號類型的共同行為與屬性
  * User, Organization, Bot 都繼承自此聚合根
  */

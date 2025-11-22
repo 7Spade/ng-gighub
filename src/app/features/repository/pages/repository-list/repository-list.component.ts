@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-repository-list',
   templateUrl: './repository-list.component.html',
-  standalone: true
+  standalone: true,
 })
 export class RepositoryListComponent {
   // TODO: 實作元件邏輯

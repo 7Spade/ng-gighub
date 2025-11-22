@@ -1,9 +1,5 @@
 <div class="context-switcher">
-  <button
-    mat-button
-    [matMenuTriggerFor]="contextMenu"
-    class="context-trigger"
-  >
+  <button mat-button [matMenuTriggerFor]="contextMenu" class="context-trigger">
     <div class="context-avatar">
       @if (currentContext()?.avatarUrl) {
         <img [src]="currentContext()!.avatarUrl" [alt]="currentContext()!.displayName" />
@@ -23,11 +19,7 @@
       <div class="menu-section">
         <div class="menu-section-title">個人</div>
         @for (item of personalContexts(); track item.id) {
-          <button
-            mat-menu-item
-            (click)="switchContext(item)"
-            [class.active]="isCurrentContext(item)"
-          >
+          <button mat-menu-item (click)="switchContext(item)" [class.active]="isCurrentContext(item)">
             <mat-icon>person</mat-icon>
             <span>{{ item.displayName }}</span>
             @if (isCurrentContext(item)) {
@@ -43,11 +35,7 @@
       <div class="menu-section">
         <div class="menu-section-title">組織</div>
         @for (item of organizationContexts(); track item.id) {
-          <button
-            mat-menu-item
-            (click)="switchContext(item)"
-            [class.active]="isCurrentContext(item)"
-          >
+          <button mat-menu-item (click)="switchContext(item)" [class.active]="isCurrentContext(item)">
             <mat-icon>business</mat-icon>
             <span>{{ item.displayName }}</span>
             @if (isCurrentContext(item)) {
@@ -63,11 +51,7 @@
       <div class="menu-section">
         <div class="menu-section-title">團隊</div>
         @for (item of teamContexts(); track item.id) {
-          <button
-            mat-menu-item
-            (click)="switchContext(item)"
-            [class.active]="isCurrentContext(item)"
-          >
+          <button mat-menu-item (click)="switchContext(item)" [class.active]="isCurrentContext(item)">
             <mat-icon>groups</mat-icon>
             <span>{{ item.displayName }}</span>
             @if (isCurrentContext(item)) {

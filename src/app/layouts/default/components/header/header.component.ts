@@ -7,6 +7,6 @@ import { ContextSwitcherComponent } from './components/context-switcher/context-
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [ContextSwitcherComponent]
+  imports: [ContextSwitcherComponent],
 })
 export class HeaderComponent {}

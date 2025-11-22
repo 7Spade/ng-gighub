@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-team-repositories',
   templateUrl: './team-repositories.component.html',
-  standalone: true
+  standalone: true,
 })
 export class TeamRepositoriesComponent {
   // TODO: 實作元件邏輯

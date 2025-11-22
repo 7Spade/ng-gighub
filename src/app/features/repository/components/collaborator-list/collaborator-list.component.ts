@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-collaborator-list',
   templateUrl: './collaborator-list.component.html',
-  standalone: true
+  standalone: true,
 })
 export class CollaboratorListComponent {
   // TODO: 實作元件邏輯

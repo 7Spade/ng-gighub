@@ -1,6 +1,6 @@
 /**
  * Workspace Domain Module
- * 
+ *
  * 匯出工作區領域層的所有公開介面
  */
 

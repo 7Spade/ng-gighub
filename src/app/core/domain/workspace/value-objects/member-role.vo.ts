@@ -1,6 +1,6 @@
 /**
  * Workspace Member Role 值物件
- * 
+ *
  * 代表工作區成員的角色
  */
 export type MemberRoleValue = 'owner' | 'admin' | 'member' | 'viewer';

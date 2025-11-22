@@ -1,6 +1,6 @@
 /**
  * Account Settings 實體
- * 
+ *
  * 儲存帳號的私有設定
  */
 export class AccountSettingsEntity {

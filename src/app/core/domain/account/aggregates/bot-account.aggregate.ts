@@ -1,6 +1,6 @@
 /**
  * Bot Account 聚合根
- * 
+ *
  * 代表機器人帳號
  * 由 Organization 建立，用於自動化任務
  */

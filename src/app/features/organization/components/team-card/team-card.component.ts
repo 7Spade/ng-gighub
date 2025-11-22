@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-team-card',
   templateUrl: './team-card.component.html',
-  standalone: true
+  standalone: true,
 })
 export class TeamCardComponent {
   // TODO: 實作元件邏輯

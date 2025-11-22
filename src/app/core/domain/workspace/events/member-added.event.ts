@@ -1,6 +1,6 @@
 /**
  * Member Added Event
- * 
+ *
  * 當成員被加入工作區時觸發
  */
 export class MemberAddedEvent {

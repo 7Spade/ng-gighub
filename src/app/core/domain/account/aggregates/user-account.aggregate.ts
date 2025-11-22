@@ -1,6 +1,6 @@
 /**
  * User Account 聚合根
- * 
+ *
  * 代表個人使用者帳號
  * 可以建立 repositories, 加入 organizations, 切換帳號
  */

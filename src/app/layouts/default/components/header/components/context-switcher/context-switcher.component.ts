@@ -6,7 +6,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { ContextService } from '../../../../../../core/application/context/services/context.service';
-import { ContextType, ContextItem } from '../../../../../../core/application/context/models/context.model';
+import {
+  ContextType,
+  ContextItem,
+} from '../../../../../../core/application/context/models/context.model';
 
 /**
  * Context Switcher Component
@@ -17,13 +20,7 @@ import { ContextType, ContextItem } from '../../../../../../core/application/con
   templateUrl: './context-switcher.component.html',
   styleUrls: ['./context-switcher.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule,
-    MatMenuModule,
-    MatButtonModule,
-    MatIconModule,
-    MatDividerModule
-  ]
+  imports: [CommonModule, MatMenuModule, MatButtonModule, MatIconModule, MatDividerModule],
 })
 export class ContextSwitcherComponent {
   private readonly contextService = inject(ContextService);
@@ -119,8 +116,8 @@ export class ContextSwitcherComponent {
         id: 'user-1',
         type: ContextType.PERSONAL,
         displayName: '我的帳戶',
-        avatarUrl: undefined
-      }
+        avatarUrl: undefined,
+      },
     ]);
 
     // 組織上下文
@@ -129,8 +126,8 @@ export class ContextSwitcherComponent {
         id: 'org-1',
         type: ContextType.ORGANIZATION,
         displayName: '示例組織',
-        avatarUrl: undefined
-      }
+        avatarUrl: undefined,
+      },
     ]);
 
     // 團隊上下文
@@ -139,8 +136,8 @@ export class ContextSwitcherComponent {
         id: 'team-1',
         type: ContextType.TEAM,
         displayName: '開發團隊',
-        avatarUrl: undefined
-      }
+        avatarUrl: undefined,
+      },
     ]);
 
     // 設定預設上下文（個人上下文）

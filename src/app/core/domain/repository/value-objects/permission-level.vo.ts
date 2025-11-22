@@ -1,6 +1,6 @@
 /**
  * Permission Level 值物件
- * 
+ *
  * Read, Write, Admin
  */
 export class PermissionLevel {
