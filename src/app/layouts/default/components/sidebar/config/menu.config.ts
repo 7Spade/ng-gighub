@@ -21,6 +21,11 @@ export interface MenuItem {
 export const MENU_CONFIG: Record<ContextType, MenuItem[]> = {
   [ContextType.PERSONAL]: [
     {
+      label: '工作區',
+      route: '/workspaces',
+      icon: 'folder_open',
+    },
+    {
       label: '個人資料',
       route: '/account/profile',
       icon: 'person',
@@ -33,6 +38,11 @@ export const MENU_CONFIG: Record<ContextType, MenuItem[]> = {
   ],
 
   [ContextType.ORGANIZATION]: [
+    {
+      label: '工作區',
+      route: '/workspaces',
+      icon: 'folder_open',
+    },
     {
       label: '組織儀表板',
       route: '/organizations',
@@ -61,6 +71,11 @@ export const MENU_CONFIG: Record<ContextType, MenuItem[]> = {
   ],
 
   [ContextType.TEAM]: [
+    {
+      label: '工作區',
+      route: '/workspaces',
+      icon: 'folder_open',
+    },
     {
       label: '團隊概覽',
       route: '/teams/:id',

@@ -78,6 +78,18 @@ export const routes: Routes = [
         ],
       },
       {
+        path: 'workspaces',
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./features/workspace/pages/workspace-list/workspace-list.component').then(
+                (m) => m.WorkspaceListComponent
+              ),
+          },
+        ],
+      },
+      {
         path: 'repositories',
         children: [
           {
