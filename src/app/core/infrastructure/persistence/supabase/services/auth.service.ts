@@ -1,5 +1,4 @@
-import { Injectable, inject } from '@angular/core';
-import { SupabaseClientService } from '../supabase.client';
+import { Injectable } from '@angular/core';
 
 /**
  * Supabase Auth Service
@@ -7,6 +6,7 @@ import { SupabaseClientService } from '../supabase.client';
  * 提供 Supabase Auth 相關操作，包含使用者認證、登入、登出等功能。
  * 
  * **注意：** 此服務目前為預留骨架，待未來實作認證功能時擴充。
+ * **請勿在生產環境中使用此服務。**
  * 
  * @example
  * ```typescript
@@ -20,10 +20,9 @@ import { SupabaseClientService } from '../supabase.client';
   providedIn: 'root'
 })
 export class SupabaseAuthService {
-  private clientService = inject(SupabaseClientService);
-
   constructor() {
     // 預留：未來實作 Auth 相關初始化
+    // 需要時注入 SupabaseClientService
   }
 
   // TODO: 實作認證相關方法
