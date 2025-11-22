@@ -165,9 +165,22 @@ signature
       "timestamp": 1700000000
     }
   ],
-  "session_id": "session-uuid"
+  "session_id": "session-uuid",
+  "workspace_context": {
+    "type": "personal",
+    "workspace_id": "workspace-uuid",
+    "role": "owner"
+  }
 }
 ```
+
+**多租戶 Context 擴充欄位說明：**
+- `workspace_context`: 當前工作區上下文（個人/組織/團隊視角）
+  - `type`: `personal` | `organization` | `team`
+  - `workspace_id`: 工作區 UUID
+  - `role`: 使用者在該工作區的角色
+  - `organization_id`: (選用) 組織 UUID
+  - `team_id`: (選用) 團隊 UUID
 
 #### Signature (簽名)
 使用 HS256 演算法與 JWT Secret 簽署。
@@ -637,6 +650,423 @@ async refreshSession() {
 3. **Secure Flag**: 僅透過 HTTPS 傳輸
 4. **有效期限**: 30 天（可配置）
 5. **撤銷機制**: 支援手動撤銷
+
+## 多租戶 JWT Context
+
+### 概念
+
+在多租戶 SaaS 系統中，使用者可能同時屬於多個工作區（Workspace）。JWT Token 需要攜帶當前的工作區上下文（Context），以便：
+
+1. **資料隔離**: 確保使用者只能存取當前工作區的資料
+2. **權限控制**: 根據使用者在不同工作區的角色授予權限
+3. **審計追蹤**: 記錄使用者在哪個工作區執行了哪些操作
+
+### 三種視角 (Context Type)
+
+#### 1. Personal Context (個人視角)
+
+```json
+{
+  "workspace_context": {
+    "type": "personal",
+    "workspace_id": "user-workspace-uuid",
+    "role": "owner"
+  }
+}
+```
+
+**特性：**
+- 使用者在自己的個人工作區
+- 永遠是 owner 角色
+- 可存取個人專案、倉庫、設定
+
+#### 2. Organization Context (組織視角)
+
+```json
+{
+  "workspace_context": {
+    "type": "organization",
+    "workspace_id": "org-workspace-uuid",
+    "organization_id": "org-uuid",
+    "role": "admin"
+  }
+}
+```
+
+**特性：**
+- 使用者切換到組織工作區
+- 角色可能是：owner, admin, member, billing, viewer
+- 可存取組織資源、團隊、成員管理
+
+#### 3. Team Context (團隊視角)
+
+```json
+{
+  "workspace_context": {
+    "type": "team",
+    "workspace_id": "team-workspace-uuid",
+    "organization_id": "org-uuid",
+    "team_id": "team-uuid",
+    "role": "member"
+  }
+}
+```
+
+**特性：**
+- 使用者切換到特定團隊工作區
+- 角色可能是：maintainer, member
+- 可存取團隊專屬的倉庫與專案
+- 仍繼承組織層級的權限
+
+### Context 切換流程
+
+```mermaid
+sequenceDiagram
+    participant User as 使用者
+    participant App as Angular App
+    participant ContextService as Workspace Context Service
+    participant AuthService as Auth Service
+    participant Supabase as Supabase Auth
+
+    User->>App: 點擊切換工作區
+    App->>ContextService: switchContext(workspaceId, type)
+    ContextService->>AuthService: updateJWTContext(context)
+    AuthService->>Supabase: refreshSession(with new context)
+    Supabase->>Supabase: 產生新 JWT with updated claims
+    Supabase-->>AuthService: 新 Token
+    AuthService->>AuthService: 更新本地 Token
+    AuthService-->>ContextService: Context 更新成功
+    ContextService->>App: 觸發 contextChanged 事件
+    App->>App: 重新載入相關資料
+    App-->>User: UI 更新為新工作區視角
+```
+
+### 實作：更新 JWT Claims
+
+#### 1. Supabase Database Function
+
+```sql
+-- 更新使用者的工作區 Context
+CREATE OR REPLACE FUNCTION set_workspace_context(
+  p_workspace_id uuid,
+  p_context_type text
+)
+RETURNS jsonb
+LANGUAGE plpgsql
+SECURITY DEFINER
+AS $$
+DECLARE
+  v_user_id uuid;
+  v_role text;
+  v_organization_id uuid;
+  v_team_id uuid;
+  v_context jsonb;
+BEGIN
+  v_user_id := auth.uid();
+  
+  -- 驗證使用者對該工作區有權限
+  IF NOT EXISTS (
+    SELECT 1 FROM workspace_members
+    WHERE workspace_id = p_workspace_id
+      AND account_id = v_user_id
+  ) THEN
+    RAISE EXCEPTION 'User does not have access to this workspace';
+  END IF;
+  
+  -- 取得使用者在該工作區的角色
+  SELECT role INTO v_role
+  FROM workspace_members
+  WHERE workspace_id = p_workspace_id
+    AND account_id = v_user_id;
+  
+  -- 根據 context_type 取得額外資訊
+  IF p_context_type = 'organization' THEN
+    SELECT owner_id INTO v_organization_id
+    FROM workspaces
+    WHERE id = p_workspace_id AND type = 'organization';
+  ELSIF p_context_type = 'team' THEN
+    SELECT organization_id, id INTO v_organization_id, v_team_id
+    FROM teams
+    WHERE id = p_workspace_id;
+  END IF;
+  
+  -- 建立 Context JSON
+  v_context := jsonb_build_object(
+    'type', p_context_type,
+    'workspace_id', p_workspace_id,
+    'role', v_role
+  );
+  
+  IF v_organization_id IS NOT NULL THEN
+    v_context := v_context || jsonb_build_object('organization_id', v_organization_id);
+  END IF;
+  
+  IF v_team_id IS NOT NULL THEN
+    v_context := v_context || jsonb_build_object('team_id', v_team_id);
+  END IF;
+  
+  RETURN v_context;
+END;
+$$;
+```
+
+#### 2. Angular Workspace Context Service
+
+```typescript
+@Injectable({ providedIn: 'root' })
+export class WorkspaceContextService {
+  private currentContext = signal<WorkspaceContext | null>(null);
+  
+  // Observable for context changes
+  public contextChanged$ = toObservable(this.currentContext);
+  
+  constructor(
+    private authService: AuthService,
+    private supabase: SupabaseClient
+  ) {
+    this.initializeContext();
+  }
+  
+  private async initializeContext() {
+    // 從 JWT 中讀取當前 context
+    const session = await this.authService.getSession();
+    if (session?.user) {
+      const context = session.user.app_metadata?.workspace_context;
+      if (context) {
+        this.currentContext.set(context as WorkspaceContext);
+      }
+    }
+  }
+  
+  async switchContext(
+    workspaceId: string,
+    contextType: 'personal' | 'organization' | 'team'
+  ): Promise<void> {
+    // 1. 呼叫 Supabase Function 取得新 Context
+    const { data, error } = await this.supabase.rpc('set_workspace_context', {
+      p_workspace_id: workspaceId,
+      p_context_type: contextType
+    });
+    
+    if (error) {
+      console.error('Failed to set workspace context:', error);
+      throw error;
+    }
+    
+    const newContext = data as WorkspaceContext;
+    
+    // 2. 更新使用者的 app_metadata
+    const { error: updateError } = await this.supabase.auth.updateUser({
+      data: {
+        workspace_context: newContext
+      }
+    });
+    
+    if (updateError) {
+      console.error('Failed to update user metadata:', updateError);
+      throw updateError;
+    }
+    
+    // 3. 重新整理 Session 以取得新的 JWT
+    await this.authService.refreshSession();
+    
+    // 4. 更新本地狀態
+    this.currentContext.set(newContext);
+    
+    // 5. 清除相關快取
+    this.clearContextCache();
+  }
+  
+  getCurrentContext(): WorkspaceContext | null {
+    return this.currentContext();
+  }
+  
+  getContextType(): 'personal' | 'organization' | 'team' | null {
+    return this.currentContext()?.type || null;
+  }
+  
+  getWorkspaceId(): string | null {
+    return this.currentContext()?.workspace_id || null;
+  }
+  
+  getRole(): string | null {
+    return this.currentContext()?.role || null;
+  }
+  
+  isPersonalContext(): boolean {
+    return this.getContextType() === 'personal';
+  }
+  
+  isOrganizationContext(): boolean {
+    return this.getContextType() === 'organization';
+  }
+  
+  isTeamContext(): boolean {
+    return this.getContextType() === 'team';
+  }
+  
+  private clearContextCache() {
+    // 清除與工作區相關的所有快取
+    // 例如：權限快取、資料快取等
+  }
+}
+
+interface WorkspaceContext {
+  type: 'personal' | 'organization' | 'team';
+  workspace_id: string;
+  role: string;
+  organization_id?: string;
+  team_id?: string;
+}
+```
+
+#### 3. RLS Policy 使用 Context
+
+```sql
+-- 使用 JWT Context 進行資料過濾
+CREATE POLICY "Users can only access current workspace data"
+  ON work_items
+  FOR ALL
+  USING (
+    workspace_id = (auth.jwt()->>'workspace_context')::jsonb->>'workspace_id'::uuid
+  );
+
+-- 根據角色控制操作
+CREATE POLICY "Only admins can delete work items"
+  ON work_items
+  FOR DELETE
+  USING (
+    workspace_id = (auth.jwt()->>'workspace_context')::jsonb->>'workspace_id'::uuid
+    AND
+    (auth.jwt()->>'workspace_context')::jsonb->>'role' IN ('owner', 'admin')
+  );
+```
+
+### Context 守衛 (Guard)
+
+```typescript
+@Injectable({ providedIn: 'root' })
+export class WorkspaceContextGuard implements CanActivate {
+  constructor(
+    private contextService: WorkspaceContextService,
+    private router: Router
+  ) {}
+  
+  canActivate(
+    route: ActivatedRouteSnapshot
+  ): boolean {
+    const requiredContextType = route.data['requiredContextType'] as string;
+    const currentContextType = this.contextService.getContextType();
+    
+    if (requiredContextType && currentContextType !== requiredContextType) {
+      // 重導向到錯誤頁面或預設工作區
+      this.router.navigate(['/switch-workspace']);
+      return false;
+    }
+    
+    return true;
+  }
+}
+
+// 路由配置
+export const routes: Routes = [
+  {
+    path: ':workspaceSlug/teams',
+    component: TeamsComponent,
+    canActivate: [WorkspaceContextGuard],
+    data: { requiredContextType: 'organization' } // 只有組織才有團隊
+  }
+];
+```
+
+### 前端 Context 指示器
+
+```typescript
+@Component({
+  selector: 'app-workspace-indicator',
+  template: `
+    <div class="workspace-indicator">
+      <div class="context-badge" [class]="contextType()">
+        @switch (contextType()) {
+          @case ('personal') {
+            <mat-icon>person</mat-icon>
+            <span>個人工作區</span>
+          }
+          @case ('organization') {
+            <mat-icon>business</mat-icon>
+            <span>{{ workspaceName() }}</span>
+          }
+          @case ('team') {
+            <mat-icon>group</mat-icon>
+            <span>{{ workspaceName() }}</span>
+          }
+        }
+      </div>
+      
+      <button mat-icon-button (click)="openSwitcher()">
+        <mat-icon>swap_horiz</mat-icon>
+      </button>
+    </div>
+  `,
+  standalone: true
+})
+export class WorkspaceIndicatorComponent {
+  contextType = computed(() => this.contextService.getContextType());
+  workspaceName = signal<string>('');
+  
+  constructor(
+    private contextService: WorkspaceContextService,
+    private dialog: MatDialog
+  ) {
+    effect(() => {
+      const context = this.contextService.getCurrentContext();
+      if (context) {
+        this.loadWorkspaceName(context.workspace_id);
+      }
+    });
+  }
+  
+  openSwitcher() {
+    this.dialog.open(WorkspaceSwitcherDialog);
+  }
+  
+  private async loadWorkspaceName(workspaceId: string) {
+    // 載入工作區名稱
+  }
+}
+```
+
+### 安全考量
+
+#### 1. Context 驗證
+- 每次 API 請求都驗證 JWT 中的 workspace_context
+- 確保使用者確實有權限存取該工作區
+
+#### 2. Context 一致性
+- 確保 URL、JWT Context、實際資料查詢三者一致
+- 避免 Context 與 URL 不同步的情況
+
+#### 3. Context 過期處理
+- 當使用者從工作區中被移除時，強制重新登入
+- 定期驗證 Context 的有效性
+
+```typescript
+@Injectable({ providedIn: 'root' })
+export class ContextValidationInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(req).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 403 && error.error?.code === 'INVALID_CONTEXT') {
+          // Context 無效，強制使用者重新選擇工作區
+          this.contextService.clearContext();
+          this.router.navigate(['/switch-workspace']);
+        }
+        return throwError(() => error);
+      })
+    );
+  }
+}
+```
 
 ## Multi-Factor Authentication
 
